@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
+    crossorigin="anonymous">
+    <link rel="shortcut icon" href="/resources/Images/favicon.ico" type="image/x-icon">
+    <title>Manager | Home Banking</title>
+</head>
+<body class="bg-body-tertiary">
+    <div id="app">
+        <div class="d-flex justify-content-center align-items-center">
+            <h1 class="m-5">Home Banking Mindhub</h1>
+        </div>
+        
+        <main>
+            <div class="d-flex flex-grow-1 flex-wrap m-3">
+                <section class="col-6">
+                    <h2>Client Manager</h2>
+                    <form>
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="nameInput" v-model="firstName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastNameInput" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastNameInput" v-model="lastName">
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleInputEmail1" class="form-label">Email address</label>
+                          <input type="email" class="form-control" id="exampleInputEmail1" v-model="email">
+                        </div>
+                        <button type="submit" class="btn btn-primary" @click="addClient()">Add Client</button>
+                      </form>
+                </section>
+                <section class="col-6">
+                    <h2>Client REST Response</h2>
+                    <pre>{{clientsInfo}}</pre>
+                </section>
+                <section class="col-6 mt-5">
+                    <h2>Client List</h2>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">email</th>
+                          </tr>
+                        </thead>
+                        <tbody v-for="client in clientsInfo">
+                            <tr>
+                                <th scope="row">{{client.id}}</th>
+                                <td>{{client.firstName}}</td>
+                                <td>{{client.lastName}}</td>
+                                <td>{{client.email}}</td>
+                            </tr>
+                        </tbody>
+                      </table>
+                </section>
+            </div>
+        </main>
+    </div>
+    <!-- VUE -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
+    crossorigin="anonymous">
+    </script>
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/resources/manager.js"></script>
+</body>
+</html>
