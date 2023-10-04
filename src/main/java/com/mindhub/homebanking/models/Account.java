@@ -1,9 +1,11 @@
 package com.mindhub.homebanking.models;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -18,15 +20,15 @@ public class Account {
     @JoinColumn(name="client_id")
     private Client client;
 
-    private long number;
+    private String number;
 
-    private BigDecimal balance;
+    private double balance;
 
-    private Date creationDate;
+    private LocalDate creationDate;
 
     public Account(){}
 
-    public Account(long number, BigDecimal balance, Date creationDate){
+    public Account(String number, double balance, LocalDate creationDate){
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
@@ -36,30 +38,31 @@ public class Account {
         return id;
     }
 
-    public long getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(long number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
-    public BigDecimal getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
+    @JsonIgnore
     public Client getClient() {
         return client;
     }
