@@ -1,0 +1,39 @@
+:root {
+    --maincolor: rgb(4, 13, 18);
+    --secondcolor: rgb(24, 61, 61);
+    --thirdcolor: rgb(92, 131, 116);
+    --fourthcolor: rgb(147, 177, 166);
+}
+
+.headerHeight {
+    min-height: 15vh;
+    background-color: var(--secondcolor);
+}
+
+.mainColor {
+    background-color: var(--maincolor) !important;
+    min-height: 100vh;
+}
+
+.footerColor {
+    background-color: var(--secondcolor);
+    min-height: 10vh;
+}
+
+.h1Color {
+    color: var(--fourthcolor);
+}
+
+.iconSize {
+    font-size: 3rem;
+    color: var(--maincolor);
+}
+
+a {
+    text-decoration: none;
+    color: white !important;
+}
+
+.pColor {
+    color: white;
+}
