@@ -1,8 +1,8 @@
 :root {
-    --maincolor: rgb(4, 13, 18);
-    --secondcolor: rgb(24, 61, 61);
-    --thirdcolor: rgb(92, 131, 116);
-    --fourthcolor: rgb(147, 177, 166);
+    --maincolor: rgb(76, 0, 51);
+    --secondcolor: rgb(121, 2, 82);
+    --thirdcolor: rgb(175, 1, 113);
+    --fourthcolor: rgb(232, 15, 136);
 }
 
 .headerHeight {
@@ -21,7 +21,7 @@
 }
 
 .h1Color {
-    color: var(--fourthcolor);
+    color: white;
 }
 
 .iconSize {
@@ -36,4 +36,12 @@ a {
 
 .pColor {
     color: white;
+}
+
+.debitType {
+    color: red !important;
+}
+
+.creditType {
+    color: green !important;
 }

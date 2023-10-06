@@ -49,12 +49,15 @@ public class HomebankingApplication {
 			accountRepository.save(cuenta3);
 			accountRepository.save(cuenta4);
 
-			LocalDateTime now = LocalDateTime.now();
+			LocalDateTime dateTime = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String formattedDateTime = dateTime.format(formatter);
+			LocalDateTime formattedLocalDateTime = LocalDateTime.parse(formattedDateTime, formatter);
 
-			Transaction transaction1 = new Transaction(DEBIT, -2000, "Pago Matrícula", now);
-			Transaction transaction2 = new Transaction(CREDIT, 5000, "Pago Colegio", now);
-			Transaction transaction3 = new Transaction(DEBIT, -500, "Pago Mindhub", now);
-			Transaction transaction4 = new Transaction(CREDIT, 4200, "Pago PASCAL", now);
+			Transaction transaction1 = new Transaction(DEBIT, -2000, "Pago Matrícula", formattedLocalDateTime);
+			Transaction transaction2 = new Transaction(CREDIT, 5000, "Pago Colegio", formattedLocalDateTime);
+			Transaction transaction3 = new Transaction(DEBIT, -500, "Pago Mindhub", formattedLocalDateTime);
+			Transaction transaction4 = new Transaction(CREDIT, 4200, "Pago PASCAL", formattedLocalDateTime);
 
 			cuenta1.addTransaction(transaction1);
 			cuenta1.addTransaction(transaction2);

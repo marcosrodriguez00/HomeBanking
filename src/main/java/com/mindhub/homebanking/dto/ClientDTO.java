@@ -22,7 +22,7 @@ public class ClientDTO {
         this.firstName = client.getFirstName();
         this.lastName = client.getFirstName();
         this.email = client.getEmail();
-        this.accounts = client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toSet());
+        this.accounts = client.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toSet());
     }
 
     public long getID() {

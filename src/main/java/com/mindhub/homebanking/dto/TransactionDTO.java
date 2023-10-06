@@ -26,6 +26,7 @@ public class TransactionDTO {
         this.type = transaction.getType();
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
+        this.date = transaction.getDate();
     }
 
     public long getID() {
