@@ -29,6 +29,7 @@ public class AccountDTO {
     private List<TransactionDTO> transactions;
 
     public AccountDTO(Account account) {
+        id = account.getId();
         number = account.getNumber();
         balance = account.getBalance();
         creationDate = account.getCreationDate();
