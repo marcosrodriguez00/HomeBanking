@@ -2,11 +2,15 @@ package com.mindhub.homebanking.dto;
 
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.Transaction;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AccountDTO {
 
@@ -22,10 +26,13 @@ public class AccountDTO {
 
     private LocalDate creationDate;
 
+    private List<TransactionDTO> transactions;
+
     public AccountDTO(Account account) {
         number = account.getNumber();
         balance = account.getBalance();
         creationDate = account.getCreationDate();
+        transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
     }
 
     public long getId() {
