@@ -11,18 +11,36 @@
     />
     <link rel="shortcut icon" href="../resources/Images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <title>Home Banking | Accounts</title>
+    <title>BankHub | Accounts</title>
 </head>
 <body>
 
     <div id="app">
         <header class="bg-dark headerHeight">
-            <div class="d-flex justify-content-between p-5 headerHeight">
-                <a href="#"><button type="button" class="btn btn-outline-light btn-lg">Accounts</button></a>
-                <a href="#"><button type="button" class="btn btn-outline-light btn-lg">Cards</button></a>
-                <a href="#"><button type="button" class="btn btn-outline-light btn-lg">Loans</button></a>
-                <a href="#"><button type="button" class="btn btn-outline-light btn-lg">Transactions</button></a>
+            <div class="d-flex headerHeight justify-content-center">
+                <div class="d-flex justify-content-center headerHeight align-baseline">
+                    <img class="logoSize" src="../resources/Images/bankHub logo letras.png" alt="BankHub Logo">
+                </div>
             </div>
+            <nav class="navbar navbar-expand-lg headerHeight d-flex justify-content-center">
+                <div class="container-fluid">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Pages
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item dropdownColor" href="#">Accounts</a></li>
+                          <li><a class="dropdown-item dropdownColor" href="#">Cards</a></li>
+                          <li><a class="dropdown-item dropdownColor" href="#">Loans</a></li>
+                          <li><a class="dropdown-item dropdownColor" href="#">Transactions</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
         </header>
         <main>
             <div class="mainColor">
@@ -39,7 +57,7 @@
                                 <div class="card" style="width: 18rem;">
                                     <ul class="list-group list-group-flush">
                                       <li class="list-group-item">Account number: #{{account.number}}</li>
-                                      <li class="list-group-item">Balance: ${{account.balance.toLocaleString()}}</li>
+                                      <li class="list-group-item">Balance: ${{numberFormat(account.balance)}}</li>
                                       <li class="list-group-item">Creation Date: {{account.creationDate}}</li>
                                     </ul>
                                 </div>

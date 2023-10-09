@@ -52,3 +52,11 @@ a {
     font-weight: bold;
     color: white !important;
 }
+
+.logoSize {
+    width : 50vh;
+}
+
+.dropdownColor {
+    color: black !important;
+}
