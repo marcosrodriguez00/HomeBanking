@@ -45,3 +45,10 @@ a {
 .creditType {
     color: green !important;
 }
+
+.noTransaction {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white !important;
+}

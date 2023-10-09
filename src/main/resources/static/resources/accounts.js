@@ -17,5 +17,9 @@ createApp({
         })
         .catch((error) => console.log(error))
   },
-  methods: {},
+  methods: {
+    crearLink(account) {
+      return 'http://localhost:8080/web/account.html?id=' + account.id
+    }
+  },
 }).mount('#app');

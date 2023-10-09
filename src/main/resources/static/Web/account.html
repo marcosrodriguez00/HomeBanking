@@ -10,7 +10,8 @@
         crossorigin="anonymous"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <title>Home Banking | Accounts</title>
+    <link rel="shortcut icon" href="../resources/Images/favicon.ico" type="image/x-icon">
+    <title>Home Banking | Account</title>
 </head>
 <body>
 
@@ -39,7 +40,10 @@
                 </section>
                 <section class="m-3">
                     <h3 class="h1Color">Transactions</h3>
-                    <table class="table table-striped">
+                    <div v-if="transactions.length === 0" class="d-flex justify-content-center mt-5">
+                        <p class="noTransaction">There are no transactions.</p>
+                    </div>
+                    <table v-else class="table table-striped">
                         <thead>
                           <tr>
                             <th scope="col">ID</th>
@@ -52,7 +56,7 @@
                         <tbody v-for="transaction in transactions">
                           <tr>
                             <th scope="row">{{transaction.id}}</th>
-                            <td>${{transaction.amount}}</td>
+                            <td>${{numberFormat(Math.abs(transaction.amount))}}</td>
                             <td :class="{ 'debitType': transaction.type == 'DEBIT', 'creditType': transaction.type == 'CREDIT' }">
                                 {{transaction.type}}</td>
                             <td>{{transaction.date.replace('T', ' ')}}</td>
@@ -65,7 +69,7 @@
         </main>
         <footer class="footerColor">
             <div class="d-flex justify-content-between ps-4 pe-4">
-                <div class="justify-content-center align-items-center">
+                <div class="d-flex justify-content-center align-items-center">
                     <p class="pColor text-center">2023 - All rights reserved</p>
                 </div>
                 <div class="d-flex gap-3 iconSize">
