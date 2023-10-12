@@ -1,5 +1,5 @@
 * {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
 }
 
 :root {
@@ -16,12 +16,12 @@
 }
 
 .mainColor {
-    background-color: var(--maincolor) !important;
+    background-color: var(--secondcolor) !important;
     min-height: 100vh;
 }
 
 .footerColor {
-    background-color: var(--secondcolor);
+    background-color: var(--maincolor);
     min-height: 10vh;
     padding: 10px 0;
 }
@@ -35,7 +35,8 @@
 }
 
 .h1Color {
-    color: white;
+    color: black;
+    font-weight: bold;
     text-align: center;
 }
 
@@ -53,8 +54,12 @@ a {
     color: white !important;
 }
 
+.nav-item {
+    font-size: 1rem !important;
+}
+
 .pColor {
-    color: black;
+    color: white;
 }
 
 .debitType {
@@ -69,7 +74,7 @@ a {
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
-    color: black !important;
+    color: white !important;
 }
 
 .logoSize {
@@ -79,7 +84,7 @@ a {
 }
 
 .navbar-toggler {
-    order: 3; /* Cambia el orden para que el botón del menú se muestre al final */
+    background-color: white !important;
 }
 
 .navbarFont {
@@ -117,5 +122,20 @@ a {
     /* Aplicar la transformación al hacer hover en el elemento */
     .nav-item:hover {
         transform: none; /* Puedes ajustar el valor según tu preferencia */
+    }
+}
+
+.titleSection {
+    min-height: 40vh;
+    background-image: url(https://images.pexels.com/photos/210643/pexels-photo-210643.jpeg);
+    background-size: cover; /* La imagen de fondo se ajusta al tamaño de la ventana del navegador */
+    background-repeat: no-repeat; /* Evita la repetición de la imagen */
+    background-position: center center;
+}
+
+/* con esto controlo que la seccion de mensaje de bienvenida no se vea gigante en disp moviles*/
+@media (max-width: 767px) {
+    .titleSection {
+        min-height: 10vh; /* Reduzca el tamaño para dispositivos móviles */
     }
 }

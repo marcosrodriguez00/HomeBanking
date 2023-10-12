@@ -65,7 +65,7 @@ public class Loan {
         this.payments = payments;
     }
 
-    public void addClient(ClientLoan clientLoan) {
+    public void addClientLoan(ClientLoan clientLoan) {
         clientLoan.setLoan(this);
         clientLoans.add(clientLoan);
     }

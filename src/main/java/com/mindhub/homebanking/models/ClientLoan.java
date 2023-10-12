@@ -27,6 +27,12 @@ public class ClientLoan {
 
     public ClientLoan() { }
 
+    public ClientLoan(double amount, int payments) {
+        this.amount = amount;
+        this.payments = payments;
+    }
+
+    // Esto no cumple con la especificidad única
     public ClientLoan(double amount, Client client, Loan loan, int payments){
         this.amount = amount;
         this.client = client;

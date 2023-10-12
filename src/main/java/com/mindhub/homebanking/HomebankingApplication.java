@@ -76,15 +76,29 @@ public class HomebankingApplication {
 			loanRepository.save(prestamo2);
 			loanRepository.save(prestamo3);
 
+
+			// esta bien que a clientLoan se le asigne el cliente y tipo de prestamo desde el constructor?
+			// o debo usar el metodo .addLoan()
+
+			// Estos constructores funcionan pero no cumplen con el principio de responsabilidad única
 			ClientLoan clientLoan1 = new ClientLoan(400000, melba, prestamo1, 60);
 			ClientLoan clientLoan2 = new ClientLoan(50000, melba, prestamo2, 12);
 			ClientLoan clientLoan3 = new ClientLoan(100000, marcos, prestamo2, 24);
 			ClientLoan clientLoan4 = new ClientLoan(200000, marcos, prestamo3, 36);
 
+			ClientLoan clientLoan5 = new ClientLoan(10000, 12);
+			marcos.addClientLoan(clientLoan5);
+			prestamo2.addClientLoan(clientLoan5);
+			ClientLoan clientLoan6 = new ClientLoan(200000, 36);
+			melba.addClientLoan(clientLoan6);
+			prestamo1.addClientLoan(clientLoan6);
+
 			clientLoanRepository.save(clientLoan1);
 			clientLoanRepository.save(clientLoan2);
 			clientLoanRepository.save(clientLoan3);
 			clientLoanRepository.save(clientLoan4);
+			clientLoanRepository.save(clientLoan5);
+			clientLoanRepository.save(clientLoan6);
 		};
 	}
 }
