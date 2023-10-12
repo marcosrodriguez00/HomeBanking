@@ -1,13 +1,18 @@
+* {
+    font-size: 1.2rem;
+}
+
 :root {
-    --maincolor: rgb(76, 0, 51);
-    --secondcolor: rgb(121, 2, 82);
+    --maincolor: #1e8c45;
+    --secondcolor: black;
     --thirdcolor: rgb(175, 1, 113);
     --fourthcolor: rgb(232, 15, 136);
 }
 
 .headerHeight {
-    min-height: 15vh;
+    min-height: 15%;
     background-color: var(--secondcolor);
+    
 }
 
 .mainColor {
@@ -18,14 +23,28 @@
 .footerColor {
     background-color: var(--secondcolor);
     min-height: 10vh;
+    padding: 10px 0;
+}
+
+.footerColor p {
+    margin: 0; /* Elimina el margen predeterminado del párrafo */
+    display: flex; /* Utiliza flexbox para centrar verticalmente */
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    height: 100%; /* Asegura que el párrafo ocupe todo el espacio vertical */
 }
 
 .h1Color {
     color: white;
+    text-align: center;
+}
+
+.h3Color {
+    color: white;
 }
 
 .iconSize {
-    font-size: 3rem;
+    font-size: 3rem !important;
     color: var(--maincolor);
 }
 
@@ -35,7 +54,7 @@ a {
 }
 
 .pColor {
-    color: white;
+    color: black;
 }
 
 .debitType {
@@ -50,13 +69,53 @@ a {
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
-    color: white !important;
+    color: black !important;
 }
 
 .logoSize {
-    width : 50vh;
+    max-width: 30%; /* El logo no se expandirá más allá del ancho del contenedor */
+    height: auto; /* Mantén la proporción original del logo */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse sobre el logo */
 }
 
-.dropdownColor {
-    color: black !important;
+.navbar-toggler {
+    order: 3; /* Cambia el orden para que el botón del menú se muestre al final */
+}
+
+.navbarFont {
+    font-size: 20px;
+}
+
+.iconColor {
+    color: white !important;
+}
+
+/* Estilo inicial para los elementos */
+.nav-item {
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Aplicar la transformación al hacer hover en el elemento */
+.nav-item:hover {
+    transform: scale(1.1); /* Puedes ajustar el valor según tu preferencia */
+}
+
+.btn_color {
+    background-color: #f28705 !important;
+    color: white !important;
+}
+
+.list-group-item {
+    text-align: center !important;
+}
+
+@media (max-width: 990px) {
+    .nav-item {
+        transition: none;
+    }
+    
+    /* Aplicar la transformación al hacer hover en el elemento */
+    .nav-item:hover {
+        transform: none; /* Puedes ajustar el valor según tu preferencia */
+    }
 }

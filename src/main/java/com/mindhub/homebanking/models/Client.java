@@ -23,7 +23,7 @@ public class Client {
     private String firstName, lastName, email;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    Set<ClientLoan> clientLoans;
+    private Set<ClientLoan> clientLoans = new HashSet<>();
 
     public Client() {}
 
@@ -92,5 +92,9 @@ public class Client {
     public void addLoan(ClientLoan clientLoan) {
         clientLoan.setClient(this);
         clientLoans.add(clientLoan);
+    }
+
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
     }
 }

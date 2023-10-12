@@ -18,15 +18,16 @@ public class ClientDTO {
     private Set<AccountDTO> accounts;
     private String firstName, lastName, email;
 
-    private List<Loan> loans;
+    private List<ClientLoanDTO> loans;
 
     public ClientDTO(Client client) {
         this.ID = client.getID();
         this.firstName = client.getFirstName();
-        this.lastName = client.getFirstName();
+        this.lastName = client.getLastName();
         this.email = client.getEmail();
         this.accounts = client.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toSet());
-        this.loans = client.getLoans();
+        // quiero devolver clientLoanDTO, getLoans me da lista de Loan
+        this.loans = client.getClientLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toList());
     }
 
     public long getID() {
@@ -49,7 +50,5 @@ public class ClientDTO {
         return accounts;
     }
 
-    public List<Loan> getLoans() {
-        return loans;
-    }
+    public List<ClientLoanDTO> getLoans() { return loans; }
 }

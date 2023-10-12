@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,17 +21,17 @@ public class Loan {
 
     private String name;
 
-    private int maxAmount;
+    private double maxAmount;
 
     @ElementCollection
     private List<Integer> payments;
 
     @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
-    Set<ClientLoan> clientLoans;
+    private Set<ClientLoan> clientLoans = new HashSet<>();
 
     public Loan() {}
 
-    public Loan(String name, int maxAmount, List<Integer> payments){
+    public Loan(String name, double maxAmount, List<Integer> payments){
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
@@ -48,11 +49,11 @@ public class Loan {
         this.name = name;
     }
 
-    public int getMaxAmount() {
+    public double getMaxAmount() {
         return maxAmount;
     }
 
-    public void setMaxAmount(int maxAmount) {
+    public void setMaxAmount(double maxAmount) {
         this.maxAmount = maxAmount;
     }
 

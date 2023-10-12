@@ -13,7 +13,7 @@ public class ClientLoan {
     @GenericGenerator(name = "native", strategy = "native")
     private long ID;
 
-    private int amount;
+    private double amount;
 
     private int payments;
 
@@ -25,9 +25,9 @@ public class ClientLoan {
     @JoinColumn(name = "loan_id")
     private Loan loan;
 
-    public ClientLoan() {}
+    public ClientLoan() { }
 
-    public ClientLoan(int amount, Client client, Loan loan, int payments){
+    public ClientLoan(double amount, Client client, Loan loan, int payments){
         this.amount = amount;
         this.client = client;
         this.loan = loan;
@@ -38,11 +38,11 @@ public class ClientLoan {
         return ID;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
