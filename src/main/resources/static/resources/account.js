@@ -11,6 +11,7 @@ createApp({
     return {
         account: [],
         transactions: [],
+        loading: true
     };
   },
   created() {
@@ -22,7 +23,7 @@ createApp({
             this.account = response.data;
             this.transactions = this.account.transactions;
             this.transactions.sort((a,b) => b.id - a.id);
-            console.log(this.transactions);
+            setTimeout(() => this.loading = false, 300);
         })
         .catch((error) => console.log(error))
   },

@@ -12,18 +12,25 @@ import java.util.Set;
 @Entity
 public class Client {
 
+    // PROPERTIES
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private long ID;
+    private long id;
+
+    private String firstName, lastName, email;
 
     @OneToMany(mappedBy="client", fetch= FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
 
-    private String firstName, lastName, email;
-
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<Card> cards = new HashSet<>();
+
+    // CONSTRUCTORS
 
     public Client() {}
 
@@ -33,8 +40,10 @@ public class Client {
         this.email = email;
     }
 
-    public long getID() {
-        return ID;
+    // METHODS
+
+    public long getId() {
+        return id;
     }
 
     public Set<Account> getAccounts() {
@@ -73,7 +82,7 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "ID=" + ID +
+                "ID=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
@@ -96,5 +105,17 @@ public class Client {
 
     public Set<ClientLoan> getClientLoans() {
         return clientLoans;
+    }
+
+    public void addCard(Card card) {
+        card.setClient(this);
+        this.cards.add(card);
+    }
+
+    public Set<Card> getCards() { return cards; }
+
+    // Método para poner el cardholder
+    public String fullName() {
+        return this.firstName + " " + this.lastName;
     }
 }

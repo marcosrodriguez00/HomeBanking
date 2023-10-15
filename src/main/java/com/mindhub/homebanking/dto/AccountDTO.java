@@ -16,10 +16,6 @@ public class AccountDTO {
 
     private long id;
 
-/*    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="client_id")
-    private Client client;*/
-
     private String number;
 
     private double balance;

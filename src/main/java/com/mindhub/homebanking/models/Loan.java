@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +16,7 @@ public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private long ID;
+    private long id;
 
     private String name;
 
@@ -37,8 +36,8 @@ public class Loan {
         this.payments = payments;
     }
 
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
     public String getName() {

@@ -1,37 +1,34 @@
 package com.mindhub.homebanking.dto;
 
-import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.Loan;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ClientDTO {
 
-    private long ID;
+    private long id;
 
     private Set<AccountDTO> accounts;
     private String firstName, lastName, email;
 
-    private List<ClientLoanDTO> loans;
+    private Set<ClientLoanDTO> loans;
+
+    private Set<CardDTO> cards;
 
     public ClientDTO(Client client) {
-        this.ID = client.getID();
+        this.id = client.getId();
         this.firstName = client.getFirstName();
         this.lastName = client.getLastName();
         this.email = client.getEmail();
         this.accounts = client.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toSet());
-        // quiero devolver clientLoanDTO, getLoans me da lista de Loan
-        this.loans = client.getClientLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toList());
+        this.loans = client.getClientLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toSet());
+        this.cards = client.getCards().stream().map(CardDTO::new).collect(Collectors.toSet());
     }
 
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -50,5 +47,7 @@ public class ClientDTO {
         return accounts;
     }
 
-    public List<ClientLoanDTO> getLoans() { return loans; }
+    public Set<ClientLoanDTO> getLoans() { return loans; }
+
+    public Set<CardDTO> getCards() { return cards; }
 }

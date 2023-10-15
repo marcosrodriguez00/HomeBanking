@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static com.mindhub.homebanking.models.CardColor.*;
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.models.TransactionType.DEBIT;
 
@@ -25,7 +26,7 @@ public class HomebankingApplication {
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,
 									  TransactionRepository transactionRepository, LoanRepository loanRepository,
-									  ClientLoanRepository clientLoanRepository) {
+									  ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
 			Client marcos = new Client("Marcos", "Rodriguez", "marcosrodriguez3000@gmail.com");
 			clientRepository.save(marcos);
@@ -76,10 +77,6 @@ public class HomebankingApplication {
 			loanRepository.save(prestamo2);
 			loanRepository.save(prestamo3);
 
-
-			// esta bien que a clientLoan se le asigne el cliente y tipo de prestamo desde el constructor?
-			// o debo usar el metodo .addLoan()
-
 			// Estos constructores funcionan pero no cumplen con el principio de responsabilidad única
 			ClientLoan clientLoan1 = new ClientLoan(400000, melba, prestamo1, 60);
 			ClientLoan clientLoan2 = new ClientLoan(50000, melba, prestamo2, 12);
@@ -99,6 +96,21 @@ public class HomebankingApplication {
 			clientLoanRepository.save(clientLoan4);
 			clientLoanRepository.save(clientLoan5);
 			clientLoanRepository.save(clientLoan6);
+
+			LocalDate fiveYears = today.plusYears(5);
+
+			Card card1 = new Card(melba.fullName(), "1111-1111-1111-1111", "123", DEBIT, GOLD, fiveYears, today);
+			melba.addCard(card1);
+
+			Card card2 = new Card(melba.fullName(), "2222-2222-2222-2222", "321", CREDIT, TITANIUM, fiveYears, today);
+			melba.addCard(card2);
+
+			Card card3 = new Card(marcos.fullName(), "3333-3333-3333-3333", "333", CREDIT, SILVER, fiveYears, today);
+			marcos.addCard(card3);
+
+			cardRepository.save(card1);
+			cardRepository.save(card2);
+			cardRepository.save(card3);
 		};
 	}
 }
