@@ -58,7 +58,7 @@
                             <div class="container d-flex gap-5 no-wrap" v-if="debitOrCredit(card) === 'CREDIT'" >
                                 <div class="card" style="background-color: black !important;">
                                     <div class="card-inner">
-                                        <div class="front">
+                                        <div class="front" :style="getCardGradient(card.color)">
                                             <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
                                             <div class="row">
                                                 <img src="https://i.ibb.co/G9pDnYJ/chip.png" style="width: 80px !important;">
@@ -79,7 +79,7 @@
                                                 <p style="width: fit-content; color: white;">{{dateFormat(card.thruDate)}}</p>
                                             </div>
                                         </div>
-                                        <div class="back">
+                                        <div class="back" :style="getCardGradient(card.color)">
                                             <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
                                             <div class="bar"></div>
                                             <div class="row card-cvv">
@@ -87,6 +87,7 @@
                                                     <img src="https://i.ibb.co/S6JG8px/pattern.png">
                                                 </div>
                                                 <p>{{card.cvv}}</p>
+                                                <p style="color: black;">CARD COLOR: {{card.color}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +107,7 @@
                             <div class="container d-flex gap-5 no-wrap" v-if="debitOrCredit(card) === 'DEBIT'">
                                 <div class="card" style="background-color: black !important;">
                                     <div class="card-inner">
-                                        <div class="front">
+                                        <div class="front" :style="getCardGradient(card.color)">
                                             <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
                                             <div class="row">
                                                 <img src="https://i.ibb.co/G9pDnYJ/chip.png" style="width: 80px !important;">
@@ -127,7 +128,7 @@
                                                 <p style="width: fit-content; color: white;">{{dateFormat(card.thruDate)}}</p>
                                             </div>
                                         </div>
-                                        <div class="back">
+                                        <div class="back" :style="getCardGradient(card.color)">
                                             <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
                                             <div class="bar"></div>
                                             <div class="row card-cvv">
@@ -135,6 +136,7 @@
                                                     <img src="https://i.ibb.co/S6JG8px/pattern.png">
                                                 </div>
                                                 <p>{{card.cvv}}</p>
+                                                <p style="color: black;">CARD COLOR: {{card.color}}</p>
                                             </div>
                                         </div>
                                     </div>

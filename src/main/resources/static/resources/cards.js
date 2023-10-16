@@ -63,6 +63,15 @@ createApp({
           console.log("Credit card found");
           this.isCredit = true;
         }
+      },
+      getCardGradient(color) {
+        if (color === 'TITANIUM') {
+            return { 'background-image': 'linear-gradient(45deg, #111111, #222222)' };
+        } else if (color === 'GOLD') {
+            return { 'background-image': 'linear-gradient(45deg, #FFD700, #FFA500)' };
+        } else if (color === 'SILVER') {
+            return { 'background-image': 'linear-gradient(45deg, #C0C0C0, #808080)' };
+        }
       }
   },
   computed: {

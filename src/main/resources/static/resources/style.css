@@ -7,8 +7,9 @@
 :root {
     --maincolor: #1e8c45;
     --secondcolor: black;
-    --thirdcolor: rgb(175, 1, 113);
-    --fourthcolor: rgb(232, 15, 136);
+    --titanium-gradient: linear-gradient(45deg, #111111, #222222);
+    --gold-gradient: linear-gradient(45deg, #FFD700, #FFA500);
+    --silver-gradient: linear-gradient(45deg, #C0C0C0, #808080);
 }
 
 .headerHeight {

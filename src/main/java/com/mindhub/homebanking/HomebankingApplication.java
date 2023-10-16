@@ -16,7 +16,7 @@ import static com.mindhub.homebanking.models.CardColor.*;
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.models.TransactionType.DEBIT;
 
-@SpringBootApplication
+@SpringBootApplication	// Dice que la aplicación de abajo es una app de springboot, crea el contexto de springboot
 public class HomebankingApplication {
 
 	public static void main(String[] args) {
