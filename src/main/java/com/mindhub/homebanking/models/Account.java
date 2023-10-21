@@ -10,12 +10,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity // define que una tabla representa una tabla en una base de datos relacional, la marca como una entidad persistente
 public class Account {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
+    @Id //marca como primary key, este tipo de datos no se pueden repetir
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native") // indica como se generara automaticamente la primary key
+    @GenericGenerator(name = "native", strategy = "native") // se usa para personalizar la generacion de los valores
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -67,7 +67,7 @@ public class Account {
         this.creationDate = creationDate;
     }
 
-    @JsonIgnore
+    @JsonIgnore // Evita que se genere la recursividad en la API
     public Client getClient() {
         return client;
     }

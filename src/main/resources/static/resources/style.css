@@ -5,7 +5,7 @@
 }
 
 :root {
-    --maincolor: #1e8c45;
+    --maincolor: #2c2c2c;
     --secondcolor: black;
     --titanium-gradient: linear-gradient(45deg, #111111, #222222);
     --gold-gradient: linear-gradient(45deg, #FFD700, #FFA500);
@@ -19,12 +19,12 @@
 }
 
 .mainColor {
-    background-color: var(--secondcolor) !important;
+    background-color: var(--maincolor) !important;
     min-height: 100vh;
 }
 
 .footerColor {
-    background-color: #f28705;
+    background-color: black;
     min-height: 10vh;
     padding: 10px 0;
 }
@@ -117,6 +117,7 @@ a {
 
 .list-group-item {
     text-align: center !important;
+    font-size: 1rem !important;
 }
 
 .loader-container {
@@ -169,12 +170,196 @@ a {
     }
 }
 
+.list-group-item {
+    background-color: transparent !important;
+}
+
+.titleSectionCards {
+    min-height: 40vh;
+    background-image: url(https://images.pexels.com/photos/2988232/pexels-photo-2988232.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    background-size: cover; /* La imagen de fondo se ajusta al tamaño de la ventana del navegador */
+    background-repeat: no-repeat; /* Evita la repetición de la imagen */
+    background-position: center 20%;
+    margin-bottom: 2rem !important;
+}
+
+/* LOGIN */
+
+.login_height {
+    min-height: 100vh;
+    background-image: url("https://img.freepik.com/vector-gratis/ilustracion-concepto-abstracto-prestamo-hipotecario-credito-bancario-residencial-pago-inicial-servicios-inmobiliarios-amortizacion-prestamos-hipotecarios-cartera-inversiones-carga-financiera-familiar_335657-1125.jpg?w=1380&t=st=1697816000~exp=1697816600~hmac=b33f92237c8c86d78e18ccecac66772b9433908c4bb458b358da7c56c9700c96");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: auto 120%;
+}
+
+.register_height {
+    min-height: 100vh;
+    background-image: url("https://img.freepik.com/vector-gratis/ilustracion-vector-concepto-abstracto-prestamo-hipotecario-credito-bancario-pago-inicial-servicios-inmobiliarios-amortizacion-prestamos-hipotecarios-cartera-inversiones-metafora-abstracta-carga-financiera-familiar_335657-4239.jpg?w=1380&t=st=1697822708~exp=1697823308~hmac=cb81c659ebf373a70a81eb153d58210830c6e6bce84603be425083cf384cd54e");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: auto 120%;
+}
+
+.login-box {
+  position: absolute;
+  top: 50%;
+  left: 80%;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  background: rgba(24, 20, 20, 0.987);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
+}
+
+.login-box .user-box {
+  position: relative;
+}
+
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.login-box .user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 20px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #bdb8b8;
+  font-size: 18px;
+}
+
+.login-box form a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  margin-bottom: 20px;
+  letter-spacing: 4px
+}
+
+.sendHover {
+    background: transparent;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.sendHover:hover {
+  background: #03f40f;
+  color: #fff;
+  border-radius: 5px;
+  
+}
+
+.login-box a span {
+  position: absolute;
+  display: block;
+}
+
+@keyframes btn-anim1 {
+  0% {
+    left: -100%;
+  }
+
+  50%,100% {
+    left: 100%;
+  }
+}
+
+.login-box a span:nth-child(1) {
+  bottom: 2px;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #03f40f);
+  animation: btn-anim1 2s linear infinite;
+}
+
+.loginLogo {
+    width: 80%;
+    padding: 1rem;
+}
+
+.loginRedirect {
+    color: white;
+    font-size: medium;
+}
+
+@media (max-width: 1010px) and (min-width: 900px) {
+    .login-box {
+        left: 50%;
+        width: 50vh;
+    }
+
+    .login-box .user-box label {
+        font-size: 25px;
+    }
+
+    .login-box form a {
+        font-size: 25px;
+    }
+
+    .login_height {
+        background-position: center center;
+        background-size: auto 100%;
+    }
+
+    .register_height {
+        background-position: center center;
+        background-size: auto 100%;
+    }
+
+}
+
+@media (min-width: 450px) and (max-width: 900px) {
+    .login-box {
+        height: 90vh !important;
+    }
+
+    .loginLogo {
+        width: 60%;
+    }
+
+    .loginRedirect {
+        font-size: large;
+    }
+}
+
 /* Diseño de las tarjetas */
 
 .container {
     min-height: 50vh;
     width: 100% !important;
-    background-color: black;
+    background-color: var(--maincolor);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -186,7 +371,7 @@ a {
     color: #fff;
     cursor: pointer;
     perspective: 1000px;
-    background-color: inherit;
+    background-color: var(--maincolor);
     border: none !important;
 }
 
@@ -196,7 +381,7 @@ a {
     position: relative;
     transition: transform 1s;
     transform-style: preserve-3d;
-    background-color: black;
+    background-color: var(--maincolor);
 }
 
 .front, .back {
@@ -285,6 +470,6 @@ a {
     transform: rotateY(180deg);
 }
 
-.card:hover .card-inner {
+.card:active .card-inner {
     transform: rotateY(-180deg);
 }

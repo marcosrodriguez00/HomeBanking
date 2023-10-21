@@ -28,7 +28,7 @@ public class AccountController {
     }
 
     @RequestMapping("/accounts/{id}")
-    public AccountDTO getAccount(@PathVariable Long id) {
+    public AccountDTO getAccount(@PathVariable Long id) { // PathVariable se usa para que el metodo getAccount tome el valor de {id}
         return accountRepository.findById(id)
                 .map(AccountDTO::new) // Convierte el cliente a un DTO
                 .orElse(null); // Si no se encuentra, retorna null
