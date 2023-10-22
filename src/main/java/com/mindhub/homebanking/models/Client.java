@@ -44,7 +44,6 @@ public class Client {
 
     // METHODS
 
-
     public String getPassword() {
         return password;
     }

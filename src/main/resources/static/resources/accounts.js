@@ -1,6 +1,6 @@
 const { createApp } = Vue;
 
-const url = "http://localhost:8080/api/clients/2"
+const url = "/api/clients/currents"
 
 createApp({
   data() {
@@ -31,6 +31,14 @@ createApp({
       numString[0] = numString[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
       return numString.join('.')
-    }
+    },
+    logout() {
+      axios
+      .post('http://localhost:8080/api/logout')
+      .then((response) => {
+          console.log('logged out');
+          location.pathname = '/index.html';
+      })
+    },
   },
 }).mount('#app');

@@ -26,31 +26,32 @@
                     <form>
                         <div class="d-flex gap-2">
                             <div class="user-box" style="width: 45vh;">
-                                <input type="text" name="" required="">
+                                <input type="text" name="firstName" required="" v-model="firstName">
                                 <label>Fisrt Name</label>
                             </div>
                             <div class="user-box" style="width: 45vh;">
-                                <input type="text" name="" required="">
+                                <input type="text" name="lastName" required="" v-model="lastName">
                                 <label>Last Name</label>
                             </div>
                         </div>
                         <div class="user-box">
-                            <input type="text" name="" required="">
+                            <input type="text" name="email" required="" v-model="email">
                             <label>Email</label>
                         </div>
                         <div class="user-box">
-                            <input type="password" name="" required="">
+                            <input type="password" name="password" required="" v-model="password">
                             <label>Password</label>
                         </div>
                         <div class="user-box">
-                            <input type="password" name="confirm_password" required="">
+                            <input type="password" name="confirm_password" required="" v-model="confirm_password">
                             <label>Confirm Password</label>
                         </div>
                         <center>
-                        <a href="" class="sendHover">
-                                REGISTER
+                        <button class="sendHover" type="button" @click="register">
+                            REGISTER
                             <span></span>
-                        </a></center>
+                        </button>
+                        </center>
                     </form>
                     <div class="d-flex justify-content-center">
                         <p class="loginRedirect">You are already a client? <a class="loginRedirect" href="login.html">login now</a></p>
@@ -58,9 +59,6 @@
                   </div>
             </div>
         </main>
-        <div v-if="loading" class="loader-container">
-            <div class="loader"></div>
-        </div>
         <footer class="footerColor mt-3">
             <div class="d-flex justify-content-between ps-4 pe-4">
                 <div class="justify-content-center align-items-center">

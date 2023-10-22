@@ -21,17 +21,17 @@ class WebAuthorization extends WebSecurityConfigurerAdapter { // depricated
 
         http.authorizeRequests()
                 // primero los permisos genericos (permitAll())
-                //.antMatchers("/api/**").hasAuthority("ADMIN")
+                .antMatchers("/index.html").permitAll()
+                .antMatchers("/Web/login.html").permitAll()
+                .antMatchers("/Web/register.html").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                 // permisos para el cliente
                 .antMatchers("/web/accounts.html").hasAuthority("CLIENT")
                 .antMatchers("/web/account.html").hasAuthority("CLIENT")
-                .antMatchers("/web/cards.html").hasAuthority("CLIENT")
-                // Permisos para todo publico
-                .antMatchers("/index.html").permitAll()
-                .antMatchers("/web/login.html").permitAll()
-//                .antMatchers("/api/login").permitAll()
-                .antMatchers("/web/register.html").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll();
+                .antMatchers("/web/cards.html").hasAuthority("CLIENT");
+                // denyAll para corroborar en la prueba que no haya errores en los permisos
+                //.antMatchers("/**").denyAll();
 
 
         http.formLogin()

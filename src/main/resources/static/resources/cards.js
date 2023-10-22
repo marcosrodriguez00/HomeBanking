@@ -1,6 +1,6 @@
 const { createApp } = Vue;
 
-const url = "http://localhost:8080/api/clients/2"
+const url = "/api/clients/currents"
 
 createApp({
   data() {
@@ -72,7 +72,15 @@ createApp({
         } else if (color === 'SILVER') {
             return { 'background-image': 'linear-gradient(45deg, #C0C0C0, #808080)' };
         }
-      }
+      },
+      logout() {
+        axios
+        .post('api/logout')
+        .then((response) => {
+            console.log('logged out');
+            location.pathname = '/index.html';
+        })
+      },
   },
   computed: {
 

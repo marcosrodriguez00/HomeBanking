@@ -16,39 +16,19 @@
 <body>
     <div id="app">
         <main>
-            <div class="login_height">
-                <div class="login-box">
-                    <div class="d-flex justify-content-center mb-3">
-                        <a href="../index.html" class="d-flex justify-content-center">
-                            <img src="../resources/Images/bankHub logo letras.png" alt="BankHub Logo" class="loginLogo">
-                        </a>
-                    </div>
-                    <form>
-                        <div class="user-box">
-                            <input type="text" name="email" required="" v-model="email">
-                            <label>Email</label>
-                        </div>
-                        <div class="user-box">
-                            <input type="password" name="pwd" required="" v-model="password">
-                            <label>Password</label>
-                        </div><center>
-                        <button class="sendHover" type="button" @click="login">
-                            LOGIN
-                            <span></span>
-                        </button>
-                        </center>
-                    </form>
-                    <div class="d-flex justify-content-center">
-                        <p class="loginRedirect">You are not a client? <a class="loginRedirect" href="register.html">open an account now</a></p>
-                    </div>
-                  </div>
+            <div style="min-height: 100vh;">
+                <h1>BankHub</h1>
+                <div>
+                    <a href="Web/login.html" ><p style="color: blueviolet;">Login :D</p></a>
+                </div>
+                <div>
+                    <a href="Web/register.html" ><p style="color: blueviolet;">Register :P</p></a>
+                </div> 
             </div>
         </main>
-        <!--
             <div v-if="loading" class="loader-container">
                 <div class="loader"></div>
             </div>
-        -->
         <footer class="footerColor">
             <div class="d-flex justify-content-between ps-4 pe-4">
                 <div class="justify-content-center align-items-center">

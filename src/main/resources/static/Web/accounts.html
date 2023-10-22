@@ -39,14 +39,35 @@
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-arrow-left-right iconColor"></i><a class="nav-link active" aria-current="page" href="#">Transactions</a>
                         </li>
+                        <li class="nav-item d-flex align-items-center">
+                            <i class="bi bi-box-arrow-right iconColor"></i>
+                            <button class="nav-link active" aria-current="page" data-bs-toggle="modal" data-bs-target="#modalId" style="color: white;">Logout</button>
+                        </li>
                     </ul>
                   </div>
                 </div>
             </nav>
-
         </header>
         <main>
             <div class="mainColor">
+                <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalTitleId">Logout</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you wan to log out?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" @click="logout()">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <section class="d-flex justify-content-center align-items-center pt-3 titleSection">
                     <h1 class="h1Color">Welcome, {{client.firstName}}!</h1>
                 </section>
