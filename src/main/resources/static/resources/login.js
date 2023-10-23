@@ -17,7 +17,33 @@ createApp({
         console.log('signed in!!!');
         location.pathname = '/web/accounts.html';
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => { 
+        console.error('Error:', error)
+        if (this.inputEmail = "" || this.inputPassword === "") {
+          Swal.fire({
+              icon: "error",
+              title: "Error...",
+              text: "Fill in all fields",
+              color: "#fff",
+          });
+        } 
+        else if(error.response.status === 401) {
+          Swal.fire({
+            icon: "error",
+            title: "Incorrect password",
+            text: "The provided password is incorrect",
+            color: "#fff",
+        });
+        }
+        else {
+          Swal.fire({
+              icon: "error",
+              title: "Invalid user",
+              text: "This user is not registered",
+              color: "#fff",
+          });
+        }
+    });
     },
     logout() {
         axios

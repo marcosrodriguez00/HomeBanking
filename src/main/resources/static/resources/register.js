@@ -8,6 +8,7 @@ createApp({
       firstName: "",
       lastName: "",
       confirm_password: "",
+      passwordMatch: true,
     };
   },
   created() {
@@ -15,6 +16,7 @@ createApp({
   methods: {
     register() {
         if(this.password === this.confirm_password){
+            this.passwordMatch = true;
             axios
                 .post("/api/clients", `firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`)
                 .then(response => {
@@ -28,10 +30,29 @@ createApp({
                         })
                         .catch(error => console.error('Error:', error));
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => { 
+                    console.error('Error:', error)
+                    if(this.firstName === "" || this.lastName === ""
+                       || this.email === "" || this.password === "") {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Make sure to fill in all the fields',
+                                color: '#fff'
+                            })
+                    }
+                    else if (error.response.status === 403) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Email already registered!',
+                            color: '#fff'
+                        })
+                    }
+                });
         }
         else{
-            alert("Passwords do not match");
+            this.passwordMatch = false;
         }
     }
     }

@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <link rel="shortcut icon" href="../resources/Images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <title>BankHub | Accounts</title>
+    <title>BankHub | Create a card</title>
 </head>
 <body>
     <div id="app">
@@ -29,7 +29,7 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbarFont d-flex gap-4">
                         <li class="nav-item d-flex align-items-center">
-                            <i class="bi bi-person-circle iconColor"></i><a class="nav-link active" aria-current="page" href="#">Accounts</a>
+                            <i class="bi bi-person-circle iconColor"></i><a class="nav-link active" aria-current="page" href="accounts.html">Accounts</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-credit-card iconColor"></i><a class="nav-link active" aria-current="page" href="cards.html">Cards</a>
@@ -72,47 +72,37 @@
                 <section class="d-flex justify-content-center align-items-center pt-3 titleSection">
                     <h1 class="h1Color">Welcome, {{client.firstName}}!</h1>
                 </section>
-                <section>
-                    <div class="d-flex justify-content-center h3Color mt-5 mb-5">
-                       <h3>Accounts</h3> 
-                    </div>
-                    <div class="d-flex justify-content-center flex-wrap">
-                        <div v-for="account of client.accounts" class="col-12 col-lg-6 mb-4">
-                            <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <div class="card col-12 col-lg-6 d-flex justify-content-center align-items-center" style="width: 60%;">
-                                    <ul class="list-group list-group-flush list-group-lg mb-4">
-                                      <li class="list-group-item"><b>Account number:</b> #{{account.number}}</li>
-                                      <li class="list-group-item"><b>Balance:</b> ${{numberFormat(account.balance)}}</li>
-                                      <li class="list-group-item" style="font-size: 18px;"><b style="font-size: 18px;">Creation Date:</b> {{account.creationDate}}</li>
-                                    </ul>
-                                    <a :href="crearLink(account)" class="pb-3"><button type="button" class="btn btn_color">Account Details</button></a>
-                                </div>
-                            </div> 
+                <section class="d-flex justify-content-center">
+                    <form class="form">
+                        <p class="title">Create a new card</p>
+                        <div class="d-flex justify-content-around">
+                            <!-- Tipo de Tarjeta (Crédito o Débito) -->
+                            <label>
+                                <input class="input" type="radio" name="cardType" v-model="cardType" value="CREDIT" required>
+                                <span>Credit</span>
+                            </label>
+                            <label>
+                                <input class="input" type="radio" name="cardType" v-model="cardType" value="DEBIT" required>
+                                <span>Debit</span>
+                            </label>
                         </div>
-                    </div>
-                    <div v-if="client.accounts.length != 3" class="d-flex justify-content-center">
-                        <button @click="createAccount()" class="btn btn-danger">Open a new account</button>
-                    </div>
-                </section>
-                
-                <section>
-                    <div class="d-flex justify-content-center h3Color mt-5 mb-5">
-                        <h3>Loans</h3> 
-                    </div>
-                    <!-- Loan Card -->
-                    <div class="d-flex justify-content-center flex-wrap">
-                        <div v-for="loan of client.loans" class="col-12 col-lg-6 mb-4">
-                            <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <div class="card col-12 col-lg-6" style="width: 60%;">
-                                    <ul class="list-group list-group-flush list-group-lg mb-4">
-                                      <li class="list-group-item"><b>Loan type:</b> {{loan.name}}</li>
-                                      <li class="list-group-item"><b>Amount:</b> ${{numberFormat(loan.amount)}}</li>
-                                      <li class="list-group-item"><b>Number of Payments:</b> {{loan.payments}}</li>
-                                    </ul>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
+                        
+                        <!-- Selección de Color (3 opciones) -->
+                        <label>
+                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="SILVER" required>
+                            <span>Silver</span>
+                        </label>
+                        <label>
+                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="GOLD" required>
+                            <span>Gold</span>
+                        </label>
+                        <label>
+                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="PLATINIUM" required>
+                            <span>Platinium</span>
+                        </label>
+                    
+                        <button class="submit">Submit</button>
+                    </form>
                 </section>
             </div>
         </main>

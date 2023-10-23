@@ -40,5 +40,23 @@ createApp({
           location.pathname = '/index.html';
       })
     },
+    createAccount() {
+      axios
+      .post('/api/clients/current/accounts')
+      .then(response => {
+        location.pathname = '/web/accounts.html'
+      })
+      .catch(error => { 
+        console.error('Error:', error)
+        if (error.response.status === 403) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You already have the maximum amount of accounts (3)',
+                color: '#fff'
+            })
+        }
+      });
+    },
   },
 }).mount('#app');
