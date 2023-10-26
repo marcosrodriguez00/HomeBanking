@@ -101,13 +101,13 @@ public class HomebankingApplication {
 
 			LocalDate fiveYears = today.plusYears(5);
 
-			Card card1 = new Card(melba.fullName(), "1111-1111-1111-1111", "123", DEBIT, GOLD, fiveYears, today);
+			Card card1 = new Card(melba.fullName(), "1111-1111-1111-1111", "123", CardType.DEBIT, GOLD, fiveYears, today);
 			melba.addCard(card1);
 
-			Card card2 = new Card(melba.fullName(), "2222-2222-2222-2222", "321", CREDIT, TITANIUM, fiveYears, today);
+			Card card2 = new Card(melba.fullName(), "2222-2222-2222-2222", "321", CardType.CREDIT, TITANIUM, fiveYears, today);
 			melba.addCard(card2);
 
-			Card card3 = new Card(marcos.fullName(), "3333-3333-3333-3333", "333", CREDIT, SILVER, fiveYears, today);
+			Card card3 = new Card(marcos.fullName(), "3333-3333-3333-3333", "333", CardType.CREDIT, SILVER, fiveYears, today);
 			marcos.addCard(card3);
 
 			cardRepository.save(card1);

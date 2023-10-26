@@ -80,14 +80,23 @@ public class CardController {
 
     @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> newCard(Authentication authentication,
-                                          @RequestParam TransactionType type, @RequestParam CardColor color) {
+                                          @RequestParam String cardType, @RequestParam String cardColor) {
+
+        if (cardColor.isEmpty()) {
+            return new ResponseEntity<>("You must choose a card type.", HttpStatus.FORBIDDEN);
+        }
+        if (cardType.isEmpty()) {
+            return new ResponseEntity<>("You must choose a card color.", HttpStatus.FORBIDDEN);
+        }
 
         // encapsulo el cliente
         Client client = clientRepository.findByEmail(authentication.getName());
 
-        // controlo que no haya mas de 3 cuentas
-        if (client.getCards().size() >= 3) {
-            return new ResponseEntity<>("Cannot create any more cards for this client", HttpStatus.FORBIDDEN);
+        int numberOfCardType =  // card.getType() == cardType
+                (int) client.getCards().stream().filter(card -> card.getType().equals(CardType.valueOf(cardType))).count();
+
+        if (numberOfCardType == 3) {
+            return new ResponseEntity<>("You cannot have more than three cards of the same type.", HttpStatus.FORBIDDEN);
         }
 
         String cardNumber = generateCardNumber();
@@ -97,7 +106,7 @@ public class CardController {
         }
 
         // Creo la cuenta nueva y la agrego al cliente
-        Card card = new Card(client.fullName(), cardNumber, generateCvv(), type, color, LocalDate.now().plusYears(5), LocalDate.now());
+        Card card = new Card(client.fullName(), cardNumber, generateCvv(), CardType.valueOf(cardType), CardColor.valueOf(cardColor), LocalDate.now().plusYears(5), LocalDate.now());
         client.addCard(card);
 
         // guardo el cliente con la nueva cuenta y devuelvo respuesta exitosa

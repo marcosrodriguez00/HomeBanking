@@ -72,16 +72,16 @@
                 <section class="d-flex justify-content-center align-items-center pt-3 titleSection">
                     <h1 class="h1Color">Welcome, {{client.firstName}}!</h1>
                 </section>
-                <section class="d-flex justify-content-center">
+                <section class="d-flex justify-content-center mt-5">
                     <form class="form">
                         <p class="title">Create a new card</p>
                         <div class="d-flex justify-content-around">
                             <!-- Tipo de Tarjeta (Crédito o Débito) -->
-                            <label>
+                            <label class="d-flex align-items-center p-3">
                                 <input class="input" type="radio" name="cardType" v-model="cardType" value="CREDIT" required>
                                 <span>Credit</span>
                             </label>
-                            <label>
+                            <label class="d-flex align-items-center p-3">
                                 <input class="input" type="radio" name="cardType" v-model="cardType" value="DEBIT" required>
                                 <span>Debit</span>
                             </label>
@@ -97,12 +97,18 @@
                             <span>Gold</span>
                         </label>
                         <label>
-                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="PLATINIUM" required>
-                            <span>Platinium</span>
+                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="TITANIUM" required>
+                            <span>Titanium</span>
                         </label>
-                    
-                        <button class="submit">Submit</button>
+
+                        <button type="button" class="submit" @click="createCard()">Submit</button>
                     </form>
+
+                    <div class="bg-danger">
+                        <p>tarjetas</p>
+                        <p>{{cardType}}</p>
+                        <p>{{cardColor}}</p>
+                    </div>
                 </section>
             </div>
         </main>
@@ -131,6 +137,6 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-<script src="../resources/accounts.js"></script>
+<script src="../resources/create-card.js"></script>
 </body>
 </html>

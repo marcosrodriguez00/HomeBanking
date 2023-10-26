@@ -30,6 +30,9 @@ createApp({
                         })
                         .catch(error => console.error('Error:', error));
                 })
+
+                //error.response.data
+                
                 .catch(error => { 
                     console.error('Error:', error)
                     if(this.firstName === "" || this.lastName === ""

@@ -45,6 +45,14 @@ createApp({
       .post('/api/clients/current/accounts')
       .then(response => {
         location.pathname = '/web/accounts.html'
+        Swal.fire({
+          icon: "success",
+          title: "Account created",
+          text: "Account created",
+          color: "#fff",
+          background: "#1c2754",
+          confirmButtonColor: "#17acc9",
+      });
       })
       .catch(error => { 
         console.error('Error:', error)
