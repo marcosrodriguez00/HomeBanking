@@ -17,6 +17,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.util.stream.Collectors.toList;
 
@@ -50,6 +52,20 @@ public class ClientController {
         return "VIN-" + randomNumber;
     }
 
+    public static boolean isValidEmail(String email) {
+        // Define la expresión regular para validar el formato de un correo electrónico
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+
+        // Compila la expresión regular en un patrón
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // Crea un objeto Matcher para comparar el correo electrónico con el patrón
+        Matcher matcher = pattern.matcher(email);
+
+        // Verifica si el correo electrónico coincide con el patrón
+        return matcher.matches();
+    }
+
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
@@ -65,6 +81,10 @@ public class ClientController {
 
         if (email.isEmpty()) {
             return new ResponseEntity<>("Missing email", HttpStatus.FORBIDDEN);
+        }
+
+        if (!isValidEmail(email)) {
+            return new ResponseEntity<>("Email has an invalid format", HttpStatus.FORBIDDEN);
         }
 
         if (password.isEmpty()) {
@@ -83,7 +103,7 @@ public class ClientController {
             accountNumber = randomAccountNumber();
         }
 
-        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
+        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password), false);
         clientRepository.save(client);
         Account account = new Account(accountNumber, 0, LocalDate.now());
         client.addAccount(account);

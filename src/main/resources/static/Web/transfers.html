@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <link rel="shortcut icon" href="../resources/Images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <title>BankHub | Accounts</title>
+    <title>BankHub | Transfers</title>
 </head>
 <body>
     <div id="app">
@@ -29,7 +29,7 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbarFont d-flex gap-4">
                         <li class="nav-item d-flex align-items-center">
-                            <i class="bi bi-person-circle iconColor"></i><a class="nav-link active" aria-current="page" href="#">Accounts</a>
+                            <i class="bi bi-person-circle iconColor"></i><a class="nav-link active" aria-current="page" href="accounts.html">Accounts</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-credit-card iconColor"></i><a class="nav-link active" aria-current="page" href="cards.html">Cards</a>
@@ -38,7 +38,7 @@
                             <i class="bi bi-cash-coin iconColor"></i><a class="nav-link active" aria-current="page" href="#">Loans</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
-                            <i class="bi bi-arrow-left-right iconColor"></i><a class="nav-link active" aria-current="page" href="transfers.html">Transactions</a>
+                            <i class="bi bi-arrow-left-right iconColor"></i><a class="nav-link active" aria-current="page" href="#">Transactions</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-box-arrow-right iconColor"></i>
@@ -50,7 +50,7 @@
             </nav>
         </header>
         <main>
-            <div class="mainColor">
+            <div class="mainColor pb-3">
                 <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
                         <div class="modal-content">
@@ -70,56 +70,71 @@
                 </div>
                 
                 <section class="d-flex justify-content-center align-items-center pt-3 titleSection">
-                    <h1 class="h1Color">Welcome, {{client.firstName}}!</h1>
+                    <h1 class="h1Color">Make a transaction</h1>
                 </section>
-                <section>
-                    <div class="d-flex justify-content-center h3Color mt-5 mb-5">
-                       <h3>Accounts</h3> 
+
+                <section class="d-flex flex-column align-items-center gap-3 justify-content-center mt-3">
+                    <div class="form-switch-container">
+                        <span class="toggle-text">To own account</span>
+                          <input type="checkbox" class="theme-checkbox" @click="toggleForm">
+                        <span class="toggle-text">To another person's account</span>
                     </div>
-                    <div class="d-flex justify-content-center flex-wrap">
-                        <div v-for="account of client.accounts" class="col-12 col-lg-6 mb-4">
-                            <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <div class="card col-12 col-lg-6 d-flex justify-content-center align-items-center" style="width: 60%;">
-                                    <ul class="list-group list-group-flush list-group-lg mb-4">
-                                      <li class="list-group-item"><b>Account number:</b> #{{account.number}}</li>
-                                      <li class="list-group-item"><b>Balance:</b> ${{numberFormat(account.balance)}}</li>
-                                      <li class="list-group-item" style="font-size: 18px;"><b style="font-size: 18px;">Creation Date:</b> {{account.creationDate}}</li>
-                                    </ul>
-                                    <a :href="crearLink(account)" class="pb-3"><button type="button" class="btn btn_color">Account Details</button></a>
-                                </div>
-                            </div> 
+                    
+                                  
+                    <form class="transferForm" v-if="showForm1">
+                        <div class="mb-3">
+                          <label for="" class="form-label">Select origin account</label>
+                          <select class="form-select" aria-label="Default select example" v-model="originAccountNumber" required>
+                            <option v-for="account in accounts" :value="account.number">{{ account.number }}</option>
+                          </select>
                         </div>
-                    </div>
-                    <div v-if="client.accounts.length != 3" class="d-flex justify-content-center">
-                        <button @click="createAccount()" class="btn btn-danger">Open a new account</button>
-                    </div>
-                </section>
-                
-                <section>
-                    <div class="d-flex justify-content-center h3Color mt-5 mb-5">
-                        <h3>Loans</h3> 
-                    </div>
-                    <!-- Loan Card -->
-                    <div class="d-flex justify-content-center flex-wrap">
-                        <div v-for="loan of client.loans" class="col-12 col-lg-6 mb-4">
-                            <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <div class="card col-12 col-lg-6" style="width: 60%;">
-                                    <ul class="list-group list-group-flush list-group-lg mb-4">
-                                      <li class="list-group-item"><b>Loan type:</b> {{loan.name}}</li>
-                                      <li class="list-group-item"><b>Amount:</b> ${{numberFormat(loan.amount)}}</li>
-                                      <li class="list-group-item"><b>Number of Payments:</b> {{loan.payments}}</li>
-                                    </ul>
-                                </div>
-                            </div> 
+                        <div class="mb-3">
+                            <label for="" class="form-label">Select destiny account</label>
+                            <select class="form-select" aria-label="Default select example" v-model="destinyAccountNumber" required>
+                              <option v-for="account in accounts" :value="account.number">{{ account.number }}</option>
+                            </select>
                         </div>
-                    </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input type="number" v-model="ammount" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                            <span class="input-group-text">.00</span>
+                        </div>
+                        <div class="d-flex flex-column mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea maxlength="250" name="description" v-model="description" id="description" cols="30" rows="4" placeholder="Max. 250 characters"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" @click="sendTransaction()">Send transaction</button>
+                    </form>
+
+                    <form class="transferForm" v-else>
+                        <div class="mb-3">
+                          <label for="" class="form-label">Select origin account</label>
+                          <select class="form-select" aria-label="Default select example" v-model="originAccountNumber" required>
+                            <option v-for="account in accounts" :value="account.number">{{ account.number }}</option>
+                          </select>
+                        </div>
+                        <div class="mb-3 d-flex flex-column">
+                            <label for="" class="form-label">Type in destiny account</label>
+                            <input type="text" v-model="destinyAccountNumber" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input type="number" v-model="ammount" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                            <span class="input-group-text">.00</span>
+                        </div>
+                        <div class="d-flex flex-column mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea maxlength="250" v-model="description" name="description" id="description" cols="30" rows="10" placeholder="Max. 250 characters"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" @click="sendTransaction()">Send transaction</button>
+                    </form>
                 </section>
             </div>
         </main>
         <div v-if="loading" class="loader-container">
             <div class="loader"></div>
         </div>
-        <footer class="footerColor">
+        <footer class="footerColor pt-3">
             <div class="d-flex justify-content-between ps-4 pe-4">
                 <div class="justify-content-center align-items-center">
                     <p class="pColor text-center" style="color: white; font-size: 1rem;">2023 - &copy; All rights reserved</p>
@@ -141,6 +156,6 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-<script src="../resources/accounts.js"></script>
+<script src="../resources/transfers.js"></script>
 </body>
 </html>

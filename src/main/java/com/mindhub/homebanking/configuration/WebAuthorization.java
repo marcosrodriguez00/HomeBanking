@@ -24,15 +24,24 @@ class WebAuthorization extends WebSecurityConfigurerAdapter { // depricated
                 .antMatchers("/index.html").permitAll()
                 .antMatchers("/Web/login.html").permitAll()
                 .antMatchers("/Web/register.html").permitAll()
+                .antMatchers("/resources/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
+                // permisos de admin
+                .antMatchers("/rest/**").hasAuthority("ADMIN")
+                .antMatchers("/api/clients").hasAuthority("ADMIN")
                 // permisos para el cliente
-                .antMatchers("/Web/accounts.html").hasAuthority("CLIENT")
-                .antMatchers("/Web/account.html").hasAuthority("CLIENT")
-                .antMatchers("/Web/cards.html").hasAuthority("CLIENT");
-                //.anyRequest().denyAll();
-                // denyAll para corroborar en la prueba que no haya errores en los permisos
-                //.antMatchers("/**").denyAll();
+                .antMatchers(HttpMethod.GET, "/api/clients/currents").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/accounts/{id}").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/transactions").authenticated()
+                .antMatchers("/web/accounts.html").authenticated()
+                .antMatchers("/web/account.html").authenticated()
+                .antMatchers("/web/cards.html").authenticated()
+                .antMatchers("/web/create-card.html").authenticated()
+                .antMatchers("/web/transfers.html").authenticated()
+                .antMatchers("/**").hasAuthority("ADMIN")
+                .anyRequest().denyAll();
 
 
         http.formLogin()

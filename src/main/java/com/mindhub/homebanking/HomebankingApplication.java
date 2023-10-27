@@ -30,9 +30,9 @@ public class HomebankingApplication {
 									  TransactionRepository transactionRepository, LoanRepository loanRepository,
 									  ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
-			Client marcos = new Client("Marcos", "Rodriguez", "marcosrodriguez3000@gmail.com", passwordEncoder.encode("marcos123"));
+			Client marcos = new Client("Marcos", "Rodriguez", "marcosrodriguez3000@gmail.com", passwordEncoder.encode("marcos123"), true);
 			clientRepository.save(marcos);
-			Client melba = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba123"));
+			Client melba = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba123"), false);
 			clientRepository.save(melba);
 
 			LocalDate today = LocalDate.now();

@@ -9,4 +9,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource // junto con la interfaz JpaRepository simplifica la creación de un servicio web RESTful,
 public interface AccountRepository extends JpaRepository<Account, Long> {
     boolean existsByNumber(String number);
+
+    Account findByNumber(String number);
 }

@@ -35,28 +35,22 @@ createApp({
                 
                 .catch(error => { 
                     console.error('Error:', error)
-                    if(this.firstName === "" || this.lastName === ""
-                       || this.email === "" || this.password === "") {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Make sure to fill in all the fields',
-                                color: '#fff'
-                            })
-                    }
-                    else if (error.response.status === 403) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Email already registered!',
-                            color: '#fff'
-                        })
-                    }
+                    this.errorMessage(error.response.data)
                 });
         }
         else{
             this.passwordMatch = false;
         }
-    }
+    },
+    errorMessage(message) {
+        Swal.fire({
+          icon: "error",
+          title: "An error has occurred",
+          text: message,
+          color: "#fff",
+          background: "#1c2754",
+          confirmButtonColor: "#17acc9",
+      });
+      }
     }
 }).mount('#app');

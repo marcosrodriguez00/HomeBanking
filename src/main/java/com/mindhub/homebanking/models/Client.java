@@ -21,6 +21,8 @@ public class Client {
 
     private String firstName, lastName, email, password;
 
+    private boolean admin;
+
     @OneToMany(mappedBy="client", fetch = FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
 
@@ -35,11 +37,12 @@ public class Client {
     // SOBRECARGA DE METODOS
     public Client() { }
 
-    public Client(String firstName, String lastName, String email, String password){
+    public Client(String firstName, String lastName, String email, String password, boolean admin){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.admin = admin;
     }
 
     // METHODS
@@ -97,6 +100,10 @@ public class Client {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public boolean isAdmin() {
+        return admin;
     }
 
     @JsonIgnore
