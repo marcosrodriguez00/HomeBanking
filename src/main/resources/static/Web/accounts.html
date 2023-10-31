@@ -29,7 +29,7 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbarFont d-flex gap-4">
                         <li class="nav-item d-flex align-items-center">
-                            <i class="bi bi-person-circle iconColor"></i><a class="nav-link active" aria-current="page" href="#">Accounts</a>
+                            <i class="bi bi-person-circle navbarActive"></i><a class="nav-link active navbarActive" aria-current="page" href="#">Accounts</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-credit-card iconColor"></i><a class="nav-link active" aria-current="page" href="cards.html">Cards</a>
@@ -50,6 +50,7 @@
             </nav>
         </header>
         <main>
+            <!--Modals-->
             <div class="mainColor">
                 <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
@@ -59,11 +60,28 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Are you sure you wan to log out?</p>
+                                <p>Are you sure you want to log out?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="button" class="btn btn-danger" @click="logout()">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="createAccountModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalTitleId">Create New Account</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to create a new account?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-success" @click="createAccount()">Create Account</button>
                             </div>
                         </div>
                     </div>
@@ -77,21 +95,37 @@
                        <h3>Accounts</h3> 
                     </div>
                     <div class="d-flex justify-content-center flex-wrap">
-                        <div v-for="account of client.accounts" class="col-12 col-lg-6 mb-4">
-                            <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <div class="card col-12 col-lg-6 d-flex justify-content-center align-items-center" style="width: 60%;">
-                                    <ul class="list-group list-group-flush list-group-lg mb-4">
-                                      <li class="list-group-item"><b>Account number:</b> #{{account.number}}</li>
-                                      <li class="list-group-item"><b>Balance:</b> ${{numberFormat(account.balance)}}</li>
-                                      <li class="list-group-item" style="font-size: 18px;"><b style="font-size: 18px;">Creation Date:</b> {{account.creationDate}}</li>
-                                    </ul>
-                                    <a :href="crearLink(account)" class="pb-3"><button type="button" class="btn btn_color">Account Details</button></a>
+                        <div v-for="account of client.accounts" class="col-12 col-lg-6 mb-4 d-flex justify-content-center flex-wrap">
+                            <div class="accountCard">
+                                <div class="accountCardRow">
+                                    <div class="cardInfoContainer ps-3">
+                                        <i class="bi bi-bank" style="font-size: 2.1rem;"></i>
+                                        <div class="d-flex flex-column" style="white-space: nowrap;">
+                                            <p style="font-size: 20px !important;"><b>Account number:</b></p>
+                                            <p style="font-size: 25px !important;"><b>#{{account.number}}</b></p>
+                                        </div>
+                                    </div>
+                                    <div class="cardInfoContainer align-self-end">
+                                        <i class="bi bi-calendar-check" style="font-size: 2.1rem !important;"></i>
+                                        <div class="d-flex flex-column" >
+                                            <p style="font-size: 15px !important;"><b>Creation date:</b></p>
+                                            <p style="font-size: 15px !important;"><b>{{account.creationDate}}</b></p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div> 
+                                <div class="accountCardRow">
+                                    <div class="balanceContainer">
+                                        <p style="margin-bottom: 0;">${{numberFormat(account.balance)}}</p>
+                                    </div>
+                                    <div>
+                                        <a :href="crearLink(account)" class="pb-3"><button type="button" class="btn btn_color"><b>Account Details</b></button></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div v-if="client.accounts.length != 3" class="d-flex justify-content-center">
-                        <button @click="createAccount()" class="btn btn-danger">Open a new account</button>
+                        <button class="btn btn_color" data-bs-toggle="modal" data-bs-target="#createAccountModal">Create a new account</button>
                     </div>
                 </section>
                 
@@ -101,16 +135,30 @@
                     </div>
                     <!-- Loan Card -->
                     <div class="d-flex justify-content-center flex-wrap">
-                        <div v-for="loan of client.loans" class="col-12 col-lg-6 mb-4">
-                            <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <div class="card col-12 col-lg-6" style="width: 60%;">
-                                    <ul class="list-group list-group-flush list-group-lg mb-4">
-                                      <li class="list-group-item"><b>Loan type:</b> {{loan.name}}</li>
-                                      <li class="list-group-item"><b>Amount:</b> ${{numberFormat(loan.amount)}}</li>
-                                      <li class="list-group-item"><b>Number of Payments:</b> {{loan.payments}}</li>
-                                    </ul>
+                        <div v-for="loan of client.loans" class="col-12 col-lg-6 mb-4  d-flex justify-content-center flex-wrap">
+                            <!-- Loans -->
+                            <div class="accountCard">
+                                <div class="accountCardRow">
+                                    <div class="cardInfoContainer ps-3">
+                                        <i class="bi bi-coin" style="font-size: 2.1rem;"></i>
+                                        <div class="d-flex flex-column" style="white-space: nowrap;">
+                                            <p style="font-size: 20px;"><b>Loan type:</b></p>
+                                            <p style="font-size: 25px;"><b>{{loan.name}}</b></p>
+                                        </div>
+                                    </div>
+                                    <div class="cardInfoContainer align-self-end">
+                                        <i class="bi bi-calendar-check" style="font-size: 2.1rem;"></i>
+                                        <div class="d-flex flex-column" style="font-size: 15px;">
+                                            <p><b>{{loan.payments}} Payments</b></p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div> 
+                                <div class="accountCardRow">
+                                    <div class="balanceContainer">
+                                        <p style="margin-bottom: 0;">${{numberFormat(loan.amount)}}</p>
+                                    </div>  
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

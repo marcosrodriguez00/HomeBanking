@@ -1,0 +1,39 @@
+Falta:
+
+- Hacer el index
+- idea: mostrar valor dolar
+- mejorar la pagina cards, se ve muy vacio
+- en accounts me gustaria hacer que las cuentas se vean como un carousel
+- mejorar títulos de las paginas
+
+
+<form class="form">
+                        <p class="title">Create a new card</p>
+                        <div class="d-flex justify-content-around">
+                            <!-- Tipo de Tarjeta (Crédito o Débito) -->
+                            <label class="d-flex align-items-center p-3">
+                                <input class="input" type="radio" name="cardType" v-model="cardType" value="CREDIT" required>
+                                <span>Credit</span>
+                            </label>
+                            <label class="d-flex align-items-center p-3">
+                                <input class="input" type="radio" name="cardType" v-model="cardType" value="DEBIT" required>
+                                <span>Debit</span>
+                            </label>
+                        </div>
+                    
+                        <!-- Selección de Color (3 opciones) -->
+                        <label>
+                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="SILVER" required>
+                            <span>Silver</span>
+                        </label>
+                        <label>
+                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="GOLD" required>
+                            <span>Gold</span>
+                        </label>
+                        <label>
+                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="TITANIUM" required>
+                            <span>Titanium</span>
+                        </label>
+                    
+                        <button type="button" class="submit" @click="createCard()">Submit</button>
+                    </form>

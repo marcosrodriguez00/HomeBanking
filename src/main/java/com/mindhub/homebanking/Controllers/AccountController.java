@@ -42,7 +42,7 @@ public class AccountController {
     }
 
     public String randomAccountNumber() {
-       int randomNumber = (int) (Math.random() * (99999999));
+       int randomNumber = (int) (Math.random() * (99999999 - 11111111) + 11111111);
        return "VIN-" + randomNumber;
     }
 

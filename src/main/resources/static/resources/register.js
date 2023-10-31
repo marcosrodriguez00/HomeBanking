@@ -21,7 +21,11 @@ createApp({
                 .post("/api/clients", `firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`)
                 .then(response => {
                     console.log('registered!!!');
-                    alert("REGISTERED");
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Register Successful!',
+                      showConfirmButton: true,
+                    })
                     axios
                         .post('/api/login', "email=" + this.email + "&pwd=" + this.password)
                         .then(response => {
@@ -30,8 +34,6 @@ createApp({
                         })
                         .catch(error => console.error('Error:', error));
                 })
-
-                //error.response.data
                 
                 .catch(error => { 
                     console.error('Error:', error)

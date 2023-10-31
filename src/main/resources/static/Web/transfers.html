@@ -38,7 +38,7 @@
                             <i class="bi bi-cash-coin iconColor"></i><a class="nav-link active" aria-current="page" href="#">Loans</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
-                            <i class="bi bi-arrow-left-right iconColor"></i><a class="nav-link active" aria-current="page" href="#">Transactions</a>
+                            <i class="bi bi-arrow-left-right navbarActive"></i><a class="nav-link active navbarActive" aria-current="page" href="#">Transactions</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-box-arrow-right iconColor"></i>
@@ -59,7 +59,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Are you sure you wan to log out?</p>
+                                <p>Are you sure you want to log out?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -103,7 +103,7 @@
                             <label for="description" class="form-label">Description</label>
                             <textarea maxlength="250" name="description" v-model="description" id="description" cols="30" rows="4" placeholder="Max. 250 characters"></textarea>
                         </div>
-                        <button type="button" class="btn btn-primary" @click="sendTransaction()">Send transaction</button>
+                        <button type="button" class="btn btn_color" @click="sendTransaction()">Send transaction</button>
                     </form>
 
                     <form class="transferForm" v-else>
@@ -124,9 +124,9 @@
                         </div>
                         <div class="d-flex flex-column mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea maxlength="250" v-model="description" name="description" id="description" cols="30" rows="10" placeholder="Max. 250 characters"></textarea>
+                            <textarea maxlength="250" v-model="description" name="description" id="description" cols="30" rows="4" placeholder="Max. 250 characters"></textarea>
                         </div>
-                        <button type="button" class="btn btn-primary" @click="sendTransaction()">Send transaction</button>
+                        <button type="button" class="btn btn_color" @click="sendTransaction()">Send transaction</button>
                     </form>
                 </section>
             </div>

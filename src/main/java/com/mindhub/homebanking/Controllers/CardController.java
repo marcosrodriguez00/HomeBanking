@@ -82,10 +82,13 @@ public class CardController {
     public ResponseEntity<Object> newCard(Authentication authentication,
                                           @RequestParam String cardType, @RequestParam String cardColor) {
 
-        if (cardColor.isEmpty()) {
+        // verificar que el string sea lo que necesito recibir
+
+        if (cardColor.isBlank()) {
             return new ResponseEntity<>("You must choose a card type.", HttpStatus.FORBIDDEN);
         }
-        if (cardType.isEmpty()) {
+
+        if (cardType.isBlank()) {
             return new ResponseEntity<>("You must choose a card color.", HttpStatus.FORBIDDEN);
         }
 

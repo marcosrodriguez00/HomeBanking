@@ -16,28 +16,59 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="accountCard">
-        <div class="accountCardRow">
-            <div>
-                <i class="bi bi-bank"></i>
-                <p>Account number: </p>
-                <p>VIN-111111</p>
+    <div class="body">
+        <div class="accountCard">
+            <div class="accountCardRow">
+                <div class="cardInfoContainer ps-3">
+                    <i class="bi bi-bank" style="font-size: 2.1rem;"></i>
+                    <div class="d-flex flex-column" style="white-space: nowrap;">
+                        <p style="font-size: 20px;"><b>Account number:</b></p>
+                        <p style="font-size: 25px;"><b>VIN-111111</b></p>
+                    </div>
+                </div>
+                <div class="cardInfoContainer align-self-end">
+                    <i class="bi bi-calendar-check" style="font-size: 2.1rem;"></i>
+                    <div class="d-flex flex-column" style="font-size: 15px;">
+                        <p><b>Creation date:</b></p>
+                        <p><b>2021-01-01</b></p>
+                    </div>
+                </div>
             </div>
-            <div>
-                <i class="bi bi-calendar-check"></i>
-                <p>Creation date: </p>
-                <p>2021-01-01</p>
+            <div class="accountCardRow">
+                <div class="balanceContainer">
+                    <p style="margin-bottom: 0;">$100,000</p>
+                </div>
+                <div>
+                    <a :href="crearLink(account)" class="pb-3"><button type="button" class="btn btn_color"><b>Account Details</b></button></a>
+                </div>
             </div>
         </div>
-        <div class="accountCardRow">
-            <div class="balanceContainer">
-                <p>$100,000</p>
+
+        <div class="accountCard">
+            <div class="accountCardRow">
+                <div class="cardInfoContainer ps-3">
+                    <i class="bi bi-coin" style="font-size: 2.1rem;"></i>
+                    <div class="d-flex flex-column" style="white-space: nowrap;">
+                        <p style="font-size: 20px;"><b>Loan type:</b></p>
+                        <p style="font-size: 25px;"><b>Mortgage</b></p>
+                    </div>
+                </div>
+                <div class="cardInfoContainer align-self-end">
+                    <i class="bi bi-calendar-check" style="font-size: 2.1rem;"></i>
+                    <div class="d-flex flex-column" style="font-size: 15px;">
+                        <p><b>12 Payments</b></p>
+                    </div>
+                </div>
             </div>
-            <div>
-                <button type="button" class="btn-dark">See Details</button>
+            <div class="accountCardRow">
+                <div class="balanceContainer">
+                    <p style="margin-bottom: 0;">$100,000</p>
+                </div>
+                
             </div>
         </div>
     </div>
+    
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>

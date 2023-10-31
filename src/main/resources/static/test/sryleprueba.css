@@ -1,0 +1,59 @@
+.body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.accountCard {
+    border-radius: 10px;
+    background-image: linear-gradient(145deg, #000000, #292239);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 27rem;
+    height: 15rem;
+    color: white !important;
+    font-size: 1.2rem !important;
+}
+
+.accountCardRow {
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cardInfoContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+}
+
+.balanceContainer {
+    border-radius: 10px;
+    background-color: white;
+    color: black !important;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 7px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 0 !important;
+    align-items: center;
+}
+
+.btn_color {
+    background-color: #FFD700 !important;
+    color: black !important;
+}
+
+p {
+    margin-bottom: 0 !important;
+}

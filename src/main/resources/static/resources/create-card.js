@@ -26,7 +26,7 @@ createApp({
     },
     logout() {
         axios
-        .post('api/logout')
+        .post('http://localhost:8080/api/logout')
         .then((response) => {
             console.log('logged out');
             location.pathname = '/index.html';

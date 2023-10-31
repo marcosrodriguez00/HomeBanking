@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+// Habilita la configuracion de seguridad de la aplicación y nos permite personalizarlo
 @EnableWebSecurity
 @Configuration
 class WebAuthorization extends WebSecurityConfigurerAdapter { // depricated
@@ -20,27 +21,21 @@ class WebAuthorization extends WebSecurityConfigurerAdapter { // depricated
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                // primero los permisos genericos (permitAll()
-                .antMatchers("/index.html").permitAll()
-                .antMatchers("/Web/login.html").permitAll()
-                .antMatchers("/Web/register.html").permitAll()
+                // primero los permisos genericos (permitAll())
+                .antMatchers("/index.html", "/Web/login.html", "/Web/register.html").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                 // permisos de admin
-                .antMatchers("/rest/**").hasAuthority("ADMIN")
-                .antMatchers("/api/clients").hasAuthority("ADMIN")
+                .antMatchers("/rest/**", "/api/clients").hasAuthority("ADMIN")
                 // permisos para el cliente
                 .antMatchers(HttpMethod.GET, "/api/clients/currents").authenticated()
-                .antMatchers(HttpMethod.GET, "/api/accounts/{id}").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/accounts/{id}").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/clients/current/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/transactions").authenticated()
-                .antMatchers("/web/accounts.html").authenticated()
-                .antMatchers("/web/account.html").authenticated()
-                .antMatchers("/web/cards.html").authenticated()
-                .antMatchers("/web/create-card.html").authenticated()
-                .antMatchers("/web/transfers.html").authenticated()
-                .antMatchers("/**").hasAuthority("ADMIN")
+                .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html",
+                        "/web/create-card.html", "/web/transfers.html").authenticated()
+                //.antMatchers("/**").hasAuthority("ADMIN")
                 .anyRequest().denyAll();
 
 
@@ -54,12 +49,14 @@ class WebAuthorization extends WebSecurityConfigurerAdapter { // depricated
         // turn off checking for CSRF tokens
         http.csrf().disable();
 
+        // frameOptions no permite a terceros ingresar codigo a la vista y al deshabilitarlo estamos permitiendo el uso de h2
         //disabling frameOptions so h2-console can be accessed
         http.headers().frameOptions().disable();
 
         // if user is not authenticated, just send an authentication failure response
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 
+        // limpia los intentos fallidos
         // if login is successful, just clear the flags asking for authentication
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
 
@@ -70,9 +67,12 @@ class WebAuthorization extends WebSecurityConfigurerAdapter { // depricated
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
     }
 
+    // funcion que se utiliza para limpiar los atributos de la sesion
     private void clearAuthenticationAttributes(HttpServletRequest request) {
+        // verifica que no haya una sesion activa
         HttpSession session = request.getSession(false);
         if (session != null) {
+            // Si hay una sesión, esta línea elimina el atributo denominado
             session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         }
     }

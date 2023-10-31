@@ -66,20 +66,21 @@ public class ClientController {
         return matcher.matches();
     }
 
+    // ResponseEntity es una clase de spring que da respuestas a traves del controlador
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
-    public ResponseEntity<Object> register(
+    public ResponseEntity<Object> register (
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
 
-        if (firstName.isEmpty()) {
+        if (firstName.isBlank()) {
             return new ResponseEntity<>("Missing first name", HttpStatus.FORBIDDEN);
         }
 
-        if (lastName.isEmpty()) {
+        if (lastName.isBlank()) {
             return new ResponseEntity<>("Missing last name", HttpStatus.FORBIDDEN);
         }
 
-        if (email.isEmpty()) {
+        if (email.isBlank()) {
             return new ResponseEntity<>("Missing email", HttpStatus.FORBIDDEN);
         }
 
@@ -87,10 +88,11 @@ public class ClientController {
             return new ResponseEntity<>("Email has an invalid format", HttpStatus.FORBIDDEN);
         }
 
-        if (password.isEmpty()) {
+        if (password.isBlank()) {
             return new ResponseEntity<>("Missing password", HttpStatus.FORBIDDEN);
         }
 
+        // usar existsByEmail
         if (clientRepository.findByEmail(email) !=  null) {
             return new ResponseEntity<>("email already in use", HttpStatus.FORBIDDEN);
         }
@@ -108,7 +110,6 @@ public class ClientController {
         Account account = new Account(accountNumber, 0, LocalDate.now());
         client.addAccount(account);
         accountRepository.save(account);
-        clientRepository.save(client);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -50,7 +50,7 @@
             </nav>
         </header>
         <main>
-            <div class="mainColor">
+            <div class="mainColor pb-3">
                 <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
                         <div class="modal-content">
@@ -59,7 +59,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Are you sure you wan to log out?</p>
+                                <p>Are you sure you want to log out?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -72,43 +72,53 @@
                 <section class="d-flex justify-content-center align-items-center pt-3 titleSection">
                     <h1 class="h1Color">Welcome, {{client.firstName}}!</h1>
                 </section>
-                <section class="d-flex justify-content-center mt-5">
-                    <form class="form">
-                        <p class="title">Create a new card</p>
-                        <div class="d-flex justify-content-around">
-                            <!-- Tipo de Tarjeta (Crédito o Débito) -->
-                            <label class="d-flex align-items-center p-3">
-                                <input class="input" type="radio" name="cardType" v-model="cardType" value="CREDIT" required>
-                                <span>Credit</span>
-                            </label>
-                            <label class="d-flex align-items-center p-3">
-                                <input class="input" type="radio" name="cardType" v-model="cardType" value="DEBIT" required>
-                                <span>Debit</span>
-                            </label>
+                <section class="d-flex justify-content-center mt-5"> 
+                    <form class="transferForm" style="width: 50%;">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-center">
+                                <p class="title">Create a new card</p>
+                            </div>
+                            
+                            <div>
+                                <p>Card type</p>
+                                <div class="d-flex justify-content-around">
+                                    <!-- Tipo de Tarjeta (Crédito o Débito) -->
+                                    <label class="d-flex align-items-center p-3 gap-2">
+                                        <input class="input" type="radio" name="cardType" v-model="cardType" value="CREDIT" required>
+                                        <span>Credit</span>
+                                    </label>
+                                    <label class="d-flex align-items-center p-3 gap-2">
+                                        <input class="input" type="radio" name="cardType" v-model="cardType" value="DEBIT" required>
+                                        <span>Debit</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
                         </div>
-                        
-                        <!-- Selección de Color (3 opciones) -->
-                        <label>
-                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="SILVER" required>
-                            <span>Silver</span>
-                        </label>
-                        <label>
-                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="GOLD" required>
-                            <span>Gold</span>
-                        </label>
-                        <label>
-                            <input class="input" type="radio" name="cardColor" v-model="cardColor" value="TITANIUM" required>
-                            <span>Titanium</span>
-                        </label>
-
-                        <button type="button" class="submit" @click="createCard()">Submit</button>
+                        <div class="mb-3 d-flex flex-column">
+                            <div class="mb-4">
+                                <p>Card color</p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="d-flex gap-2">
+                                    <input class="input" type="radio" name="cardColor" v-model="cardColor" value="SILVER" required>
+                                    <span>Silver</span>
+                                </label>
+                                <label class="d-flex gap-2">
+                                    <input class="input" type="radio" name="cardColor" v-model="cardColor" value="GOLD" required>
+                                    <span>Gold</span>
+                                </label>
+                                <label class="d-flex gap-2">
+                                    <input class="input" type="radio" name="cardColor" v-model="cardColor" value="TITANIUM" required>
+                                    <span>Titanium</span>
+                                </label>
+                            </div>
+                            
+                            <div class="d-flex justify-content-center">
+                                <button type="button" class="submit btn_color" @click="createCard()" style="width: 50%;"><b>Request new card</b></button>
+                            </div>
+                        </div>
                     </form>
-
-                    <div class="bg-danger">
-                        <p>tarjetas</p>
-                        <p>{{cardType}}</p>
-                        <p>{{cardColor}}</p>
-                    </div>
                 </section>
             </div>
         </main>

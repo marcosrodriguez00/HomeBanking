@@ -20,11 +20,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
     @Autowired
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
 
+        // configura detalladamente el logeo de nuestro usuario
         auth.userDetailsService(userNameEmail -> {
             Client client = clientRepository.findByEmail(userNameEmail);
             if (client != null) {
@@ -35,7 +36,6 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
                 throw new UsernameNotFoundException("Unknown user: " + userNameEmail);
             }
         });
-
     }
 
     @Bean
