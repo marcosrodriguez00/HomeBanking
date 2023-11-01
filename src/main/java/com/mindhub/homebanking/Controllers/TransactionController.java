@@ -9,6 +9,7 @@ import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -32,6 +34,13 @@ public class TransactionController {
 
     @Autowired
     ClientRepository clientRepository;
+
+    public LocalDateTime dateFormatter (LocalDateTime localDateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = localDateTime.format(formatter);
+
+        return LocalDateTime.parse(formattedDateTime, formatter);
+    }
 
     @RequestMapping("/transactions")
     public List<TransactionDTO> getAllTransactions() {
@@ -103,8 +112,8 @@ public class TransactionController {
         String receivedDescription = "Transaction from " + client.fullName() + ", account number " + destinyAccountNumber + ". " + description;
 
         // creo las transacciones
-        Transaction outgoingTransaction = new Transaction( TransactionType.DEBIT, -ammount, sentDescription, LocalDateTime.now() );
-        Transaction incomingTransaction = new Transaction( TransactionType.CREDIT, ammount, receivedDescription, LocalDateTime.now() );
+        Transaction outgoingTransaction = new Transaction( TransactionType.DEBIT, -ammount, sentDescription, dateFormatter(LocalDateTime.now()) );
+        Transaction incomingTransaction = new Transaction( TransactionType.CREDIT, ammount, receivedDescription, dateFormatter(LocalDateTime.now()) );
 
         // cambio los balances de las cuentas
         originAccount.setBalance(originAccount.getBalance() - ammount);

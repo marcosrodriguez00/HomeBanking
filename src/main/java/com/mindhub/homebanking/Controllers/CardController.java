@@ -82,17 +82,15 @@ public class CardController {
     public ResponseEntity<Object> newCard(Authentication authentication,
                                           @RequestParam String cardType, @RequestParam String cardColor) {
 
-        // verificar que el string sea lo que necesito recibir
-
-        if (cardColor.isBlank()) {
-            return new ResponseEntity<>("You must choose a card type.", HttpStatus.FORBIDDEN);
+        if (!cardType.equals("DEBIT") && !cardType.equals("CREDIT")) {
+            return new ResponseEntity<>("You must choose a valid card type.", HttpStatus.FORBIDDEN);
         }
 
-        if (cardType.isBlank()) {
-            return new ResponseEntity<>("You must choose a card color.", HttpStatus.FORBIDDEN);
+        if (!cardColor.equals("GOLD") && !cardColor.equals("SILVER") && !cardColor.equals("TITANIUM")) {
+            return new ResponseEntity<>("You must choose a valid card color.", HttpStatus.FORBIDDEN);
         }
 
-        // encapsulo el cliente
+        // guardo la info en el cliente
         Client client = clientRepository.findByEmail(authentication.getName());
 
         int numberOfCardType =  // card.getType() == cardType

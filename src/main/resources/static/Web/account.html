@@ -70,14 +70,27 @@
                     </div>
                 </div>
                 <section class="d-flex justify-content-center pt-3">
-                    <div class="d-flex flex-column">
-                        <h1 class="h1Color">Your Account</h1>
-                        <div class="card" style="width: 18rem;">
-                            <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Account number: #{{account.number}}</li>
-                            <li class="list-group-item">Balance: ${{numberFormat(account.balance)}}</li>
-                            <li class="list-group-item">Creation Date: {{account.creationDate}}</li>
-                            </ul>
+                    <div class="accountCard">
+                        <div class="accountCardRow">
+                            <div class="cardInfoContainer ps-3">
+                                <i class="bi bi-bank" style="font-size: 2.1rem;"></i>
+                                <div class="d-flex flex-column" style="white-space: nowrap;">
+                                    <p style="font-size: 20px !important;"><b>Account number:</b></p>
+                                    <p style="font-size: 25px !important;"><b>#{{account.number}}</b></p>
+                                </div>
+                            </div>
+                            <div class="cardInfoContainer align-self-end">
+                                <i class="bi bi-calendar-check" style="font-size: 2.1rem !important;"></i>
+                                <div class="d-flex flex-column" >
+                                    <p style="font-size: 15px !important;"><b>Creation date:</b></p>
+                                    <p style="font-size: 15px !important;"><b>{{account.creationDate}}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accountCardRow">
+                            <div class="balanceContainer">
+                                <p style="margin-bottom: 0;">${{numberFormat(account.balance)}}</p>
+                            </div>
                         </div>
                     </div>
                 </section>

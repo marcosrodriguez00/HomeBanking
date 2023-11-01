@@ -1,12 +1,3 @@
-Falta:
-
-- Hacer el index
-- idea: mostrar valor dolar
-- mejorar la pagina cards, se ve muy vacio
-- en accounts me gustaria hacer que las cuentas se vean como un carousel
-- mejorar títulos de las paginas
-
-
 package com.mindhub.homebanking.dto;
 
 import com.mindhub.homebanking.models.Loan;
