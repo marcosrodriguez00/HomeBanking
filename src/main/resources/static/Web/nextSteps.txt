@@ -7,38 +7,80 @@ Falta:
 - mejorar títulos de las paginas
 
 
-package com.mindhub.homebanking.dto;
+swiper
 
-import com.mindhub.homebanking.models.Loan;
+<!--
+                            <div class="swiper">
+                                <!-- Additional required wrapper -->
+                                <div class="swiper-wrapper">
+                                <!-- Slides -->
+                                <div v-for="account in client.accounts">
+                                    <div class="swiper-slide">
+                                        <div class="accountCard">
+                                    
+                                            <div class="accountCardRow">
+                                                <div class="cardInfoContainer ps-3">
+                                                    <i class="bi bi-bank" style="font-size: 2.1rem;"></i>
+                                                    <div class="d-flex flex-column" style="white-space: nowrap;">
+                                                        <p style="font-size: 20px !important;"><b>Account number:</b></p>
+                                                        <p style="font-size: 25px !important;"><b>#{{account.number}}</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="cardInfoContainer align-self-end">
+                                                    <i class="bi bi-calendar-check" style="font-size: 2.1rem !important;"></i>
+                                                    <div class="d-flex flex-column" >
+                                                        <p style="font-size: 15px !important;"><b>Creation date:</b></p>
+                                                        <p style="font-size: 15px !important;"><b>{{account.creationDate}}</b></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accountCardRow">
+                                                <div class="balanceContainer">
+                                                    <p style="margin-bottom: 0;">${{numberFormat(account.balance)}}</p>
+                                                </div>
+                                                <div>
+                                                    <a :href="crearLink(account)" class="pb-3"><button type="button" class="btn btn_color"><b>Account Details</b></button></a>
+                                                </div>
+                                            </div>
+                                  
+                                        </div>
+                                    </div>
+                                </div>
+                                ...
+                                </div>
+                                <!-- If we need pagination -->
+                                <div class="swiper-pagination"></div>
+                            
+                                <!-- If we need navigation buttons -->
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
+                            
+                                <!-- If we need scrollbar -->
+                                <div class="swiper-scrollbar"></div>
+                            </div>
+                        -->
 
-import java.util.List;
+JS
 
-public class LoanDTO {
-    private Long id;
-    private String name;
-    private Double maxAmount;
-    private List<Integer> payments;
+// Initialize Swiper 
+const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'vertical',
+  loop: true,
 
-    public LoanDTO(Loan loan) {
-        this.id = loan.getId();
-        this.name = loan.getName();
-        this.maxAmount = loan.getMaxAmount();
-        this.payments = loan.getPayments();
-    }
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
 
-    public Long getId() {
-        return id;
-    }
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
 
-    public String getName() {
-        return name;
-    }
-
-    public Double getMaxAmount() {
-        return maxAmount;
-    }
-
-    public List<Integer> getPayments() {
-        return payments;
-    }
-}
+  // And if we need scrollbar
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  },
+});

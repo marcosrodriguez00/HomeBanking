@@ -3,12 +3,14 @@ const { createApp } = Vue;
 const url = "/api/clients/currents"
 
 createApp({
+
   data() {
     return {
         client: [],
         loading: true
     };
   },
+
   created() {
     axios
         .get(url)
@@ -16,8 +18,11 @@ createApp({
             this.client = response.data;
             setTimeout(() => this.loading = false, 300);
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          console.log(error)
+        });
   },
+
   methods: {
     crearLink(account) {
       return 'http://localhost:8080/web/account.html?id=' + account.id
@@ -68,3 +73,4 @@ createApp({
     },
   },
 }).mount('#app');
+

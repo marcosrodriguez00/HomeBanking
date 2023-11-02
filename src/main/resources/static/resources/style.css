@@ -776,3 +776,13 @@ a {
 p {
   margin-bottom: 0 !important;
 }
+
+/* Carousel */
+
+.carouselItemBackground {
+  background-image: url('https://i.pinimg.com/564x/d5/f8/b5/d5f8b59a1a80f3bd098247917f47379c.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 50vh;
+}

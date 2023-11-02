@@ -27,15 +27,16 @@ class WebAuthorization extends WebSecurityConfigurerAdapter { // depricated
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                 // permisos de admin
-                .antMatchers("/rest/**", "/api/**").hasAuthority("ADMIN")
+                .antMatchers("/rest/**", "/api/clients").hasAuthority("ADMIN")
                 // permisos para el cliente
+                .antMatchers(HttpMethod.GET, "/api/clients/currents").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/clients/currents").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/accounts/{id}").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/clients/current/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/transactions", "/api/loans").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/transactions", "/api/loans").authenticated()
                 .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html",
-                        "/web/create-card.html", "/web/transfers.html").authenticated()
+                        "/web/create-card.html", "/web/transfers.html", "/web/loan-application.html").authenticated()
                 .antMatchers("/**").hasAuthority("ADMIN")
                 .anyRequest().denyAll();
 

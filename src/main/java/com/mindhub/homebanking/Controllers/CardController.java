@@ -80,24 +80,13 @@ public class CardController {
 
     @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> newCard(Authentication authentication,
-                                          @RequestParam String cardType, @RequestParam String cardColor) {
-
-        if (!cardType.equals("DEBIT") && !cardType.equals("CREDIT")) {
-            return new ResponseEntity<>("You must choose a valid card type.", HttpStatus.FORBIDDEN);
-        }
-
-        if (!cardColor.equals("GOLD") && !cardColor.equals("SILVER") && !cardColor.equals("TITANIUM")) {
-            return new ResponseEntity<>("You must choose a valid card color.", HttpStatus.FORBIDDEN);
-        }
+                                          @RequestParam CardType cardType, @RequestParam CardColor cardColor) {
 
         // guardo la info en el cliente
         Client client = clientRepository.findByEmail(authentication.getName());
 
-        int numberOfCardType =  // card.getType() == cardType
-                (int) client.getCards().stream().filter(card -> card.getType().equals(CardType.valueOf(cardType))).count();
-
-        if (numberOfCardType == 3) {
-            return new ResponseEntity<>("You cannot have more than three cards of the same type.", HttpStatus.FORBIDDEN);
+        if (cardRepository.existsByTypeAndColorAndClient(cardType, cardColor, client)) {
+            return new ResponseEntity<>("You already have that card!", HttpStatus.FORBIDDEN);
         }
 
         String cardNumber = generateCardNumber();
@@ -107,7 +96,7 @@ public class CardController {
         }
 
         // Creo la cuenta nueva y la agrego al cliente
-        Card card = new Card(client.fullName(), cardNumber, generateCvv(), CardType.valueOf(cardType), CardColor.valueOf(cardColor), LocalDate.now().plusYears(5), LocalDate.now());
+        Card card = new Card(client.fullName(), cardNumber, generateCvv(), cardType, cardColor, LocalDate.now().plusYears(5), LocalDate.now());
         client.addCard(card);
 
         // guardo el cliente con la nueva cuenta y devuelvo respuesta exitosa
