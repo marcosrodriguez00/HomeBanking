@@ -5,6 +5,7 @@ import com.mindhub.homebanking.dto.CardDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.CardService;
 import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,21 +27,19 @@ import static java.util.stream.Collectors.toList;
 public class CardController {
 
     @Autowired
-    CardRepository cardRepository;
+    CardService cardService;
 
     @Autowired
     ClientService clientService;
 
     @RequestMapping("/cards")
     public List<CardDTO> getAllCards() {
-        return cardRepository.findAll().stream().map(CardDTO::new).collect(toList());
+        return cardService.getAllCardDTO();
     }
 
     @RequestMapping("/cards/{id}")
     public CardDTO getCard(@PathVariable Long id) { // PathVariable se usa para que el metodo getAccount tome el valor de {id}
-        return cardRepository.findById(id)
-                .map(CardDTO::new) // Convierte el cliente a un DTO
-                .orElse(null); // Si no se encuentra, retorna null
+        return cardService.getCardDTOById(id);
     }
 
     public int generarDigitoAleatorio() {
@@ -86,13 +85,13 @@ public class CardController {
         // guardo la info en el cliente
         Client client = clientService.getClientByEmail(authentication.getName());
 
-        if (cardRepository.existsByTypeAndColorAndClient(cardType, cardColor, client)) {
+        if ( cardService.existsCardByTypeAndColorAndClient(cardType, cardColor, client) ) {
             return new ResponseEntity<>("You already have that card!", HttpStatus.FORBIDDEN);
         }
 
         String cardNumber = generateCardNumber();
 
-        while (cardRepository.existsByNumber(cardNumber)) {
+        while ( cardService.existsCardByNumber(cardNumber) ) {
             cardNumber = generateCardNumber();
         }
 
@@ -102,7 +101,7 @@ public class CardController {
 
         // guardo el cliente con la nueva cuenta y devuelvo respuesta exitosa
         clientService.saveClient(client);
-        cardRepository.save(card);
+        cardService.saveCard(card);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

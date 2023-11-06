@@ -1,12 +1,8 @@
 Falta:
 
-- Hacer el index
 - idea: mostrar valor dolar
 - mejorar la pagina cards, se ve muy vacio
-- en accounts me gustaria hacer que las cuentas se vean como un carousel
 - mejorar títulos de las paginas
 
-- postgreSQL
-- capa de servicios
 - responsive index
 - armar 2 querys

@@ -10,6 +10,7 @@ import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ import static java.util.stream.Collectors.toList;
 public class TransactionController {
 
     @Autowired
-    TransactionRepository transactionRepository;
+    TransactionService transactionService;
 
     @Autowired
     AccountService accountService;
@@ -46,14 +47,12 @@ public class TransactionController {
 
     @RequestMapping("/transactions")
     public List<TransactionDTO> getAllTransactions() {
-        return transactionRepository.findAll().stream().map(TransactionDTO::new).collect(toList());
+        return transactionService.getAllTransactionDTO();
     }
 
     @RequestMapping("/transactions/{id}")
     public TransactionDTO getTransaction(@PathVariable Long id) {
-        return transactionRepository.findById(id)
-                .map(TransactionDTO::new) // Convierte el cliente a un DTO
-                .orElse(null); // Si no se encuentra, retorna null
+        return transactionService.getTransactionDTO(id);
     }
 
     @Transactional
@@ -101,7 +100,7 @@ public class TransactionController {
         }
 
         // checkear la cuenta de destino
-        if ( !accountRepository.existsByNumber(destinyAccountNumber) ) {
+        if ( !accountService.existsAccountByNumber(destinyAccountNumber) ) {
             return new ResponseEntity<>("The Destiny account does not exist", HttpStatus.FORBIDDEN);
         }
 
@@ -126,10 +125,10 @@ public class TransactionController {
         destinyAccount.addTransaction(incomingTransaction);
 
         // guardo en la BD las nuevas transacciones y los cambios en las cuentas
-        accountRepository.save(originAccount);
-        accountRepository.save(destinyAccount);
-        transactionRepository.save(outgoingTransaction);
-        transactionRepository.save(incomingTransaction);
+        accountService.saveAccount(originAccount);
+        accountService.saveAccount(destinyAccount);
+        transactionService.saveTransaction(outgoingTransaction);
+        transactionService.saveTransaction(incomingTransaction);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

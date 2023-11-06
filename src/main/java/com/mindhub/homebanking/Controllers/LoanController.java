@@ -4,8 +4,7 @@ import com.mindhub.homebanking.dto.LoanApplicationDTO;
 import com.mindhub.homebanking.dto.LoanDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
-import com.mindhub.homebanking.services.AccountService;
-import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,7 @@ import static java.util.stream.Collectors.toList;
 public class LoanController {
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
 
     @Autowired
     private AccountService accountService;
@@ -37,10 +36,10 @@ public class LoanController {
     private ClientService clientService;
 
     @Autowired
-    private LoanRepository loanRepository;
+    private LoanService loanService;
 
     @Autowired
-    private ClientLoanRepository clientLoanRepository;
+    private ClientLoanService clientLoanService;
 
     public LocalDateTime dateFormatter (LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -51,7 +50,7 @@ public class LoanController {
 
     @RequestMapping("/loans")
     public List<LoanDTO> getAllLoans () {
-        return loanRepository.findAll().stream().map(LoanDTO::new).collect(toList());
+        return loanService.getAllLoanDTO();
     }
 
     public double addInterest ( double amount ) {
@@ -66,7 +65,7 @@ public class LoanController {
 
         Client client = clientService.getClientByEmail(authentication.getName());
 
-        Loan loan = loanRepository.findById(loanApplication.getId()).orElse(null);
+        Loan loan = loanService.getLoanById(loanApplication.getId());
 
         Account account = accountService.getAccountByNumber(loanApplication.getDestinyAccountNumber());
 
@@ -102,18 +101,18 @@ public class LoanController {
             return new ResponseEntity<>("The account you inserted does not belong to you!", HttpStatus.FORBIDDEN);
         }
 
-        ClientLoan clientLoan = new ClientLoan(addInterest(loanApplication.getAmount()), loanApplication.getPayments());
-        client.addClientLoan(clientLoan);
-        loan.addClientLoan(clientLoan);
+        ClientLoan clientLoan = new ClientLoan( addInterest(loanApplication.getAmount()), loanApplication.getPayments() );
+        client.addClientLoan( clientLoan );
+        loan.addClientLoan( clientLoan );
 
-        clientLoanRepository.save(clientLoan);
+        clientLoanService.saveClientLoan( clientLoan );
 
         Transaction transaction = new Transaction( TransactionType.CREDIT, loanApplication.getAmount(), approvedMessage, dateFormatter(LocalDateTime.now()) );
         account.addTransaction( transaction );
-        transactionRepository.save( transaction );
+        transactionService.saveTransaction( transaction );
         account.setBalance( account.getBalance() + loanApplication.getAmount() );
         accountService.saveAccount( account );
 
-        return new ResponseEntity<>("Loan created succesfully",HttpStatus.CREATED);
+        return new ResponseEntity<>("Loan created successfully",HttpStatus.CREATED);
     }
 }

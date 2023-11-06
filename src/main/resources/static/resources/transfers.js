@@ -59,7 +59,8 @@ createApp({
           color: "#fff",
           background: "#1c2754",
           confirmButtonColor: "#17acc9",
-      });
+        });
+        location.pathname = '/web/accounts.html'
       })
       .catch(error => {
         console.log(`ammount=${this.ammount}&description=${this.description}&originAccountNumber=${this.originAccountNumber}&destinyAccountNumber=${this.destinyAccountNumber}`)
