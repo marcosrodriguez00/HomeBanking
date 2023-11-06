@@ -5,6 +5,8 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,21 +26,19 @@ import static java.util.stream.Collectors.toList;
 public class AccountController {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @RequestMapping("/accounts")
     public List<AccountDTO> getAllAccounts() {
-       return accountRepository.findAll().stream().map(AccountDTO::new).collect(toList());
+       return accountService.getAllAccountDTO();
     }
 
     @RequestMapping("/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id) { // PathVariable se usa para que el metodo getAccount tome el valor de {id}
-        return accountRepository.findById(id)
-                .map(AccountDTO::new) // Convierte el cliente a un DTO
-                .orElse(null); // Si no se encuentra, retorna null
+        return accountService.getAccountDTOById(id);
     }
 
     public String randomAccountNumber() {
@@ -51,7 +51,7 @@ public class AccountController {
     public ResponseEntity<Object> newAccount(Authentication authentication) {
 
         // encapsulo el cliente
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.getClientByEmail(authentication.getName());
 
         // controlo que no haya mas de 3 cuentas
         if (client.getAccounts().size() >= 3) {
@@ -62,7 +62,7 @@ public class AccountController {
         String accountNumber = randomAccountNumber();
 
         // me aseguro que no exista el numero de cuenta
-        while (accountRepository.existsByNumber(accountNumber)){
+        while (accountService.existsAccountByNumber(accountNumber)){
             accountNumber = randomAccountNumber();
         }
 
@@ -71,8 +71,8 @@ public class AccountController {
         client.addAccount(account);
 
         // guardo el cliente con la nueva cuenta y devuelvo respuesta exitosa
-        clientRepository.save(client);
-        accountRepository.save(account);
+        clientService.saveClient(client);
+        accountService.saveAccount(account);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

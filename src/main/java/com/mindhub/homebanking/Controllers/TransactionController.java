@@ -8,6 +8,8 @@ import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -30,10 +32,10 @@ public class TransactionController {
     TransactionRepository transactionRepository;
 
     @Autowired
-    AccountRepository accountRepository;
+    AccountService accountService;
 
     @Autowired
-    ClientRepository clientRepository;
+    ClientService clientService;
 
     public LocalDateTime dateFormatter (LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -63,7 +65,7 @@ public class TransactionController {
 
         // ver que no falte ningun parametro escencial
         if ( ammount.isNaN() ) {
-            return new ResponseEntity<>("Missing an ammount to transfer", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Missing an amount to transfer", HttpStatus.FORBIDDEN);
         }
 
         if ( originAccountNumber.isEmpty() ) {
@@ -80,7 +82,7 @@ public class TransactionController {
         }
 
         // checkear la cuenta de origen
-        if ( !accountRepository.existsByNumber(originAccountNumber) ) {
+        if ( !accountService.existsAccountByNumber(originAccountNumber) ) {
             return new ResponseEntity<>("The origin account does not exist", HttpStatus.FORBIDDEN);
         }
 
@@ -91,9 +93,9 @@ public class TransactionController {
 
         // tengo que ver que la cuenta y el cliente esten asociados, ver las
         // cuentas del cliente o ver el cliente de la cuenta
-        Client client = clientRepository.findByEmail(authentication.getName());
-        Account originAccount = accountRepository.findByNumber(originAccountNumber);
-        Account destinyAccount = accountRepository.findByNumber(destinyAccountNumber);
+        Client client = clientService.getClientByEmail(authentication.getName());
+        Account originAccount = accountService.getAccountByNumber(originAccountNumber);
+        Account destinyAccount = accountService.getAccountByNumber(destinyAccountNumber);
         if ( !client.getAccounts().contains(originAccount) ) {
             return new ResponseEntity<>("The origin account does not belong to this client", HttpStatus.FORBIDDEN);
         }

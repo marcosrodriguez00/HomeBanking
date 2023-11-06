@@ -12,7 +12,7 @@ createApp({
         currentLoan: [],
         amount: 0,
         payments: 0,
-        destinyAccountNumber: ""
+        destinyAccountNumber: "",
     };
   },
   created() {
@@ -73,7 +73,6 @@ createApp({
         })
         .catch(error => {
           console.log(error)
-          console.log(`{loanId: ${this.currentLoan.id}, payments: ${this.payments}, amount: ${this.amount}, destinyAccountNumber: ${this.destinyAccountNumber}}`)
           this.errorMessage(error.response.data)
         })
     },
@@ -89,8 +88,8 @@ createApp({
     }
   },
   computed: {
-    selectedLoanId() {
-        this.loanId = currentLoan.id;
+    paymentAmount() {
+      return (this.amount * 1.2) / this.payments
     }
   }
 }).mount('#app');

@@ -51,7 +51,7 @@
         </header>
         <main>
             <!--Modals-->
-            <div class="mainColor">
+            <div class="mainColor pb-4">
                 <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
                         <div class="modal-content">
@@ -89,7 +89,7 @@
                             </select>
                         </div>
                         <div v-if="currentLoan != ''" style="color: #FFD700; margin-bottom: 12px;">
-                            <p><i class="bi bi-exclamation-triangle"></i> This loan has a maximum ammount of {{numberFormat(currentLoan.maxAmount)}}</p>
+                            <p><i class="bi bi-exclamation-triangle"></i> This loan has a maximum amount of {{numberFormat(currentLoan.maxAmount)}}</p>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">$</span>
@@ -102,11 +102,13 @@
                             <select class="form-select" aria-label="Default select example" v-model="payments" required>
                               <option v-for="payment in currentLoan.payments" :value="payment">{{ payment }}</option>
                             </select>
-                          </div>
+                        </div>
+                        <div v-if="amount != 0 && payments != 0" style="color: #FFD700; margin-bottom: 12px;">
+                            <p><i class="bi bi-exclamation-triangle"></i> Each payment will be ${{numberFormat(paymentAmount)}}</p>
+                        </div>
                         <button type="button" class="btn btn_color" @click="requestLoan()">Request loan</button>
                     </form>
-                
-                
+                </section>
             </div>
         </main>
         <div v-if="loading" class="loader-container">

@@ -4,6 +4,8 @@ import com.mindhub.homebanking.dto.LoanApplicationDTO;
 import com.mindhub.homebanking.dto.LoanDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -29,10 +31,10 @@ public class LoanController {
     private TransactionRepository transactionRepository;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Autowired
     private LoanRepository loanRepository;
@@ -62,18 +64,18 @@ public class LoanController {
     @PostMapping("/loans")
     public ResponseEntity<Object> requestLoan (@RequestBody LoanApplicationDTO loanApplication, Authentication authentication) {
 
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.getClientByEmail(authentication.getName());
 
         Loan loan = loanRepository.findById(loanApplication.getId()).orElse(null);
 
-        Account account = accountRepository.findByNumber(loanApplication.getDestinyAccountNumber());
+        Account account = accountService.getAccountByNumber(loanApplication.getDestinyAccountNumber());
 
         if ( loanApplication.getDestinyAccountNumber().isBlank() ) {
             return new ResponseEntity<>("Missing an account to take the loan", HttpStatus.FORBIDDEN);
         }
 
-        if ( loanApplication.getAmount() == 0 ) {
-            return new ResponseEntity<>("Requested amount cannot be 0", HttpStatus.FORBIDDEN);
+        if ( loanApplication.getAmount() <= 0 ) {
+            return new ResponseEntity<>("Requested amount cannot be 0 or less", HttpStatus.FORBIDDEN);
         }
 
         if ( loanApplication.getPayments() == 0 ) {
@@ -92,11 +94,11 @@ public class LoanController {
             return new ResponseEntity<>("Please select an available amount of payments", HttpStatus.FORBIDDEN);
         }
 
-        if ( !accountRepository.existsByNumber(loanApplication.getDestinyAccountNumber()) ){
+        if ( !accountService.existsAccountByNumber(loanApplication.getDestinyAccountNumber()) ){
             return new ResponseEntity<>("The account number you selected does not exist", HttpStatus.FORBIDDEN);
         }
 
-        if ( !client.getAccounts().contains(accountRepository.findByNumber(loanApplication.getDestinyAccountNumber())) ) {
+        if ( !client.getAccounts().contains(accountService.getAccountByNumber(loanApplication.getDestinyAccountNumber())) ) {
             return new ResponseEntity<>("The account you inserted does not belong to you!", HttpStatus.FORBIDDEN);
         }
 
@@ -110,7 +112,7 @@ public class LoanController {
         account.addTransaction( transaction );
         transactionRepository.save( transaction );
         account.setBalance( account.getBalance() + loanApplication.getAmount() );
-        accountRepository.save( account );
+        accountService.saveAccount( account );
 
         return new ResponseEntity<>("Loan created succesfully",HttpStatus.CREATED);
     }

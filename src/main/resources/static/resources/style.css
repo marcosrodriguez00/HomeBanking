@@ -777,12 +777,174 @@ p {
   margin-bottom: 0 !important;
 }
 
-/* Carousel */
+/* Index */
 
-.carouselItemBackground {
-  background-image: url('https://i.pinimg.com/564x/d5/f8/b5/d5f8b59a1a80f3bd098247917f47379c.jpg');
+.indexBackground1 {
+  background-image: url('Images/carousel_background2.jpeg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 50vh;
+  height: 60%;
+  max-height: fit-content;
+}
+
+.indexBackground2 {
+  background-image: url('Images/bg_img_black_texture.jpeg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 60%;
+  max-height: fit-content;
+}
+
+.indexBackground3 {
+  background-image: url('Images/background_image_dark.jpeg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-height: fit-content;
+}
+
+.carouselImage {
+  border-radius: 10px !important;
+}
+
+.registerButton {
+  background-color: #148AA8 !important;
+  color: white !important;
+  width: 10rem;
+  border-radius: 30px !important;
+}
+
+.linkLogin {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 90%;
+  font-size: 2rem;
+}
+
+.indexSectionPadding{
+  padding: 7%;
+}
+/* cards de clientes */
+
+.containerCards {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 0;
+}
+
+/* tamaño y estilo de las tarjetas clients */
+
+.containerCards .clientCard {
+  position: relative;
+  width: 33% !important;
+  height: 40% !important;
+  background: var(--secondcolor);
+  margin: 80px 80px 0;
+  margin-top: 0;
+  box-shadow: 0 15px 35px rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerCards .clientCard .content {
+  position: relative;
+  padding-top: 100px; /* cantra la imagen en la targeta */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0.5;
+  transition: 0.5s;
+}
+
+/* Mueve la foto hacia arriba */
+
+.containerCards .clientCard:hover .content {
+  cursor: pointer;
+  opacity: 1;
+  transform: translateY(-45px);
+}
+
+.containerCards .clientCard .content .imgBox {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 10px solid var(--fourthcolor, 0.25);
+}
+
+.containerCards .clientCard .content .imgBox img {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.containerCards .clientCard .content .contentBx h3,
+.containerCards .clientCard .content .contentBx li {
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-size: 15px;
+  text-align: center;
+  margin: 10px 0 10px;
+  line-height: 1.1em;
+  list-style: none;
+  transform: translateY(20px);
+  transition: 0.5s;
+  opacity: 0;
+  transition-delay: calc(0.1s * var(--i));
+}
+
+.containerCards .clientCard:hover .content .contentBx h3,
+.containerCards .clientCard:hover .content .contentBx li {
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.containerCards .clientCard .sci {
+  bottom: 50px;
+  display: flex;
+}
+
+.containerCards .clientCard .sci li {
+  list-style: none;
+  margin-right: 10px !important;
+}
+
+.containerCards .clientCard .sci li a {
+  color: white;
+  font-size: 24px;
+}
+
+.contentBx h3 span {
+  color: white;
+  font-size: 12px;
+  font-weight: 300;
+  text-transform: initial;
+  transition-delay: 0.1s;
+}
+
+.clientCard {
+  max-width: 30% !important; /* Establece un ancho máximo para las tarjetas */
+  margin: 1rem !important; /* Ajusta el margen entre las tarjetas */
+}
+
+/* media queries index */
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+
 }

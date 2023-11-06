@@ -5,6 +5,8 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -27,24 +29,22 @@ import static java.util.stream.Collectors.toList;
 public class ClientController {
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping("/clients")
-    public List<ClientDTO> getAllClients() {
-        return clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
+    public List<ClientDTO> getAllClientsDTO() {
+        return clientService.getAllClientDTO();
     }
 
     @RequestMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id) {
-        return clientRepository.findById(id)
-                .map(ClientDTO::new) // Convierte el cliente a un DTO
-                .orElse(null); // Si no se encuentra, retorna null
+        return clientService.getClientDTOById(id);
     }
 
     public String randomAccountNumber() {
@@ -93,7 +93,7 @@ public class ClientController {
         }
 
         // usar existsByEmail
-        if (clientRepository.findByEmail(email) !=  null) {
+        if (clientService.getClientByEmail(email) !=  null) {
             return new ResponseEntity<>("email already in use", HttpStatus.FORBIDDEN);
         }
 
@@ -101,20 +101,20 @@ public class ClientController {
         String accountNumber = randomAccountNumber();
 
         // me aseguro que no exista el numero de cuenta
-        while (accountRepository.existsByNumber(accountNumber)){
+        while (accountService.existsAccountByNumber(accountNumber)){
             accountNumber = randomAccountNumber();
         }
 
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password), false);
-        clientRepository.save(client);
+        clientService.saveClient(client);
         Account account = new Account(accountNumber, 0, LocalDate.now());
         client.addAccount(account);
-        accountRepository.save(account);
+        accountService.saveAccount(account);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping("/clients/currents")
     public ClientDTO getClientCurrent(Authentication authentication){
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
+        return new ClientDTO(clientService.getClientByEmail(authentication.getName()));
     }
 }

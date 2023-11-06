@@ -5,6 +5,7 @@ import com.mindhub.homebanking.dto.CardDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class CardController {
     CardRepository cardRepository;
 
     @Autowired
-    ClientRepository clientRepository;
+    ClientService clientService;
 
     @RequestMapping("/cards")
     public List<CardDTO> getAllCards() {
@@ -83,7 +84,7 @@ public class CardController {
                                           @RequestParam CardType cardType, @RequestParam CardColor cardColor) {
 
         // guardo la info en el cliente
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.getClientByEmail(authentication.getName());
 
         if (cardRepository.existsByTypeAndColorAndClient(cardType, cardColor, client)) {
             return new ResponseEntity<>("You already have that card!", HttpStatus.FORBIDDEN);
@@ -100,7 +101,7 @@ public class CardController {
         client.addCard(card);
 
         // guardo el cliente con la nueva cuenta y devuelvo respuesta exitosa
-        clientRepository.save(client);
+        clientService.saveClient(client);
         cardRepository.save(card);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

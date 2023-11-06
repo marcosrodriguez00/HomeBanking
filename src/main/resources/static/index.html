@@ -15,47 +15,112 @@
 </head>
 <body>
     <div id="app">
-        <div class="container-fluid d-flex justify-content-center" style="background-color: black;">
-            <a class="navbar-brand w-75 d-flex justify-content-center" href="#">
+        <div class="d-flex justify-content-center align-items-center" style="background-color: black;">
+            <a class="w-75 d-flex justify-content-center" href="#">
                 <img class="logoSize p-2" src="../resources/Images/bankHub logo letras.png" alt="BankHub Logo">
+            </a>
+            <a href="Web/login.html" class="linkLogin">
+                <i class="bi bi-door-open"></i>
+                <button class="btn" aria-current="page" style="color: white;">Login</button>
             </a>
         </div>
         <main>
             <div style="min-height: 100vh;">
-                <div id="carouselExampleIndicators" class="carousel slide">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <div class="indexBackground1" style="height: 60vh;">
+                    <div class="d-flex gap-5 justify-content-around align-items-center indexSectionPadding" style="height: 100%;">
+                        <div style="min-width: 50%;">
+                            <h2>Security and trust, that's our core</h2>
+                            <p>Become a client right now and join the most secure banking organization</p>
+                            <div class="d-flex justify-content-center mt-5" style="min-width: 50%;">
+                                <a href="Web/register.html"><button type="button" class="btn registerButton">Register now</button></a>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <img src="resources/Images/ciberSecurity.jpg" class="d-block w-100 carouselImage" alt="...">
+                        </div>      
                     </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active carouselItemBackground">
-                            <img src="..." class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item carouselItemBackground">
-                            <img src="..." class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item carouselItemBackground">
-                            <img src="..." class="d-block w-100" alt="...">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
-            </div>
 
-            <div>
-                <a href="Web/login.html" ><p style="color: blueviolet;">Login :D</p></a>
+                <div class="indexBackground2" style="height: 60vh;">
+                    <div class="d-flex gap-5 justify-content-around align-items-center indexSectionPadding" style="height: 100%;">     
+                        <div class="d-flex justify-content-center" style="min-width: 50%;">
+                            <img src="resources/Images/happy_people.jpeg" class="d-block carouselImage" style="width: 88%;" alt="...">
+                        </div> 
+                        <div style="min-width: 50%; min-height: 100%;" class="justify-content-center align-content-center">
+                            <h2 style="color: white;">About us</h2>
+                            <p style="color: white;">
+                                BankHub is more than just another bank, we are a company that 
+                                started from the desire of helping simple people solve there 
+                                financial issues in a simple way. We make it so that you can stop
+                                worrying about how to handle your finances, and can give attention
+                                to enjoying your life.
+                            </p>
+                        </div>   
+                    </div>                   
+                </div>
+
+                <div class="indexBackground3" style="min-height: fit-content;">
+                    <div class="d-flex flex-column gap-2 justify-content-around align-items-center" style="padding: 2rem;">
+                        <div>
+                            <h3 style="color: white;">Our clients</h3>
+                        </div>    
+                        <div class="containerCards d-flex">
+                            <div class="clientCard" data-aos="zoom-out-up">
+                                <div class="content">
+                                    <div class="imgBox">
+                                        <img src="resources/Images/Jhon_and_Maya.jpeg" alt="Client #1" />
+                                    </div>
+                                    <div class="contentBx">
+                                        <h3 style="--i: 1">Jhon and Maya</h3>
+                                        <h3 style="--i: 2">
+                                            <span>
+                                                With our help, they were able to afford an appartment in the 
+                                                neighbourhood they always dreamt about
+                                            </span>
+                                        </h3>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="clientCard" data-aos="zoom-out-up" data-aos-delay="100">
+                                <div class="content">
+                                    <div class="imgBox">
+                                        <img src="resources/Images/Tim_and_grandkids.jpg" alt="Client #2" />
+                                    </div>
+                                    <div class="contentBx">
+                                        <h3 style="--i: 1">Tim</h3>
+                                        <h3 style="--i: 2">
+                                            <span>
+                                                Thanks to us, Tim is now retired enjoying watching his grandkids grow
+                                            </span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="clientCard" data-aos="zoom-out-up" data-aos-delay="100">
+                                <div class="content">
+                                    <div class="imgBox">
+                                        <img src="resources/Images/melba_student.jpeg" alt="Client #3" />
+                                    </div>
+                                    <div class="contentBx">
+                                        <h3 style="--i: 1">Melba</h3>
+                                        <h3 style="--i: 2">
+                                            <span>
+                                                With one of our loans, Melba is now able to pursue her dream career.
+                                            </span>
+                                        </h3>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> 
+                    </div> 
+                </div>
+
             </div>
-            <div>
-                <a href="Web/register.html" ><p style="color: blueviolet;">Register :P</p></a>
-            </div> 
         </main>
         <div v-if="loading" class="loader-container">
             <div class="loader"></div>
