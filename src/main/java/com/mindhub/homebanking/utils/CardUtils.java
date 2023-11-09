@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class CardUtils {
+public final class CardUtils {
 
     public static int generateRandomDigit() {
         Random random = new Random();

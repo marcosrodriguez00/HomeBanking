@@ -3,7 +3,7 @@ package com.mindhub.homebanking.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ClientUtils {
+public final class ClientUtils {
 
     public static boolean isValidEmail(String email) {
         // Define la expresión regular para validar el formato de un correo electrónico
