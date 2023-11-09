@@ -1,0 +1,18 @@
+/* INDEX */
+
+/* Header */
+
+.logoSize {
+    max-width: 70%; /* El logo no se expandirá más allá del ancho del contenedor */
+    height: auto; /* Mantén la proporción original del logo */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse sobre el logo */
+}
+
+.linkLogin {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 83%;
+    font-size: 4rem;
+}

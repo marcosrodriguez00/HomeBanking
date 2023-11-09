@@ -1,10 +1,7 @@
 package com.mindhub.homebanking.Controllers;
 
-import com.mindhub.homebanking.dto.AccountDTO;
 import com.mindhub.homebanking.dto.CardDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.CardRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.services.CardService;
 import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Type;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
-import static java.util.stream.Collectors.toList;
+import static com.mindhub.homebanking.utils.CardUtils.*;
 
 @RestController
 @RequestMapping("/api")
@@ -32,50 +25,14 @@ public class CardController {
     @Autowired
     ClientService clientService;
 
-    @RequestMapping("/cards")
+    @GetMapping("/cards")
     public List<CardDTO> getAllCards() {
         return cardService.getAllCardDTO();
     }
 
-    @RequestMapping("/cards/{id}")
+    @GetMapping("/cards/{id}")
     public CardDTO getCard(@PathVariable Long id) { // PathVariable se usa para que el metodo getAccount tome el valor de {id}
         return cardService.getCardDTOById(id);
-    }
-
-    public int generarDigitoAleatorio() {
-        Random random = new Random();
-        return random.nextInt(10); // Genera un número aleatorio entre 0 y 9
-    }
-
-    public String generateCvv() {
-        List<Integer> cvv = Arrays.asList(null, null, null);
-
-        for(int i = 0; i < 3; i++) {
-            cvv.set(i, generarDigitoAleatorio());
-        }
-
-        StringBuilder builder = new StringBuilder();
-
-        for (Integer num : cvv) {
-            builder.append(num);
-        }
-
-        return builder.toString();
-    }
-
-    public String generateCardNumber() {
-        StringBuilder numeroTarjeta = new StringBuilder();
-
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                numeroTarjeta.append(generarDigitoAleatorio());
-            }
-            if (i < 3) {
-                numeroTarjeta.append("-"); // Agrega el guion entre grupos de dígitos
-            }
-        }
-
-        return numeroTarjeta.toString();
     }
 
     @PostMapping("/clients/current/cards")

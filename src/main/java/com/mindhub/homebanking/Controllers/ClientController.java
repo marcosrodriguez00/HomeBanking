@@ -3,12 +3,9 @@ package com.mindhub.homebanking.Controllers;
 import com.mindhub.homebanking.dto.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,13 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static java.util.stream.Collectors.toList;
+import static com.mindhub.homebanking.utils.AccountUtils.randomAccountNumber;
+import static com.mindhub.homebanking.utils.ClientUtils.isValidEmail;
 
 @RestController
 @RequestMapping("/api")
@@ -37,37 +31,18 @@ public class ClientController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping("/clients")
+    @GetMapping("/clients")
     public List<ClientDTO> getAllClientsDTO() {
         return clientService.getAllClientDTO();
     }
 
-    @RequestMapping("/clients/{id}")
+    @GetMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id) {
         return clientService.getClientDTOById(id);
     }
 
-    public String randomAccountNumber() {
-        int randomNumber = (int) (Math.random() * (99999999));
-        return "VIN-" + randomNumber;
-    }
-
-    public static boolean isValidEmail(String email) {
-        // Define la expresión regular para validar el formato de un correo electrónico
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-
-        // Compila la expresión regular en un patrón
-        Pattern pattern = Pattern.compile(emailRegex);
-
-        // Crea un objeto Matcher para comparar el correo electrónico con el patrón
-        Matcher matcher = pattern.matcher(email);
-
-        // Verifica si el correo electrónico coincide con el patrón
-        return matcher.matches();
-    }
-
     // ResponseEntity es una clase de spring que da respuestas a traves del controlador
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping(path = "/clients")
     public ResponseEntity<Object> register (
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
@@ -113,7 +88,7 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping("/clients/currents")
+    @GetMapping("/clients/currents")
     public ClientDTO getClientCurrent(Authentication authentication){
         return new ClientDTO(clientService.getClientByEmail(authentication.getName()));
     }

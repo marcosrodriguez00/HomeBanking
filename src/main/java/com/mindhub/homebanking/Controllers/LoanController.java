@@ -3,24 +3,19 @@ package com.mindhub.homebanking.Controllers;
 import com.mindhub.homebanking.dto.LoanApplicationDTO;
 import com.mindhub.homebanking.dto.LoanDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.*;
 import com.mindhub.homebanking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
+import static com.mindhub.homebanking.utils.LoanUtils.*;
+
 
 @RestController
 @RequestMapping("/api")
@@ -41,20 +36,9 @@ public class LoanController {
     @Autowired
     private ClientLoanService clientLoanService;
 
-    public LocalDateTime dateFormatter (LocalDateTime localDateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = localDateTime.format(formatter);
-
-        return LocalDateTime.parse(formattedDateTime, formatter);
-    }
-
-    @RequestMapping("/loans")
+    @GetMapping("/loans")
     public List<LoanDTO> getAllLoans () {
         return loanService.getAllLoanDTO();
-    }
-
-    public double addInterest ( double amount ) {
-        return amount + (amount * 0.2);
     }
 
     String approvedMessage = "Loan approved";

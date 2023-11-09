@@ -5,4 +5,4 @@ Falta:
 - mejorar títulos de las paginas
 
 - responsive index
-- armar 2 querys
+- agregar monto disponible en transactions

@@ -9,10 +9,11 @@ createApp({
         accounts: [],
         loading: false,
         showForm1: true,
-        ammount: 0,
+        amount: 0,
         description: "",
         originAccountNumber: "",
         destinyAccountNumber: "",
+        selectedOriginAccount: []
     };
   },
   created() {
@@ -49,7 +50,7 @@ createApp({
     },
     sendTransaction( ){
       axios
-      .post('http://localhost:8080/api/transactions', `ammount=${this.ammount}&description=${this.description}&originAccountNumber=${this.originAccountNumber}&destinyAccountNumber=${this.destinyAccountNumber}`)
+      .post('http://localhost:8080/api/transactions', `amount=${this.amount}&description=${this.description}&originAccountNumber=${this.originAccountNumber}&destinyAccountNumber=${this.destinyAccountNumber}`)
       .then((response) => {
         console.log('transaction sent')
         Swal.fire({
@@ -63,7 +64,6 @@ createApp({
         location.pathname = '/web/accounts.html'
       })
       .catch(error => {
-        console.log(`ammount=${this.ammount}&description=${this.description}&originAccountNumber=${this.originAccountNumber}&destinyAccountNumber=${this.destinyAccountNumber}`)
         console.log(error);
         this.errorMessage(error.response.data)
       })
@@ -79,4 +79,9 @@ createApp({
     });
     }
   },
+  watch: {
+    originAccountNumber() {
+      this.selectedOriginAccount = this.accounts.filter(account => account.number === this.originAccountNumber);
+    }
+  }
 }).mount('#app');

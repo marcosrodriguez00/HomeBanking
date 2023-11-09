@@ -96,8 +96,11 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">$</span>
-                            <input type="number" v-model="ammount" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                            <input type="number" v-model="amount" class="form-control" aria-label="Amount (to the nearest dollar)" required>
                             <span class="input-group-text">.00</span>
+                        </div>
+                        <div v-if="originAccountNumber != ''" style="color: #FFD700; margin-bottom: 12px;">
+                            <p><i class="bi bi-exclamation-triangle"></i> This account has a balance of ${{numberFormat(selectedOriginAccount[0].balance)}} </p>
                         </div>
                         <div class="d-flex flex-column mb-3">
                             <label for="description" class="form-label">Description</label>
@@ -119,8 +122,11 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">$</span>
-                            <input type="number" v-model="ammount" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                            <input type="number" v-model="amount" class="form-control" aria-label="Amount (to the nearest dollar)" required>
                             <span class="input-group-text">.00</span>
+                        </div>
+                        <div v-if="originAccountNumber != ''" style="color: #FFD700; margin-bottom: 12px;">
+                            <p><i class="bi bi-exclamation-triangle"></i> This account has a balance of ${{numberFormat(selectedOriginAccount[0].balance)}} </p>
                         </div>
                         <div class="d-flex flex-column mb-3">
                             <label for="description" class="form-label">Description</label>

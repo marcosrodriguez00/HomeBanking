@@ -5,14 +5,10 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -20,10 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
+import static com.mindhub.homebanking.utils.LoanUtils.dateFormatter;
 
 @RestController
 @RequestMapping("/api")
@@ -38,32 +33,25 @@ public class TransactionController {
     @Autowired
     ClientService clientService;
 
-    public LocalDateTime dateFormatter (LocalDateTime localDateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = localDateTime.format(formatter);
-
-        return LocalDateTime.parse(formattedDateTime, formatter);
-    }
-
-    @RequestMapping("/transactions")
+    @GetMapping("/transactions")
     public List<TransactionDTO> getAllTransactions() {
         return transactionService.getAllTransactionDTO();
     }
 
-    @RequestMapping("/transactions/{id}")
+    @GetMapping("/transactions/{id}")
     public TransactionDTO getTransaction(@PathVariable Long id) {
         return transactionService.getTransactionDTO(id);
     }
 
     @Transactional
-    @RequestMapping(path = "/transactions", method = RequestMethod.POST)
+    @PostMapping(path = "/transactions")
     public ResponseEntity<Object> transaction (
             Authentication authentication,
-            @RequestParam Double ammount, @RequestParam String description,
+            @RequestParam Double amount, @RequestParam String description,
             @RequestParam String originAccountNumber, @RequestParam String destinyAccountNumber) {
 
         // ver que no falte ningun parametro escencial
-        if ( ammount.isNaN() ) {
+        if ( amount.isNaN() ) {
             return new ResponseEntity<>("Missing an amount to transfer", HttpStatus.FORBIDDEN);
         }
 
@@ -105,7 +93,7 @@ public class TransactionController {
         }
 
         // checkear que se dispone de monto suficiente
-        if (ammount > originAccount.getBalance()) {
+        if (amount > originAccount.getBalance()) {
             return new ResponseEntity<>("You noy have enough funds for this transaction", HttpStatus.FORBIDDEN);
         }
 
@@ -113,12 +101,12 @@ public class TransactionController {
         String receivedDescription = "Transaction from " + client.fullName() + ", account number " + destinyAccountNumber + ". " + description;
 
         // creo las transacciones
-        Transaction outgoingTransaction = new Transaction( TransactionType.DEBIT, -ammount, sentDescription, dateFormatter(LocalDateTime.now()) );
-        Transaction incomingTransaction = new Transaction( TransactionType.CREDIT, ammount, receivedDescription, dateFormatter(LocalDateTime.now()) );
+        Transaction outgoingTransaction = new Transaction( TransactionType.DEBIT, -amount, sentDescription, dateFormatter(LocalDateTime.now()) );
+        Transaction incomingTransaction = new Transaction( TransactionType.CREDIT, amount, receivedDescription, dateFormatter(LocalDateTime.now()) );
 
         // cambio los balances de las cuentas
-        originAccount.setBalance(originAccount.getBalance() - ammount);
-        destinyAccount.setBalance(destinyAccount.getBalance() + ammount);
+        originAccount.setBalance(originAccount.getBalance() - amount);
+        destinyAccount.setBalance(destinyAccount.getBalance() + amount);
 
         // agrego las trasnacciones
         originAccount.addTransaction(outgoingTransaction);

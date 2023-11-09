@@ -45,6 +45,8 @@
     text-align: center;
     background-color: rgba(255, 255, 255, 0.5);
     padding: 10px;
+    border-radius: 8px;
+    text-shadow: 4px 4px 8px #272137;
 }
 
 .h3Color {
@@ -149,6 +151,11 @@ a {
 @media (max-width: 990px) {
     .nav-item {
         transition: none;
+        gap: 13px;
+    }
+
+    .navbarFont{
+      align-items: center;
     }
     
     /* Aplicar la transformación al hacer hover en el elemento */
@@ -160,6 +167,14 @@ a {
 .titleSection {
     min-height: 40vh;
     background-image: url(https://images.pexels.com/photos/210643/pexels-photo-210643.jpeg);
+    background-size: cover; /* La imagen de fondo se ajusta al tamaño de la ventana del navegador */
+    background-repeat: no-repeat; /* Evita la repetición de la imagen */
+    background-position: center center;
+}
+
+.titleSectionLoans {
+    min-height: 40vh;
+    background-image: url(../resources/Images/mortgageLoan.jpg);
     background-size: cover; /* La imagen de fondo se ajusta al tamaño de la ventana del navegador */
     background-repeat: no-repeat; /* Evita la repetición de la imagen */
     background-position: center center;
@@ -324,7 +339,7 @@ a {
 @media (max-width: 1010px) and (min-width: 900px) {
     .login-box {
         left: 50%;
-        width: 50vh;
+        width: 80%;
     }
 
     .login-box .user-box label {
@@ -347,7 +362,7 @@ a {
 
 }
 
-@media (min-width: 450px) and (max-width: 900px) {
+@media (min-width: 370px) and (max-width: 900px) {
     .login-box {
         height: 90vh !important;
     }
@@ -358,6 +373,10 @@ a {
 
     .loginRedirect {
         font-size: large;
+    }
+
+    .logoSize {
+      max-width: 70%;
     }
 }
 
