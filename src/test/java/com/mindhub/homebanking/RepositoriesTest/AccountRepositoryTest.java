@@ -39,15 +39,13 @@ public class AccountRepositoryTest {
 
     @Test
     public void accountStartsWithVIN() {
-
+        assertThat(accounts,hasItem(hasProperty("number", startsWith("VIN"))));
     }
 
     @Test
     public void accountsHavePositiveBalance() {
-        assertThat(accounts, hasItem(hasProperty("balance", greaterThanOrEqualTo(0))));
+        assertThat(accounts, hasItem(hasProperty("balance", greaterThanOrEqualTo(0.0))));
     }
 
-    //greaterThanOrEqualTo
-    //assertThat(new BigDecimal("10.01"), greaterThanOrEqualTo(new BigDecimal("9.02")));
 
 }

@@ -23,12 +23,17 @@ public class TransactionRepositoryTest {
     private List<Transaction> transactions;
 
     @BeforeEach
-    public void getAccounts() {
+    public void getTransactions() {
         transactions = transactionRepository.findAll();
     }
 
     @Test
-    public void existsAccounts() {
+    public void existsTransactions() {
         assertThat(transactions, is(not(empty())));
+    }
+
+    @Test
+    public void transactionHasPositiveAmount() {
+        assertThat(transactions, hasItem(hasProperty("amount", greaterThan(0.0))));
     }
 }

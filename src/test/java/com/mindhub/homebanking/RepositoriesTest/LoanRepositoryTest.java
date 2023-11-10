@@ -24,12 +24,27 @@ public class LoanRepositoryTest {
     private List<Loan> loans;
 
     @BeforeEach
-    public void getAccounts() {
+    public void getLoans() {
         loans = loanRepository.findAll();
     }
 
     @Test
-    public void existsAccounts() {
+    public void existsLoans() {
         assertThat(loans, is(not(empty())));
+    }
+
+    @Test
+    public void existsPersonalLoan () {
+        assertThat(loans, hasItem(hasProperty("name", equalTo("Personal"))));
+    }
+
+    @Test
+    public void existsCarLoan () {
+        assertThat(loans, hasItem(hasProperty("name", equalTo("Car"))));
+    }
+
+    @Test
+    public void existsMortgageLoan () {
+        assertThat(loans, hasItem(hasProperty("name", equalTo("Mortgage"))));
     }
 }

@@ -24,12 +24,22 @@ public class ClientRepositoryTest {
     private List<Client> clients;
 
     @BeforeEach
-    public void getAccounts() {
+    public void getClients() {
         clients = clientRepository.findAll();
     }
 
     @Test
-    public void existsAccounts() {
+    public void existsClients() {
         assertThat(clients, is(not(empty())));
+    }
+
+    @Test
+    public void clientsHaveId() {
+        assertThat(clients, hasItem(hasProperty("id")));
+    }
+
+    @Test
+    public void clientsHaveAccounts() {
+        assertThat(clients, hasItem(hasProperty("accounts", notNullValue())));
     }
 }
