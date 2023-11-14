@@ -6,3 +6,5 @@ Falta:
 
 - responsive index
 - agregar monto disponible en transactions
+
+- como hacer para que filtre los loans no activos

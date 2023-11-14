@@ -11,7 +11,7 @@ public final class LoanUtils {
         return LocalDateTime.parse(formattedDateTime, formatter);
     }
 
-    public static double addInterest ( double amount ) {
-        return amount + (amount * 0.2);
+    public static double addInterest ( double amount, double interestRate ) {
+        return amount + (amount * interestRate);
     }
 }

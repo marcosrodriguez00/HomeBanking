@@ -28,6 +28,7 @@ class WebAuthorization extends WebSecurityConfigurerAdapter { // depricated
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                 // permisos de admin
                 .antMatchers("/rest/**", "/api/clients").hasAuthority("ADMIN")
+                .antMatchers("/web/admin/**").hasAuthority("ADMIN")
                 // permisos para el cliente
                 .antMatchers(HttpMethod.GET, "/api/clients/currents").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/clients/currents").authenticated()

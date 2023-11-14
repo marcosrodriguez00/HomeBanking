@@ -9,6 +9,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
         crossorigin="anonymous"
     />
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <link rel="shortcut icon" href="../resources/Images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <title>BankHub | Cards</title>
@@ -51,6 +52,7 @@
         </header>
         <main>
             <div class="mainColor">
+                <!--Modals-->
                 <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
                         <div class="modal-content">
@@ -68,19 +70,52 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal fade" id="cardDeleteConfirmation" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalTitleId">Delete card</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete this card?</p>
+                                <p>Card number: {{selectedCardNumberForDelete}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" @click="deleteCard">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modals-->
                 <section class="d-flex justify-content-center align-items-center pt-3 titleSectionCards">
                     <h1 class="h1Color">Cards</h1>
                 </section>
-                <div  class="d-flex justify-content-center">
-                    <a href="create-card.html"><button class="btn btn_color">New Card</button></a>
+                <div class="d-flex justify-content-center align-items-center flex-column">
+                    <h2 style="color: white;">Cards manager:</h2>
+                    <div class="d-flex justify-content-center align-items-center gap-5">
+                       <div>
+                            <a href="create-card.html"><button class="btn btn_color">New Card</button></a>    
+                        </div>
+                        <div>
+                            <form class="d-flex flex-column gap-2 w-100" style="width: 500px;">
+                                <label for="cardToDelete" style="color: white;">Select your card</label>
+                                <select id="cardToDelete" name="cardToDelete" v-model="selectedCardNumberForDelete">
+                                <option v-for="card of client.cards" :value="card.number">{{card.number}}</option>
+                                </select>
+                                <button v-if="selectedCardNumberForDelete != ''" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cardDeleteConfirmation">Delete this card</button>
+                            </form>
+                        </div>
+                    </div>
+                    
                 </div>
 
                 <section>
-                    <div>
-                        {{thereIsCredit()}}
+                    <div style="min-height: 40vh;">
                         <h4 class="ms-5" style="color: white;">Credit:</h4>
-                        <div v-for="card of client.cards" >
-                            <div class="container d-flex gap-5 no-wrap" v-if="debitOrCredit(card) === 'CREDIT'" >
+                        <div v-for="card of creditCards">
+                            <div class="container d-flex gap-5 no-wrap">
                                 <div class="card" style="background-color: var(--maincolor) !important;">
                                     <div class="card-inner">
                                         <div class="front" :style="getCardGradient(card.color)">
@@ -103,6 +138,9 @@
                                                 <p style="width: fit-content; color: white;">{{card.cardholder}}</p>
                                                 <p style="width: fit-content; color: white;">{{dateFormat(card.thruDate)}}</p>
                                             </div>
+                                            <div v-if="!isCardExpired(card.thruDate)" class="row justify-content-center align-items-center">
+                                                <p style="color: red; font-weight: bold;"><i style="color: red; font-weight: bold;" class="bi bi-exclamation-triangle"></i> EXPIRED </p>
+                                            </div>
                                         </div>
                                         <div class="back" :style="getCardGradient(card.color)">
                                             <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
@@ -118,18 +156,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="isCredit === false" class="p-4 d-flex justify-content-center">
+                            <div v-if="cardsCountIs0(creditCards)" class="p-4 d-flex justify-content-center">
                                 <h3 style="color: white;"><b>There are no cards.</b></h3>
                             </div>
                         </div>
                         
                     </div>
                     
-                    <div>
-                        {{thereIsDebit()}}
+                    <div style="min-height: 40vh;">
                         <h4 class="ms-5" style="color: white;">Debit:</h4>
-                        <div v-for="card of client.cards">
-                            <div class="container d-flex gap-5 no-wrap" v-if="debitOrCredit(card) === 'DEBIT'">
+                        <div v-for="card of debitCards">
+                            <div class="container d-flex gap-5 no-wrap">
                                 <div class="card" style="background-color: var(--maincolor) !important;">
                                     <div class="card-inner">
                                         <div class="front" :style="getCardGradient(card.color)">
@@ -152,6 +189,9 @@
                                                 <p style="width: fit-content; color: white;">{{card.cardholder}}</p>
                                                 <p style="width: fit-content; color: white;">{{dateFormat(card.thruDate)}}</p>
                                             </div>
+                                            <div v-if="!isCardExpired(card.thruDate)" class="row justify-content-center align-items-center">
+                                                <p style="color: red; font-weight: bold;"><i style="color: red; font-weight: bold;" class="bi bi-exclamation-triangle"></i> EXPIRED </p>
+                                            </div>
                                         </div>
                                         <div class="back" :style="getCardGradient(card.color)">
                                             <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
@@ -167,7 +207,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="isDebit === false" class="p-4 d-flex justify-content-center">
+                            <div v-if="cardsCountIs0(debitCards) === true" class="p-4 d-flex justify-content-center">
                                 <h3 style="color: white;"><b>There are no cards.</b></h3>
                             </div>
                         </div>
@@ -202,6 +242,7 @@
 ></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script src="../resources/cards.js"></script>
 </body>
 </html>

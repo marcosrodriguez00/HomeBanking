@@ -31,12 +31,18 @@ public class Account {
 
     private LocalDate creationDate;
 
+    private boolean isActive;
+
+    private AccountType accountType;
+
     public Account(){}
 
-    public Account(String number, double balance, LocalDate creationDate){
+    public Account(String number, double balance, LocalDate creationDate, AccountType accountType){
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
+        this.isActive = true;
+        this.accountType = accountType;
     }
 
     public long getId() {
@@ -83,5 +89,21 @@ public class Account {
 
     public Set<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 }

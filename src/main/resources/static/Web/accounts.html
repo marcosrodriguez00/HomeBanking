@@ -74,6 +74,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="modal fade" id="createAccountModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
                         <div class="modal-content">
@@ -92,6 +93,40 @@
                     </div>
                 </div>
                 
+                <div class="modal fade" id="accountTypeSelection" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="accountTypeSelectionLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="accountTypeSelectionLabel">Account type</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="d-flex justify-content-around">
+                                    <label>
+                                        <input type="radio" name="cuenta" value="SAVINGS" v-model="newAccountType">
+                                        <div class="option">
+                                            <i class="bi bi-piggy-bank"></i>
+                                            <p>Savings</p>
+                                        </div>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="cuenta" value="CHECKING" v-model="newAccountType">
+                                        <div class="option">
+                                            <i class="bi bi-cash-coin"></i>
+                                            <p>Checking</p>
+                                        </div>
+                                    </label>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" @click="createAccount">Open account</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal-->
+                
                 <section class="d-flex justify-content-center align-items-center pt-3 titleSection">
                     <h1 class="h1Color">Welcome, {{client.firstName}}!</h1>
                 </section>
@@ -107,7 +142,7 @@
                                     <div class="cardInfoContainer ps-3">
                                         <i class="bi bi-bank" style="font-size: 2.1rem;"></i>
                                         <div class="d-flex flex-column" style="white-space: nowrap;">
-                                            <p style="font-size: 20px !important;"><b>Account number:</b></p>
+                                            <p style="font-size: 20px !important;"><b>{{account.accountType}} ACCOUNT</b></p>
                                             <p style="font-size: 25px !important;"><b>#{{account.number}}</b></p>
                                         </div>
                                     </div>
@@ -131,7 +166,9 @@
                         </div>
                     </div>
                     <div v-if="client.accounts.length != 3" class="d-flex justify-content-center">
-                        <button class="btn btn_color" data-bs-toggle="modal" data-bs-target="#createAccountModal">Create a new account</button>
+                        <button type="button" class="btn btn_color" data-bs-toggle="modal" data-bs-target="#accountTypeSelection">
+                            Open a new account
+                        </button>
                     </div>
                 
                 </section>
@@ -139,6 +176,9 @@
                 <section>
                     <div class="d-flex justify-content-center h3Color mt-5 mb-5">
                         <h3>Loans</h3> 
+                    </div>
+                    <div v-if="client.loans.length == 0" class="d-flex justify-content-center pb-5" style="color: white;">
+                        <p>You haven't requested any loans</p>
                     </div>
                     <!-- Loan Card -->
                     <div class="d-flex justify-content-center flex-wrap">
@@ -149,8 +189,7 @@
                                     <div class="cardInfoContainer ps-3">
                                         <i class="bi bi-coin" style="font-size: 2.1rem;"></i>
                                         <div class="d-flex flex-column" style="white-space: nowrap;">
-                                            <p style="font-size: 20px;"><b>Loan type:</b></p>
-                                            <p style="font-size: 25px;"><b>{{loan.name}}</b></p>
+                                            <p style="font-size: 25px;"><b>{{loan.name}} loan</b></p>
                                         </div>
                                     </div>
                                     <div class="cardInfoContainer align-self-end">

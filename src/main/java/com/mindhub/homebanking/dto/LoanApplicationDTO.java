@@ -6,15 +6,16 @@ public class LoanApplicationDTO {
 
     private int payments;
 
-    private double amount;
+    private double amount, interestRate;
 
     private String destinyAccountNumber;
 
-    public LoanApplicationDTO(long loanId, int payments, double amount, String destinyAccountNumber) {
+    public LoanApplicationDTO(long loanId, int payments, double amount, String destinyAccountNumber, double interestRate) {
         this.loanId = loanId;
         this.payments = payments;
         this.amount = amount;
         this.destinyAccountNumber = destinyAccountNumber;
+        this.interestRate = interestRate;
     }
 
     public long getId() {
@@ -31,5 +32,9 @@ public class LoanApplicationDTO {
 
     public String getDestinyAccountNumber() {
         return destinyAccountNumber;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
     }
 }

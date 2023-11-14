@@ -380,6 +380,10 @@ a {
     }
 }
 
+.table td {
+  word-wrap: break-word; /* Romper palabras largas */
+}
+
 /* Diseño de las tarjetas */
 
 .container {
@@ -504,6 +508,13 @@ a {
 
 .card:active .card-inner {
     transform: rotateY(-180deg);
+}
+
+.expiredCard {
+  color: red;
+  background-color: black;
+  font-weight: bold;
+  font-size: inherit;
 }
 
 /* Card Creation form */
@@ -750,7 +761,7 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 27rem;
+  width: 29rem;
   height: 15rem;
   color: white !important;
   font-size: 1.2rem !important;
@@ -966,4 +977,31 @@ p {
 
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
 
+}
+
+/* MODAL DE CREACION DE CUENTAS */
+
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+}
+
+.option:hover {
+  background-color: #f0f0f0;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"]:checked + .option {
+  background-color: #cce5ff;
+  border: 2px solid #007bff;
 }

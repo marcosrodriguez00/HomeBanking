@@ -56,4 +56,11 @@ public class AccountImplement implements AccountService {
     public AccountDTO getAccountDTOByNumber(String accountNumber) {
         return new AccountDTO(getAccountByNumber(accountNumber));
     }
+
+    @Override
+    public void deleteAccountByNumber(String accountNumber) {
+        Account account = getAccountByNumber(accountNumber);
+        account.setActive(false);
+        saveAccount(account);
+    }
 }

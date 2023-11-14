@@ -74,7 +74,7 @@ public class TransactionController {
         }
 
         // agregar limitiacion de longitud a la description
-        if (description.length() > 250) {
+        if (description.length() > 101) {
             return new ResponseEntity<>("The description is too long (can´t be longer than 250 characters)", HttpStatus.FORBIDDEN);
         }
 
@@ -98,7 +98,7 @@ public class TransactionController {
         }
 
         String sentDescription = originAccountNumber + " " + description;
-        String receivedDescription = "Transaction from " + client.fullName() + ", account number " + destinyAccountNumber + ". " + description;
+        String receivedDescription = "Transaction from " + client.fullName() + ", account number " + originAccountNumber + ". " + description;
 
         // creo las transacciones
         Transaction outgoingTransaction = new Transaction( TransactionType.DEBIT, -amount, sentDescription, dateFormatter(LocalDateTime.now()) );
@@ -107,6 +107,8 @@ public class TransactionController {
         // cambio los balances de las cuentas
         originAccount.setBalance(originAccount.getBalance() - amount);
         destinyAccount.setBalance(destinyAccount.getBalance() + amount);
+        outgoingTransaction.setCurrentBalance(originAccount.getBalance());
+        incomingTransaction.setCurrentBalance(destinyAccount.getBalance());
 
         // agrego las trasnacciones
         originAccount.addTransaction(outgoingTransaction);

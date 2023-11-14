@@ -17,4 +17,6 @@ public interface TransactionService {
     TransactionDTO getTransactionDTO(Long id);
 
     void saveTransaction(Transaction transaction);
+
+    void deleteTransactions(String accountNumber);
 }

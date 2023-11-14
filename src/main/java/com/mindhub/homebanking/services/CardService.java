@@ -19,9 +19,14 @@ public interface CardService {
 
     List<Card> getAllCards();
 
-    Boolean existsCardByTypeAndColorAndClient(CardType cardType, CardColor cardColor, Client client);
+    Boolean existsCardByTypeAndColorAndClientAndIsActive(CardType cardType, CardColor cardColor, Client client, boolean isActive);
 
     Boolean existsCardByNumber(String cardNumber);
 
     void saveCard(Card card);
+
+    Card getCardByNumber(String number);
+
+    void deleteCardByNumber(String number);
+
 }

@@ -46,6 +46,37 @@ createApp({
           location.pathname = '/index.html';
       })
     },
+    deleteAccount(){
+      axios
+      .post('/api/clients/current/accounts/delete', `accountNumber=${this.account.number}`)
+      .then((response) => {
+        console.log("Account deleted: " + response)
+        Swal.fire({
+            icon: "success",
+            title: "Account deleted",
+            text: "Account deleted",
+            color: "#fff",
+            background: "#1c2754",
+            confirmButtonColor: "#17acc9",
+        });
+        location.href = 'http://localhost:8080/web/accounts.html'
+      })
+      .catch((error) => {
+          console.log(error);
+          this.errorMessage(error.response.data);
+      })
+    },
+    
+    errorMessage(message) {
+      Swal.fire({
+        icon: "error",
+        title: "An error has occurred",
+        text: message,
+        color: "#fff",
+        background: "#1c2754",
+        confirmButtonColor: "#17acc9",
+    });
+  },
   },
   computed: {
   }

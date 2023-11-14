@@ -57,7 +57,8 @@ createApp({
             loanId: this.currentLoan.id,
             amount: this.amount,
             payments: this.payments,
-            destinyAccountNumber: this.destinyAccountNumber
+            destinyAccountNumber: this.destinyAccountNumber,
+            interestRate: this.currentLoan.interestRate
         }
       axios.post('/api/loans', loanBody)
         .then((response) => {
@@ -89,7 +90,7 @@ createApp({
   },
   computed: {
     paymentAmount() {
-      return (this.amount * 1.2) / this.payments
+      return (this.amount * this.currentLoan.interestRate) / this.payments
     }
   }
 }).mount('#app');

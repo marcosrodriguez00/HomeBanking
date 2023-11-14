@@ -42,8 +42,8 @@ public class CardImplement implements CardService {
     }
 
     @Override
-    public Boolean existsCardByTypeAndColorAndClient(CardType cardType, CardColor cardColor, Client client) {
-        return cardRepository.existsByTypeAndColorAndClient(cardType, cardColor, client);
+    public Boolean existsCardByTypeAndColorAndClientAndIsActive(CardType cardType, CardColor cardColor, Client client, boolean isActive) {
+        return cardRepository.existsByTypeAndColorAndClientAndIsActive(cardType, cardColor, client, isActive);
     }
 
     @Override
@@ -54,5 +54,17 @@ public class CardImplement implements CardService {
     @Override
     public void saveCard(Card card) {
         cardRepository.save(card);
+    }
+
+    @Override
+    public Card getCardByNumber(String number) {
+        return cardRepository.findByNumber(number);
+    }
+
+    @Override
+    public void deleteCardByNumber(String number) {
+        Card card = getCardByNumber(number);
+        card.setActive(false);
+        saveCard(card);
     }
 }

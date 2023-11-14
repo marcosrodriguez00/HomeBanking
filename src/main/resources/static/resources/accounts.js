@@ -7,7 +7,8 @@ createApp({
   data() {
     return {
         client: [],
-        loading: true
+        loading: true,
+        newAccountType: ""
     };
   },
 
@@ -47,7 +48,7 @@ createApp({
     },
     createAccount() {
       axios
-      .post('/api/clients/current/accounts')
+      .post('/api/clients/current/accounts', `accountType=${this.newAccountType}`)
       .then(response => {
         location.pathname = '/web/accounts.html'
         Swal.fire({

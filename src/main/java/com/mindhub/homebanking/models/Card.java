@@ -23,6 +23,8 @@ public class Card {
 
     private LocalDate thruDate, fromDate;
 
+    private boolean isActive;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
@@ -39,6 +41,7 @@ public class Card {
         this.color = color;
         this.thruDate = thruDate;
         this.fromDate = fromDate;
+        this.isActive = true;
     }
 
     // METHODS
@@ -108,4 +111,12 @@ public class Card {
     public Client getClient() { return client; }
 
     public void setClient(Client client) { this.client = client; }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }

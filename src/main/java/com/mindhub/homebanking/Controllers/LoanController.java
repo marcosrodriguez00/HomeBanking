@@ -2,6 +2,7 @@ package com.mindhub.homebanking.Controllers;
 
 import com.mindhub.homebanking.dto.LoanApplicationDTO;
 import com.mindhub.homebanking.dto.LoanDTO;
+import com.mindhub.homebanking.dto.NewLoanDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +86,7 @@ public class LoanController {
             return new ResponseEntity<>("The account you inserted does not belong to you!", HttpStatus.FORBIDDEN);
         }
 
-        ClientLoan clientLoan = new ClientLoan( addInterest(loanApplication.getAmount()), loanApplication.getPayments() );
+        ClientLoan clientLoan = new ClientLoan( addInterest(loanApplication.getAmount(), loanApplication.getInterestRate() ), loanApplication.getPayments() );
         client.addClientLoan( clientLoan );
         loan.addClientLoan( clientLoan );
 
@@ -98,5 +99,50 @@ public class LoanController {
         accountService.saveAccount( account );
 
         return new ResponseEntity<>("Loan created successfully",HttpStatus.CREATED);
+    }
+
+    @PostMapping("/loans/create")
+    public ResponseEntity<Object> createNewLoan(@RequestBody NewLoanDTO newLoanDTO) {
+
+        // verificar que los campos no esten vacios / menores a 0
+        if (newLoanDTO.getName().isBlank()){
+            return new ResponseEntity<>("The name cannot be empty", HttpStatus.FORBIDDEN);
+        }
+
+        if (newLoanDTO.getInterestRate() <= 0) {
+            return new ResponseEntity<>("The interest rate cannot be lower or equal to 0", HttpStatus.FORBIDDEN);
+        }
+
+        if (newLoanDTO.getPayments().isEmpty()) {
+            return new ResponseEntity<>("There has to be an amount of available payments", HttpStatus.FORBIDDEN);
+        }
+
+        if (newLoanDTO.getMaxAmount() <= 0) {
+            return new ResponseEntity<>("The max amount cannot be less or equal to 0", HttpStatus.FORBIDDEN);
+        }
+
+        // verificar que no exista un prestamo con el mismo nombre
+        if ( loanService.existsLoanByName(newLoanDTO.getName())) {
+            return new ResponseEntity<>("A loan with the same name already exists", HttpStatus.FORBIDDEN);
+        }
+
+        Loan loan = new Loan(newLoanDTO.getName(), newLoanDTO.getMaxAmount(), newLoanDTO.getPayments(), newLoanDTO.getInterestRate());
+
+        loanService.saveLoan(loan);
+
+        return new ResponseEntity<>("Loan created", HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/loans/delete")
+    public ResponseEntity<Object> deactivateLoan (@RequestParam long loanId) {
+
+        // verificar que exista el prestamo
+        if ( !loanService.existsLoanById(loanId) ) {
+            return new ResponseEntity<>("This loan doesn't exist", HttpStatus.FORBIDDEN);
+        }
+
+        loanService.deleteLoanById(loanId);
+
+        return new ResponseEntity<>("Loan deactivated", HttpStatus.ACCEPTED);
     }
 }

@@ -23,4 +23,6 @@ public interface AccountService {
     Account getAccountByNumber(String accountNumber);
 
     AccountDTO getAccountDTOByNumber(String accountNumber);
+
+    void deleteAccountByNumber(String accountNumber);
 }

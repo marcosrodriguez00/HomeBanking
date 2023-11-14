@@ -20,7 +20,9 @@ public class Loan {
 
     private String name;
 
-    private double maxAmount;
+    private double maxAmount, interestRate;
+
+    private boolean isActive;
 
     @ElementCollection
     private List<Integer> payments;
@@ -30,10 +32,12 @@ public class Loan {
 
     public Loan() {}
 
-    public Loan(String name, double maxAmount, List<Integer> payments){
+    public Loan(String name, double maxAmount, List<Integer> payments, double interestRate){
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+        this.interestRate = interestRate;
+        this.isActive = true;
     }
 
     public long getId() {
@@ -76,5 +80,21 @@ public class Loan {
             clients.add(clientLoan.getClient());
         }
         return clients;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

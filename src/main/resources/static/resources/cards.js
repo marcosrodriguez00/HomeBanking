@@ -9,6 +9,9 @@ createApp({
         loading: true,
         isDebit: false,         // Estas indicaran si hay o 
         isCredit: false,        // no tarjetas de este tipo
+        debitCards: [],
+        creditCards: [],
+        selectedCardNumberForDelete: ""
     };
   },
   created() {
@@ -17,6 +20,11 @@ createApp({
         .then((response) => {
             this.client = response.data;
             setTimeout(() => this.loading = false, 300);
+            console.log(this.client)
+            this.debitCards = this.client.cards.filter(card => card.type === "DEBIT")
+            this.creditCards = this.client.cards.filter(card => card.type === "CREDIT")
+            console.log(this.creditCards)
+            console.log(this.debitCards)
         })
         .catch((error) => console.log(error))
   },
@@ -52,19 +60,17 @@ createApp({
             return "DEBIT";
         }
     },
-    thereIsDebit() {
-        if (this.client.cards.some(card => card.type === "DEBIT")) {
-          console.log("Debit card found");
-          this.isDebit = true;
-        }
-      },
-      thereIsCredit() {
-        if (this.client.cards.some(card => card.type === "CREDIT")) {
-          console.log("Credit card found");
-          this.isCredit = true;
-        }
-      },
-      getCardGradient(color) {
+
+    cardsCountIs0(cards){
+      if(cards.length === 0){
+        return true;
+      }
+      else{
+        return false;   
+      }
+    },
+
+    getCardGradient(color) {
         if (color === 'TITANIUM') {
             return { 'background-image': 'linear-gradient(45deg, #111111, #222222)' };
         } else if (color === 'GOLD') {
@@ -72,17 +78,58 @@ createApp({
         } else if (color === 'SILVER') {
             return { 'background-image': 'linear-gradient(45deg, #C0C0C0, #808080)' };
         }
-      },
-      logout() {
+    },
+
+    logout() {
         axios
         .post('http://localhost:8080/api/logout')
         .then((response) => {
             console.log('logged out');
             location.pathname = '/index.html';
         })
-      },
-  },
-  computed: {
+    },
 
+    deleteCard() {
+      axios
+      .post('/api/clients/current/cards/delete', `cardNumber=${this.selectedCardNumberForDelete}`)
+      .then((response) => {
+        console.log("Card deleted: " + response)
+        Swal.fire({
+            icon: "success",
+            title: "Card deleted",
+            text: "Card deleted",
+            color: "#fff",
+            background: "#1c2754",
+            confirmButtonColor: "#17acc9",
+        });
+        location.href = 'http://localhost:8080/web/cards.html'
+      })
+      .catch((error) => {
+          console.log(error);
+          this.errorMessage(error.response.data);
+      })
+    },
+
+    errorMessage(message) {
+        Swal.fire({
+          icon: "error",
+          title: "An error has occurred",
+          text: message,
+          color: "#fff",
+          background: "#1c2754",
+          confirmButtonColor: "#17acc9",
+      });
+    },
+
+    isCardExpired(expirationDate){
+      let todayDate = new Date();
+      let cardExpiryDate = new Date(expirationDate);
+      if (cardExpiryDate > todayDate) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
   }
 }).mount('#app');

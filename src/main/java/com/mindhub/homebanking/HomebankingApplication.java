@@ -37,15 +37,15 @@ public class HomebankingApplication {
 //
 //			LocalDate today = LocalDate.now();
 //			LocalDate tomorrow = today.plusDays(1);
-//			Account cuenta1 = new Account("VIN001", 5000, today);
-//			Account cuenta2 = new Account("VIN002", 7500, tomorrow);
+//			Account cuenta1 = new Account("VIN001", 5000, today, AccountType.SAVINGS);
+//			Account cuenta2 = new Account("VIN002", 7500, tomorrow, AccountType.CHECKING);
 //			melba.addAccount(cuenta1);
 //			melba.addAccount(cuenta2);
 //			accountRepository.save(cuenta1);
 //			accountRepository.save(cuenta2);
 //
-//			Account cuenta3 = new Account("VIN003", 100000, today);
-//			Account cuenta4 = new Account("VIN004", 200000, tomorrow);
+//			Account cuenta3 = new Account("VIN003", 100000, today, AccountType.SAVINGS);
+//			Account cuenta4 = new Account("VIN004", 200000, tomorrow, AccountType.CHECKING);
 //			marcos.addAccount(cuenta3);
 //			marcos.addAccount(cuenta4);
 //			accountRepository.save(cuenta3);
@@ -60,7 +60,10 @@ public class HomebankingApplication {
 //			Transaction transaction2 = new Transaction(CREDIT, 5000, "Pago Colegio", formattedLocalDateTime);
 //			Transaction transaction3 = new Transaction(DEBIT, -500, "Pago Mindhub", formattedLocalDateTime);
 //			Transaction transaction4 = new Transaction(CREDIT, 4200, "Pago PASCAL", formattedLocalDateTime);
-//
+//			transaction1.setCurrentBalance(100000);
+//			transaction2.setCurrentBalance(100000);
+//			transaction3.setCurrentBalance(100000);
+//			transaction4.setCurrentBalance(100000);
 //			cuenta1.addTransaction(transaction1);
 //			cuenta1.addTransaction(transaction2);
 //			cuenta3.addTransaction(transaction3);
@@ -71,9 +74,9 @@ public class HomebankingApplication {
 //			transactionRepository.save(transaction3);
 //			transactionRepository.save(transaction4);
 //
-//			Loan prestamo1 = new Loan("Mortgage", 500000, List.of(12, 24, 36, 48, 60));
-//			Loan prestamo2 = new Loan("Personal", 100000, List.of(6, 12, 24));
-//			Loan prestamo3 = new Loan("Car", 300000, List.of(6, 12, 24, 36));
+//			Loan prestamo1 = new Loan("Mortgage", 500000, List.of(12, 24, 36, 48, 60), 0.2);
+//			Loan prestamo2 = new Loan("Personal", 100000, List.of(6, 12, 24), 0.3);
+//			Loan prestamo3 = new Loan("Car", 300000, List.of(6, 12, 24, 36), 0.25);
 //
 //			loanRepository.save(prestamo1);
 //			loanRepository.save(prestamo2);

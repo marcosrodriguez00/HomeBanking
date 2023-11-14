@@ -25,7 +25,7 @@ public class LoanImplement implements LoanService {
 
     @Override
     public List<LoanDTO> getAllLoanDTO() {
-        return getAllLoans().stream().map(LoanDTO::new).collect(toList());
+        return getAllLoans().stream().filter(Loan::isActive).map(LoanDTO::new).collect(toList());
     }
 
     @Override
@@ -41,5 +41,22 @@ public class LoanImplement implements LoanService {
     @Override
     public void saveLoan(Loan loan) {
         loanRepository.save(loan);
+    }
+
+    @Override
+    public boolean existsLoanByName(String name) {
+        return loanRepository.existsByName(name);
+    }
+
+    @Override
+    public void deleteLoanById(long id) {
+        Loan loan = getLoanById(id);
+        loan.setActive(false);
+        saveLoan(loan);
+    }
+
+    @Override
+    public boolean existsLoanById(long id) {
+        return loanRepository.existsById(id);
     }
 }

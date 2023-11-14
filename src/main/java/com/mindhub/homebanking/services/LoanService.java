@@ -16,4 +16,10 @@ public interface LoanService {
     LoanDTO getLoanDTOById(Long id);
 
     void saveLoan(Loan loan);
+
+    boolean existsLoanByName(String name);
+
+    void deleteLoanById(long id);
+
+    boolean existsLoanById(long id);
 }

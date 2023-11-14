@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.dto;
 
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,12 +25,18 @@ public class AccountDTO {
 
     private List<TransactionDTO> transactions;
 
+    private boolean isActive;
+
+    private AccountType accountType;
+
     public AccountDTO(Account account) {
         this.id = account.getId();
         this.number = account.getNumber();
         this.balance = account.getBalance();
         this.creationDate = account.getCreationDate();
-        this.transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
+        this.transactions = account.getTransactions().stream().filter(Transaction::isActive).map(TransactionDTO::new).collect(Collectors.toList());
+        this.isActive = account.isActive();
+        this.accountType = account.getAccountType();
     }
 
     public long getId() {
@@ -50,5 +57,13 @@ public class AccountDTO {
 
     public List<TransactionDTO> getTransactions() {
         return transactions;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
     }
 }

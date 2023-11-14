@@ -42,7 +42,7 @@ public class CardController {
         // guardo la info en el cliente
         Client client = clientService.getClientByEmail(authentication.getName());
 
-        if ( cardService.existsCardByTypeAndColorAndClient(cardType, cardColor, client) ) {
+        if ( cardService.existsCardByTypeAndColorAndClientAndIsActive(cardType, cardColor, client, true) ) {
             return new ResponseEntity<>("You already have that card!", HttpStatus.FORBIDDEN);
         }
 
@@ -60,5 +60,25 @@ public class CardController {
         clientService.saveClient(client);
         cardService.saveCard(card);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/clients/current/cards/delete")
+    public ResponseEntity<Object> deactivateCard(Authentication authentication,
+                                                 @RequestParam String cardNumber) {
+        // verificar que exista la tarjeta
+        if ( !cardService.existsCardByNumber(cardNumber) ) {
+            return new ResponseEntity<>("The card does not exist", HttpStatus.FORBIDDEN);
+        }
+
+        Client client = clientService.getClientByEmail(authentication.getName());
+        Card card = cardService.getCardByNumber(cardNumber);
+
+        // verificar que la tarjeta pertenezca al cliente
+        if ( !client.getCards().contains(card) ) {
+            return new ResponseEntity<>("This Card does not belong to you", HttpStatus.FORBIDDEN);
+        }
+
+        cardService.deleteCardByNumber(cardNumber);
+        return new ResponseEntity<>("Card deleted successfully", HttpStatus.CREATED);
     }
 }

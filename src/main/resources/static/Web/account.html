@@ -9,6 +9,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
         crossorigin="anonymous"
     />
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="shortcut icon" href="../resources/Images/favicon.ico" type="image/x-icon">
     <title>Home Banking | Account</title>
@@ -52,6 +53,7 @@
         </header>
         <main>
             <div class="mainColor">
+                <!--Modal-->
                 <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
                         <div class="modal-content">
@@ -69,13 +71,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal fade" id="accountDeleteConfirmation" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalTitleId">Delete card</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete this account?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" @click="deleteAccount">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal-->
                 <section class="d-flex justify-content-center pt-3">
                     <div class="accountCard">
                         <div class="accountCardRow">
                             <div class="cardInfoContainer ps-3">
                                 <i class="bi bi-bank" style="font-size: 2.1rem;"></i>
                                 <div class="d-flex flex-column" style="white-space: nowrap;">
-                                    <p style="font-size: 20px !important;"><b>Account number:</b></p>
+                                    <p style="font-size: 20px !important;"><b>{{account.accountType}} ACCOUNT</b></p>
                                     <p style="font-size: 25px !important;"><b>#{{account.number}}</b></p>
                                 </div>
                             </div>
@@ -94,32 +114,40 @@
                         </div>
                     </div>
                 </section>
-                <section class="m-3">
+                <section class="p-3">
                     <h3 class="h3Color align-self-center">Transactions</h3>
                     <div v-if="transactions.length === 0" class="d-flex justify-content-center mt-5">
                         <p class="noTransaction">There are no transactions.</p>
                     </div>
-                    <table v-else class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Description</th>
-                          </tr>
-                        </thead>
-                        <tbody v-for="transaction in transactions">
-                          <tr>
-                            <th scope="row">{{transaction.id}}</th>
-                            <td>${{numberFormat(Math.abs(transaction.amount))}}</td>
-                            <td :class="{ 'debitType': transaction.type == 'DEBIT', 'creditType': transaction.type == 'CREDIT' }">
-                                {{transaction.type}}</td>
-                            <td>{{transaction.date.replace('T', ' ')}}</td>
-                            <td>{{transaction.description}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div class="d-flex justify-content-center">
+                        <table v-else class="table table-striped w-100" style="max-width: 100vh;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col" style="min-width: 10rem;">Date</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col" style="min-width: 10rem;">Current balance</th>
+                                </tr>
+                            </thead>
+                            <tbody v-for="transaction in transactions">
+                                <tr>
+                                    <!--<th scope="row">{{transaction.id}}</th>-->
+                                    <td>
+                                        {{ transaction.amount < 0 ? '-$' + numberFormat(Math.abs(transaction.amount)) : '$' + numberFormat(transaction.amount) }}
+                                    </td>
+                                    <td :class="{ 'debitType': transaction.type == 'DEBIT', 'creditType': transaction.type == 'CREDIT' }">
+                                        {{transaction.type}}</td>
+                                    <td>{{transaction.date.replace('T', ' ')}}</td>
+                                    <td style="max-width: 40rem;">{{transaction.description}}</td>
+                                    <td>$ {{numberFormat(transaction.currentBalance)}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#accountDeleteConfirmation"><i class="bi bi-trash3"></i> Delete this account</button>
+                    </div>
                 </section>
             </div>
         </main>
@@ -148,6 +176,7 @@
 ></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script src="../resources/account.js"></script>
 </body>
 </html>
