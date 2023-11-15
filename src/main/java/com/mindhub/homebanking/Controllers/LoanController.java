@@ -54,6 +54,12 @@ public class LoanController {
 
         Account account = accountService.getAccountByNumber(loanApplication.getDestinyAccountNumber());
 
+        // verificar que no exista ya un prestamo de ese tipo
+        if ( clientLoanService.existsClientLoanByLoanAndClientAndIsActive(loan, client, true) ) {
+            return new ResponseEntity<>("In order to request another loan of this type, pay in full the one that you already requested",
+                    HttpStatus.FORBIDDEN);
+        }
+
         if ( loanApplication.getDestinyAccountNumber().isBlank() ) {
             return new ResponseEntity<>("Missing an account to take the loan", HttpStatus.FORBIDDEN);
         }
@@ -89,6 +95,7 @@ public class LoanController {
         ClientLoan clientLoan = new ClientLoan( addInterest(loanApplication.getAmount(), loanApplication.getInterestRate() ), loanApplication.getPayments() );
         client.addClientLoan( clientLoan );
         loan.addClientLoan( clientLoan );
+        clientLoan.setEachPaymentAmount( (clientLoan.getAmount() * (1 + clientLoan.getLoan().getInterestRate())) / clientLoan.getPayments() );
 
         clientLoanService.saveClientLoan( clientLoan );
 
@@ -144,5 +151,75 @@ public class LoanController {
         loanService.deleteLoanById(loanId);
 
         return new ResponseEntity<>("Loan deactivated", HttpStatus.ACCEPTED);
+    }
+
+    @Transactional
+    @PostMapping("/loans/pay")
+    public ResponseEntity<Object> payClientLoan(Authentication authentication,
+                                                @RequestParam int amountOfPayments, @RequestParam long clientLoanId,
+                                                @RequestParam String accountNumber) {
+
+        Client client = clientService.getClientByEmail(authentication.getName());
+        ClientLoan clientLoan = clientLoanService.getById(clientLoanId);
+        Account account = accountService.getAccountByNumber(accountNumber);
+
+        // verificar que el clientLoan exista
+        if ( !clientLoanService.existsById( clientLoanId ) ) {
+            return new ResponseEntity<>("The loan does not exist", HttpStatus.FORBIDDEN);
+        }
+
+        // verificar que exista la cuenta
+        if ( !accountService.existsAccountByNumber( accountNumber ) ) {
+            return new ResponseEntity<>("The account you are trying to pay with does not exist", HttpStatus.FORBIDDEN);
+        }
+
+        // verificar que la cuenta pertenezca al cliente
+        if ( !client.getAccounts().contains(account) ) {
+            return new ResponseEntity<>("The account does not belong to this client", HttpStatus.FORBIDDEN);
+        }
+
+        // verificar que la cantidad de cuotas no sea menor a 1
+        if (amountOfPayments < 1) {
+            return new ResponseEntity<>("The amount of payments you want to pay cannot be less than 1", HttpStatus.FORBIDDEN);
+        }
+
+        // verificar que el prestamo aun no se haya terminado de pagar
+        if ( clientLoan.getPayedPayments() == clientLoan.getPayments() ) {
+            return new ResponseEntity<>("This loan has already been paid in full", HttpStatus.FORBIDDEN);
+        }
+
+        // ni mayor a la cantidad de pagos restantes
+        if ( amountOfPayments > clientLoan.getPayments() - clientLoan.getPayedPayments() ) {
+            return new ResponseEntity<>("You are paying more payments than you owe, you only have " + ( clientLoan.getPayments() - clientLoan.getPayedPayments() ) + " payments left", HttpStatus.FORBIDDEN);
+        }
+
+        // verificar que el cliente tenga la cantidad de dinero suficiente en la cuenta
+        if (account.getBalance() < clientLoan.getEachPaymentAmount()*amountOfPayments) {
+            return new ResponseEntity<>("You don't have enough money in this account to pay", HttpStatus.FORBIDDEN);
+        }
+
+        // agregar los pagos al clientLoan y actualizar las cuotas pagadas
+        clientLoan.setPayedPayments( clientLoan.getPayedPayments() + amountOfPayments );
+        clientLoan.setPayedAmount( clientLoan.getPayedAmount() + amountOfPayments * clientLoan.getEachPaymentAmount() );
+
+        // crear la transaccion y agregarla a la cuenta, descontar la plata de la cuenta
+        account.setBalance( account.getBalance() - clientLoan.getEachPaymentAmount()*amountOfPayments );
+
+        String description = clientLoan.getLoan().getName() + " loan payment";
+        Transaction transaction = new Transaction( TransactionType.DEBIT, -(clientLoan.getEachPaymentAmount()*amountOfPayments), description, dateFormatter(LocalDateTime.now()) );
+
+        account.addTransaction(transaction);
+
+        // si todas las cuotas estan pagadas cambiar el booleano
+        if ( clientLoan.getPayedPayments() == clientLoan.getPayments() ) {
+            clientLoan.setActive(false);
+        }
+
+        // guardo todo
+        clientLoanService.saveClientLoan(clientLoan);
+        accountService.saveAccount(account);
+        transactionService.saveTransaction(transaction);
+
+        return new ResponseEntity<>("Loan payments received", HttpStatus.ACCEPTED);
     }
 }

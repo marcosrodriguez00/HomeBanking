@@ -50,7 +50,7 @@ createApp({
       axios
       .post('/api/clients/current/accounts', `accountType=${this.newAccountType}`)
       .then(response => {
-        location.pathname = '/web/accounts.html'
+
         Swal.fire({
           icon: "success",
           title: "Account created",
@@ -59,6 +59,7 @@ createApp({
           background: "#1c2754",
           confirmButtonColor: "#17acc9",
       });
+        location.pathname = '/web/accounts.html'
       })
       .catch(error => { 
         console.error('Error:', error)
@@ -72,6 +73,11 @@ createApp({
         }
       });
     },
+    cutDecimals(numero, cantidadDecimales) {
+      const factorMultiplicador = Math.pow(10, cantidadDecimales);
+      const numeroCortado = Math.floor(numero * factorMultiplicador) / factorMultiplicador;
+      return numeroCortado.toFixed(cantidadDecimales);
+  }
   },
 }).mount('#app');
 

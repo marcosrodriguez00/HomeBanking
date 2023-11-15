@@ -8,9 +8,11 @@ public class ClientLoanDTO {
 
     private String name;
 
-    private int payments;
+    private int payments, payedPayments;
 
-    private double amount;
+    private double amount, payedAmount, eachPaymentAmount;
+
+    private boolean isActive;
 
     public ClientLoanDTO(ClientLoan clientLoan) {
         this.id = clientLoan.getId();
@@ -18,6 +20,10 @@ public class ClientLoanDTO {
         this.loanId = clientLoan.getLoan().getId();
         this.amount = clientLoan.getAmount();
         this.payments = clientLoan.getPayments();
+        this.payedAmount = clientLoan.getPayedAmount();
+        this.payedPayments = clientLoan.getPayedPayments();
+        this.eachPaymentAmount = clientLoan.getEachPaymentAmount();
+        this.isActive = clientLoan.isActive();
     }
 
     public Long getID() {
@@ -38,5 +44,21 @@ public class ClientLoanDTO {
 
     public int getPayments() {
         return payments;
+    }
+
+    public int getPayedPayments() {
+        return payedPayments;
+    }
+
+    public double getPayedAmount() {
+        return payedAmount;
+    }
+
+    public double getEachPaymentAmount() {
+        return eachPaymentAmount;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 }

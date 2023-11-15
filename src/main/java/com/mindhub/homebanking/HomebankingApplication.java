@@ -44,7 +44,7 @@ public class HomebankingApplication {
 //			accountRepository.save(cuenta1);
 //			accountRepository.save(cuenta2);
 //
-//			Account cuenta3 = new Account("VIN003", 100000, today, AccountType.SAVINGS);
+//			Account cuenta3 = new Account("VIN003", 10000000, today, AccountType.SAVINGS);
 //			Account cuenta4 = new Account("VIN004", 200000, tomorrow, AccountType.CHECKING);
 //			marcos.addAccount(cuenta3);
 //			marcos.addAccount(cuenta4);
@@ -84,16 +84,24 @@ public class HomebankingApplication {
 //
 //			// Estos constructores funcionan pero no cumplen con el principio de responsabilidad única
 //			ClientLoan clientLoan1 = new ClientLoan(400000, melba, prestamo1, 60);
+//			clientLoan1.setEachPaymentAmount((clientLoan1.getAmount() * (1 + clientLoan1.getLoan().getInterestRate())) / clientLoan1.getPayments());
 //			ClientLoan clientLoan2 = new ClientLoan(50000, melba, prestamo2, 12);
+//			clientLoan2.setEachPaymentAmount((clientLoan2.getAmount() * (1 + clientLoan2.getLoan().getInterestRate())) / clientLoan2.getPayments());
 //			ClientLoan clientLoan3 = new ClientLoan(100000, marcos, prestamo2, 24);
+//			clientLoan3.setEachPaymentAmount((clientLoan3.getAmount() * (1 + clientLoan3.getLoan().getInterestRate())) / clientLoan3.getPayments());
 //			ClientLoan clientLoan4 = new ClientLoan(200000, marcos, prestamo3, 36);
+//			clientLoan4.setEachPaymentAmount((clientLoan4.getAmount() * (1 + clientLoan4.getLoan().getInterestRate())) / clientLoan4.getPayments());
 //
 //			ClientLoan clientLoan5 = new ClientLoan(10000, 12);
 //			marcos.addClientLoan(clientLoan5);
 //			prestamo2.addClientLoan(clientLoan5);
+//			clientLoan5.setEachPaymentAmount((clientLoan5.getAmount() * (1 + clientLoan5.getLoan().getInterestRate())) / clientLoan5.getPayments());
+//
 //			ClientLoan clientLoan6 = new ClientLoan(200000, 36);
 //			melba.addClientLoan(clientLoan6);
 //			prestamo1.addClientLoan(clientLoan6);
+//			clientLoan6.setEachPaymentAmount((clientLoan6.getAmount() * (1 + clientLoan6.getLoan().getInterestRate())) / clientLoan6.getPayments());
+//
 //
 //			clientLoanRepository.save(clientLoan1);
 //			clientLoanRepository.save(clientLoan2);
@@ -121,6 +129,6 @@ public class HomebankingApplication {
 
 	// Password Encoder
 
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
+/*	@Autowired
+	private PasswordEncoder passwordEncoder;*/
 }

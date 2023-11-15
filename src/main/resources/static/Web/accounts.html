@@ -202,7 +202,15 @@
                                 <div class="accountCardRow">
                                     <div class="balanceContainer">
                                         <p style="margin-bottom: 0;">${{numberFormat(loan.amount)}}</p>
-                                    </div>  
+                                    </div>
+                                    <div>
+                                        <p>Payed payments:</p>
+                                        <p>{{loan.payedPayments}}/{{loan.payments}}</p>
+                                    </div>
+                                    <div>
+                                        <p>Cost per payment</p>
+                                        <p>${{cutDecimals(loan.eachPaymentAmount, 1)}}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -110,7 +110,7 @@ public class TransactionController {
         outgoingTransaction.setCurrentBalance(originAccount.getBalance());
         incomingTransaction.setCurrentBalance(destinyAccount.getBalance());
 
-        // agrego las trasnacciones
+        // agrego las transacciones
         originAccount.addTransaction(outgoingTransaction);
         destinyAccount.addTransaction(incomingTransaction);
 

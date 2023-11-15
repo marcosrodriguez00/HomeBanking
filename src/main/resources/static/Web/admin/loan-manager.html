@@ -7,7 +7,10 @@
     rel="stylesheet" 
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
     crossorigin="anonymous">
+    <!--Sweet Alert-->
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <link rel="shortcut icon" href="/resources/Images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../resources/style.css">
     <title>Loan Manager | Home Banking</title>
 </head>
 <body class="bg-body-tertiary">
@@ -17,7 +20,94 @@
         </div>
         
         <main>
-            <h1>Bolas</h1>
+            <div class="d-flex justify-content-around p-3">
+                <section class="col-4">
+                    <h1>Create a loan</h1>
+
+                    <div>
+                        <form>
+                            <div class="mb-3">
+                                <label for="nameInput" class="form-label">Loan name</label>
+                                <input type="text" class="form-control" id="nameInput" v-model="name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="maxAmountInput" class="form-label">Loan maximum amount</label>
+                                <input type="number" min="0" class="form-control" id="maxAmountInput" v-model="maxAmount">
+                            </div>
+                            <div class="mb-3">
+                              <label for="interestRate" class="form-label">Loan interest rate</label>
+                              <input type="number" max="1" min="0" class="form-control" id="interestRate" v-model="interestRate">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPayment" class="form-label">Loan payments</label>
+                                <input type="number" class="form-control" id="newPayment" v-model="newPayment">
+                            </div>
+                            <div class="d-flex gap-3">
+                                <button type="button" class="btn btn-primary" @click="addPayment">Add payment</button>
+                                <button type="button" class="btn btn-secondary" @click="resetPayments">Reset payments</button>
+                            </div>
+                            <div class="d-flex gap-3 align-items-center">
+                                <div class="paymentsBox align-self-center mt-3">
+                                    <p>{{payments}}</p>
+                                </div>
+                                <button style="height: auto; width: auto;" type="button" class="btn btn-primary" @click="createNewLoan">Create new loan</button>
+                            </div>
+                            
+                        </form>
+                    </div>  
+                </section>
+
+                <section class="col-4">
+                    <h1>Deactivate a loan</h1>
+                    <form class="d-flex justify-content-around">
+                        <div class="d-flex flex-wrap flex-row flex-grow-1">
+                            <label style="min-width: 10rem;" v-for="loan in loans">
+                                <input type="radio" name="loan" :value="loan.id" v-model="selectedLoanId">
+                                <div class="option">
+                                    <p>{{loan.name}}</p>
+                                    <p>ID: {{loan.id}}</p>
+                                </div>
+                            </label>
+                        </div>
+                    </form>
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="button" class="btn btn-primary" @click="deleteLoan">Delete selected loan</button> 
+                    </div>
+                </section>
+
+            </div>
+            
+            <div class="d-flex justify-content-around p-3">
+                <section class="col-6">
+                    <h2>Loans REST Response</h2>
+                    <pre>{{loans}}</pre>
+                </section>
+                
+                <section class="col-6 mt-5">
+                    <h2>Client List</h2>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Max amount</th>
+                            <th scope="col">Interest rate</th>
+                            <th scope="col">Payments</th>
+                          </tr>
+                        </thead>
+                        <tbody v-for="loan in loans">
+                            <tr>
+                                <th scope="row">{{loan.id}}</th>
+                                <td>{{loan.name}}</td>
+                                <td>{{loan.maxAmount}}</td>
+                                <td>{{loan.interestRate}}</td>
+                                <td>{{loan.payments}}</td>
+                            </tr>
+                        </tbody>
+                      </table>
+                </section>
+            </div>
+            
         </main>
     </div>
     <!-- VUE -->
@@ -29,6 +119,8 @@
     </script>
     <!-- AXIOS -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!--Sweet Alert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <script src="../../resources/loan-manager.js"></script>
 </body>
 </html>

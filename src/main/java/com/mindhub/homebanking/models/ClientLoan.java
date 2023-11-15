@@ -12,9 +12,11 @@ public class ClientLoan {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private double amount;
+    private double amount, payedAmount, eachPaymentAmount;
 
-    private int payments;
+    private int payments, payedPayments;
+
+    private boolean isActive;
 
     @ManyToOne( fetch = FetchType.EAGER )
     @JoinColumn(name = "client_id")
@@ -29,6 +31,10 @@ public class ClientLoan {
     public ClientLoan(double amount, int payments) {
         this.amount = amount;
         this.payments = payments;
+        this.payedAmount = 0;
+        this.payedPayments = 0;
+        this.eachPaymentAmount = 0;
+        this.isActive = true;
     }
 
     // Esto no cumple con la especificidad única
@@ -37,6 +43,10 @@ public class ClientLoan {
         this.client = client;
         this.loan = loan;
         this.payments = payments;
+        this.payedPayments = 0;
+        this.payedAmount = 0;
+        this.eachPaymentAmount = 0;
+        this.isActive = true;
     }
 
     public long getId() {
@@ -73,5 +83,37 @@ public class ClientLoan {
 
     public void setLoan(Loan loan) {
         this.loan = loan;
+    }
+
+    public double getPayedAmount() {
+        return payedAmount;
+    }
+
+    public void setPayedAmount(double payedAmount) {
+        this.payedAmount = payedAmount;
+    }
+
+    public int getPayedPayments() {
+        return payedPayments;
+    }
+
+    public void setPayedPayments(int payedPayments) {
+        this.payedPayments = payedPayments;
+    }
+
+    public double getEachPaymentAmount() {
+        return eachPaymentAmount;
+    }
+
+    public void setEachPaymentAmount(double eachPaymentAmount) {
+        this.eachPaymentAmount = eachPaymentAmount;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
