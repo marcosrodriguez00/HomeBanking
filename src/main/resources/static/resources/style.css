@@ -1014,3 +1014,40 @@ input[type="radio"]:checked + .option {
   border-radius: 5px;
   box-shadow: 0 0 10px 5px #0045c7;
 }
+
+/* Loan payment */
+
+.loanPaymentFormContainer {
+  border-radius: 15px;
+  background-image: linear-gradient(145deg, #000000, #292239);
+  height: fit-content;
+  width: 50%;
+  color: white;
+  padding: 1rem;
+}
+
+.loanPaymentImageContainer {
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.loanPaymentImageContainer img {
+  max-width: 80%;
+}
+
+.loanInfoDisplayContainer {
+  background-color: #f8f8f8; /* Color blanco con un tono ligeramente apagado */
+  border: 1px solid #ddd; /* Borde delgado */
+  border-radius: 5px; /* Bordes redondeados */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombreado leve */
+  padding: 10px; /* Añadir algún espacio interno al contenedor */
+  color: #000;
+  width: 45%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

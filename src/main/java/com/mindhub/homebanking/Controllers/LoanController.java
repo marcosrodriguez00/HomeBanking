@@ -207,7 +207,7 @@ public class LoanController {
 
         String description = clientLoan.getLoan().getName() + " loan payment";
         Transaction transaction = new Transaction( TransactionType.DEBIT, -(clientLoan.getEachPaymentAmount()*amountOfPayments), description, dateFormatter(LocalDateTime.now()) );
-
+        transaction.setCurrentBalance(account.getBalance());
         account.addTransaction(transaction);
 
         // si todas las cuotas estan pagadas cambiar el booleano

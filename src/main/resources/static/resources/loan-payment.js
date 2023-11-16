@@ -1,30 +1,39 @@
-const urlParams = new URLSearchParams(window.location.search);
-const idAccount = urlParams.get('id');
-
 const { createApp } = Vue;
 
-const url = "http://localhost:8080/api/accounts/" + idAccount
-
+const url = "/api/clients/currents"
 
 createApp({
+
   data() {
     return {
-        account: [],
-        transactions: [],
-        loading: true
+        client: [],
+        loading: true,
+        loans: [],
+        amountOfPayments: 0,
+        selectedAccount: [],
+        selectedLoan: "",
+        loanInDisplay: [],
     };
   },
+
   created() {
     axios
         .get(url)
         .then((response) => {
-            this.account = response.data;
-            this.transactions = this.account.transactions;
-            this.transactions.sort((a,b) => b.id - a.id);
+            this.client = response.data;
             setTimeout(() => this.loading = false, 300);
+            this.loans = this.client.loans;
+            this.loanInDisplay = this.loans[0]
+            console.log(this.loanInDisplay)
+            console.log(this.loans)
+            console.log(this.client)
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          console.log(error)
+        });
+    
   },
+
   methods: {
     numberFormat(num) {
       let numString = num.toString().split('.')
@@ -44,15 +53,23 @@ createApp({
           location.pathname = '/index.html';
       })
     },
-    deleteAccount(){
+    cutDecimals(numero, cantidadDecimales) {
+      const factorMultiplicador = Math.pow(10, cantidadDecimales);
+      const numeroCortado = Math.floor(numero * factorMultiplicador) / factorMultiplicador;
+      return numeroCortado.toFixed(cantidadDecimales);
+    },
+    changeLoanInDisplay(loanName) {
+      this.loanInDisplay = this.loans.find(loan => loan.name == loanName)
+    },
+    payLoan(){
       axios
-      .post('/api/clients/current/accounts/delete', `accountNumber=${this.account.number}`)
+      .post('http://localhost:8080/api/loans/pay',
+      `amountOfPayments=${this.amountOfPayments}&clientLoanId=${this.loanInDisplay.id}&accountNumber=${this.selectedAccount.number}`)
       .then((response) => {
-        console.log("Account deleted: " + response)
+        console.log("Payment accepted: " + response)
         Swal.fire({
             icon: "success",
-            title: "Account deleted",
-            text: "Account deleted",
+            title: "Payment accepted",
             color: "#fff",
             background: "#1c2754",
             confirmButtonColor: "#17acc9",
@@ -64,7 +81,6 @@ createApp({
           this.errorMessage(error.response.data);
       })
     },
-    
     errorMessage(message) {
       Swal.fire({
         icon: "error",
@@ -75,10 +91,5 @@ createApp({
         confirmButtonColor: "#17acc9",
     });
   },
-  cutDecimals(numero, cantidadDecimales) {
-    const factorMultiplicador = Math.pow(10, cantidadDecimales);
-    const numeroCortado = Math.floor(numero * factorMultiplicador) / factorMultiplicador;
-    return numeroCortado.toFixed(cantidadDecimales);
-  }
   },
 }).mount('#app');

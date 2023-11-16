@@ -156,7 +156,7 @@
                                 </div>
                                 <div class="accountCardRow">
                                     <div class="balanceContainer">
-                                        <p style="margin-bottom: 0;">${{numberFormat(account.balance)}}</p>
+                                        <p style="margin-bottom: 0;">${{numberFormat(cutDecimals(account.balance, 1))}}</p>
                                     </div>
                                     <div>
                                         <a :href="crearLink(account)" class="pb-3"><button type="button" class="btn btn_color"><b>Account Details</b></button></a>
@@ -207,13 +207,12 @@
                                         <p>Payed payments:</p>
                                         <p>{{loan.payedPayments}}/{{loan.payments}}</p>
                                     </div>
-                                    <div>
-                                        <p>Cost per payment</p>
-                                        <p>${{cutDecimals(loan.eachPaymentAmount, 1)}}</p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="pb-5 d-flex justify-content-center">
+                        <a href="loan-payment.html" class="btn btn_color">Pay your loans</a>
                     </div>
                 </section>
             </div>
