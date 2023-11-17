@@ -17,12 +17,11 @@
 <body>
 
     <div id="app">
-        <header class="bg-dark headerHeight">
-            
+        <header class="bg-dark headerHeight">    
             <nav class="navbar navbar-expand-lg headerHeight">
                 <div class="container-fluid">
                   <a class="navbar-brand w-75" href="#">
-                    <img class="logoSize" src="../resources/Images/bankHub logo letras.png" alt="BankHub Logo">
+                    <img class="logoSize ps-3" src="../resources/Images/bankHub_Logo-removebg-preview.png" alt="BankHub Logo">
                   </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -41,6 +40,9 @@
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-arrow-left-right iconColor"></i><a class="nav-link active" aria-current="page" href="transfers.html">Transactions</a>
                         </li>
+                        <li v-if="clientIsAdmin" class="nav-item d-flex align-items-center">
+                            <i class="bi bi-arrow-left-right iconColor"></i><a class="nav-link active" aria-current="page" style="width: 9rem;" href="admin/loan-manager.html">Loan managment</a>
+                        </li>
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-box-arrow-right iconColor"></i>
                             <button class="nav-link active" aria-current="page" data-bs-toggle="modal" data-bs-target="#modalId" style="color: white;">Logout</button>
@@ -49,7 +51,6 @@
                   </div>
                 </div>
             </nav>
-
         </header>
         <main>
             <div class="mainColor">

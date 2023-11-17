@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static com.mindhub.homebanking.utils.AccountUtils.randomAccountNumber;
 
+//se utiliza para marcar una clase como un controlador de Spring MVC que maneja solicitudes web y devuelve datos
 @RestController
 @RequestMapping("/api")
 public class AccountController {
@@ -42,11 +43,10 @@ public class AccountController {
         return accountService.getAccountDTOById(id);
     }
 
-    // currents o current
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> newAccount(Authentication authentication, @RequestParam AccountType accountType) {
 
-        // encapsulo el cliente
+        // defino el cliente
         Client client = clientService.getClientByEmail(authentication.getName());
 
         // controlo que no haya mas de 3 cuentas

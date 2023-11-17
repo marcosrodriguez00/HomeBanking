@@ -86,7 +86,7 @@ public class ClientController {
         Account account = new Account(accountNumber, 0, LocalDate.now(), AccountType.SAVINGS);
         client.addAccount(account);
         accountService.saveAccount(account);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("Account created", HttpStatus.CREATED);
     }
 
     @GetMapping("/clients/currents")

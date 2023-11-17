@@ -46,7 +46,6 @@ public class Card {
 
     // METHODS
 
-
     public long getId() {
         return id;
     }

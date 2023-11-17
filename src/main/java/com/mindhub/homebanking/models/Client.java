@@ -14,6 +14,7 @@ public class Client {
 
     // PROPERTIES
 
+    // definimos que es la PK y luego especificamos como se va a generar en la BD
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -23,6 +24,7 @@ public class Client {
 
     private boolean admin;
 
+    // fetchType.EAGER hace que al llamar a un client traiga tambien esta propiedad
     @OneToMany(mappedBy="client", fetch = FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+// se utiliza para marcar una clase como un componente de servicio en la capa de servicio
 @Service
 public class AccountImplement implements AccountService {
 

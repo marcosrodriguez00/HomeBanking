@@ -11,7 +11,9 @@ createApp({
     return {
         account: [],
         transactions: [],
-        loading: true
+        loading: true,
+        clientIsAdmin: false,
+        client: [],
     };
   },
   created() {
@@ -24,6 +26,15 @@ createApp({
             setTimeout(() => this.loading = false, 300);
         })
         .catch((error) => console.log(error))
+    axios
+        .get("http://localhost:8080/api/clients/currents")
+        .then((response) => {
+            this.client = response.data;
+            this.clientIsAdmin = this.client.admin
+        })
+        .catch((error) => {
+          console.log(error)
+        });
   },
   methods: {
     numberFormat(num) {

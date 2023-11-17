@@ -31,13 +31,14 @@ class WebAuthorization extends WebSecurityConfigurerAdapter { // depricated
                 .antMatchers("/web/admin/**").hasAuthority("ADMIN")
                 // permisos para el cliente
                 .antMatchers(HttpMethod.GET, "/api/clients/currents").authenticated()
-                .antMatchers(HttpMethod.GET, "/api/clients/currents").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/accounts/{id}").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/clients/current/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/transactions", "/api/loans").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/transactions", "/api/loans").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/loans/pay").authenticated()
                 .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html",
-                        "/web/create-card.html", "/web/transfers.html", "/web/loan-application.html").authenticated()
+                        "/web/create-card.html", "/web/transfers.html", "/web/loan-application.html",
+                        "/web/loan-payment.html").authenticated()
                 .antMatchers("/**").hasAuthority("ADMIN")
                 .anyRequest().denyAll();
 
@@ -52,6 +53,7 @@ class WebAuthorization extends WebSecurityConfigurerAdapter { // depricated
         // turn off checking for CSRF tokens
         http.csrf().disable();
 
+        // (puede que ya no lo necesite)
         // frameOptions no permite a terceros ingresar codigo a la vista y al deshabilitarlo estamos permitiendo el uso de h2
         //disabling frameOptions so h2-console can be accessed
         http.headers().frameOptions().disable();

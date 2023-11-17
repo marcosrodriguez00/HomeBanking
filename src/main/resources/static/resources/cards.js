@@ -11,7 +11,8 @@ createApp({
         isCredit: false,        // no tarjetas de este tipo
         debitCards: [],
         creditCards: [],
-        selectedCardNumberForDelete: ""
+        selectedCardNumberForDelete: "",
+        clientIsAdmin: false,
     };
   },
   created() {
@@ -19,12 +20,10 @@ createApp({
         .get(url)
         .then((response) => {
             this.client = response.data;
+            this.clientIsAdmin = this.client.admin
             setTimeout(() => this.loading = false, 300);
-            console.log(this.client)
             this.debitCards = this.client.cards.filter(card => card.type === "DEBIT")
             this.creditCards = this.client.cards.filter(card => card.type === "CREDIT")
-            console.log(this.creditCards)
-            console.log(this.debitCards)
         })
         .catch((error) => console.log(error))
   },

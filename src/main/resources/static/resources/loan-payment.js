@@ -13,6 +13,7 @@ createApp({
         selectedAccount: [],
         selectedLoan: "",
         loanInDisplay: [],
+        clientIsAdmin: false
     };
   },
 
@@ -21,12 +22,10 @@ createApp({
         .get(url)
         .then((response) => {
             this.client = response.data;
+            this.clientIsAdmin = this.client.admin
             setTimeout(() => this.loading = false, 300);
             this.loans = this.client.loans;
             this.loanInDisplay = this.loans[0]
-            console.log(this.loanInDisplay)
-            console.log(this.loans)
-            console.log(this.client)
         })
         .catch((error) => {
           console.log(error)

@@ -5,7 +5,6 @@ import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.CardColor;
 import com.mindhub.homebanking.models.CardType;
 import com.mindhub.homebanking.models.Client;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 

@@ -13,6 +13,7 @@ createApp({
         amount: 0,
         payments: 0,
         destinyAccountNumber: "",
+        clientIsAdmin: false
     };
   },
   created() {
@@ -20,6 +21,7 @@ createApp({
         .get(url)
         .then((response) => {
             this.client = response.data;
+            this.clientIsAdmin = this.client.admin;
             setTimeout(() => this.loading = false, 300);
         })
         .catch((error) => console.log(error)),

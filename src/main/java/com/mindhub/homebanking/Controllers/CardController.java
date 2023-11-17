@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.Controllers;
 
 import com.mindhub.homebanking.dto.CardDTO;
+import com.mindhub.homebanking.dto.CardPaymentDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.services.CardService;
 import com.mindhub.homebanking.services.ClientService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -62,6 +64,7 @@ public class CardController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    // patch
     @PostMapping("/clients/current/cards/delete")
     public ResponseEntity<Object> deactivateCard(Authentication authentication,
                                                  @RequestParam String cardNumber) {
@@ -81,4 +84,34 @@ public class CardController {
         cardService.deleteCardByNumber(cardNumber);
         return new ResponseEntity<>("Card deleted successfully", HttpStatus.CREATED);
     }
+
+//    @Transactional
+//    @PostMapping("clients/current/cards/pay")
+//    public ResponseEntity<Object> payWithCard (Authentication authentication,
+//                                              @RequestBody CardPaymentDTO cardPaymentDTO) {
+//        // verificar que
+//        // los parametros no esten vacios
+//        if ( cardPaymentDTO.getCardNumber().isBlank() ){
+//            return new ResponseEntity<>("Card number cannot be empty", HttpStatus.FORBIDDEN);
+//        }
+//        if ( cardPaymentDTO.getPaymentAmount() >= 0 ){
+//            return new ResponseEntity<>("Payment amount can´t be 0 or less", HttpStatus.FORBIDDEN);
+//        }
+//
+//        // ver que la tarjeta exista y pertenezca al cliente
+//
+//        Client client = clientService.getClientByEmail(authentication.getName());
+//
+//        Card card = cardService.getCardByNumber(cardPaymentDTO.getCardNumber());
+//
+//        if ( !cardService.existsCardByNumber(cardPaymentDTO.getCardNumber()) ) {
+//            return new ResponseEntity<>("This card doesn't exist", HttpStatus.FORBIDDEN);
+//        }
+//
+//        if () {
+//
+//        }
+//
+//        return new ResponseEntity<>("Payment received", HttpStatus.ACCEPTED);
+//    }
 }

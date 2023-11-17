@@ -10,14 +10,12 @@ public class NewLoanDTO {
 
     private List<Integer> payments;
 
-
     public NewLoanDTO(String name, double maxAmount, double interestRate, List<Integer> payments) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.interestRate = interestRate;
         this.payments = payments;
     }
-
 
     public String getName() {
         return name;

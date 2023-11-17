@@ -16,12 +16,11 @@
 </head>
 <body>
     <div id="app">
-        <header class="bg-dark headerHeight">
-            
+        <header class="bg-dark headerHeight">    
             <nav class="navbar navbar-expand-lg headerHeight">
                 <div class="container-fluid">
                   <a class="navbar-brand w-75" href="#">
-                    <img class="logoSize" src="../resources/Images/bankHub logo letras.png" alt="BankHub Logo">
+                    <img class="logoSize ps-3" src="../resources/Images/bankHub_Logo-removebg-preview.png" alt="BankHub Logo">
                   </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -34,11 +33,14 @@
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-credit-card navbarActive"></i><a class="nav-link active navbarActive" aria-current="page" href="#">Cards</a>
                         </li>
-                        <li class="nav-item d-flex align-items-center">
+                        <li class="nav-item d-flex align-items-center gap-1">
                             <i class="bi bi-cash-coin iconColor"></i><a class="nav-link active" aria-current="page" href="loan-application.html">Loans</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-arrow-left-right iconColor"></i><a class="nav-link active" aria-current="page" href="transfers.html">Transactions</a>
+                        </li>
+                        <li v-if="clientIsAdmin" class="nav-item d-flex align-items-center">
+                            <i class="bi bi-arrow-left-right iconColor"></i><a class="nav-link active" aria-current="page" style="width: 9rem;" href="admin/loan-manager.html">Loan managment</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
                             <i class="bi bi-box-arrow-right iconColor"></i>
@@ -48,7 +50,6 @@
                   </div>
                 </div>
             </nav>
-
         </header>
         <main>
             <div class="mainColor">
@@ -93,7 +94,7 @@
                     <h1 class="h1Color">Cards</h1>
                 </section>
                 <div class="d-flex justify-content-center align-items-center flex-column">
-                    <h2 style="color: white;">Cards manager:</h2>
+                    <h2 class="h3Color">Cards manager:</h2>
                     <div class="d-flex justify-content-center align-items-center gap-5">
                        <div>
                             <a href="create-card.html"><button class="btn btn_color">New Card</button></a>    
@@ -113,10 +114,10 @@
 
                 <section>
                     <div style="min-height: 40vh;">
-                        <h4 class="ms-5" style="color: white;">Credit:</h4>
+                        <h3 class="ms-5 h3Color">Credit:</h3>
                         <div v-for="card of creditCards">
                             <div class="container d-flex gap-5 no-wrap">
-                                <div class="card" style="background-color: var(--maincolor) !important;">
+                                <div class="card" style="background-color: transparent !important;">
                                     <div class="card-inner">
                                         <div class="front" :style="getCardGradient(card.color)">
                                             <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
@@ -164,10 +165,10 @@
                     </div>
                     
                     <div style="min-height: 40vh;">
-                        <h4 class="ms-5" style="color: white;">Debit:</h4>
+                        <h3 class="ms-5 h3Color">Debit:</h3>
                         <div v-for="card of debitCards">
                             <div class="container d-flex gap-5 no-wrap">
-                                <div class="card" style="background-color: var(--maincolor) !important;">
+                                <div class="card" style="background-color: transparent !important;">
                                     <div class="card-inner">
                                         <div class="front" :style="getCardGradient(card.color)">
                                             <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">

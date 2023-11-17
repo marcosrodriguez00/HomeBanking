@@ -8,7 +8,8 @@ createApp({
         client: [],
         loading: true,
         cardColor: "",
-        cardType: ""
+        cardType: "",
+        clientIsAdmin: false
     };
   },
   created() {

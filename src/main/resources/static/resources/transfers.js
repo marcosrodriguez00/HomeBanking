@@ -13,7 +13,8 @@ createApp({
         description: "",
         originAccountNumber: "",
         destinyAccountNumber: "",
-        selectedOriginAccount: []
+        selectedOriginAccount: [],
+        clientIsAdmin: false
     };
   },
   created() {
@@ -21,6 +22,7 @@ createApp({
         .get('/api/clients/currents')
         .then((response) => {
             this.clients = response.data;
+            this.clientIsAdmin = this.clients.admin;
             setTimeout(() => this.loading = false, 300);
             this.accounts = this.clients.accounts;
         })

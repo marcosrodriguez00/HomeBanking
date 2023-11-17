@@ -16,12 +16,15 @@
 }
 
 .headerHeight {
-    min-height: 15%;
+    min-height: 20%;
     background-color: var(--secondcolor);    
 }
 
 .mainColor {
-    background-color: var(--maincolor) !important;
+    /*background-color: var(--maincolor) !important;*/
+    background-image: url(/resources/Images/background_image_squares.jfif);
+    background-repeat: no-repeat;
+    background-size: cover;
     min-height: 100vh;
 }
 
@@ -40,17 +43,22 @@
 }
 
 .h1Color {
-    color: black;
-    font-weight: bold;
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 10px;
-    border-radius: 8px;
-    text-shadow: 4px 4px 8px #272137;
+  color: white; /* Cambiado a blanco para mayor contraste con el fondo */
+  font-weight: bold;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Cambiado a un fondo más oscuro y semi-transparente */
+  padding: 10px;
+  border-radius: 8px;
+  text-shadow: 2px 2px 4px #272137; /* Reduje el desenfoque y la opacidad de la sombra para un efecto más sutil */
 }
 
 .h3Color {
-    color: white;
+  color: white;
+  text-shadow: 4px 2px 6px rgba(0, 0, 0, 0.7); /* Aumenté el desenfoque y la opacidad de la sombra */
+  font-size: 1.5em; /* Aumenté el tamaño del texto */
+  font-weight: bold; /* Hice que el texto sea más grueso */
+  letter-spacing: 1px; /* Agregué un poco de espacio entre letras */
+  text-transform: uppercase; /* Convertí el texto a mayúsculas */
 }
 
 .iconSize {
@@ -225,7 +233,7 @@ a {
 
 .login-box {
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 80%;
   width: 400px;
   padding: 40px;
@@ -389,7 +397,6 @@ a {
 .container {
     min-height: 50vh;
     width: 100% !important;
-    background-color: var(--maincolor);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -401,7 +408,6 @@ a {
     color: #fff;
     cursor: pointer;
     perspective: 1000px;
-    background-color: var(--maincolor);
     border: none !important;
 }
 
@@ -411,7 +417,6 @@ a {
     position: relative;
     transition: transform 1s;
     transform-style: preserve-3d;
-    background-color: var(--maincolor);
 }
 
 .front, .back {

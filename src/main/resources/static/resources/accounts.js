@@ -8,7 +8,8 @@ createApp({
     return {
         client: [],
         loading: true,
-        newAccountType: ""
+        newAccountType: "",
+        clientIsAdmin: false
     };
   },
 
@@ -17,6 +18,7 @@ createApp({
         .get(url)
         .then((response) => {
             this.client = response.data;
+            this.clientIsAdmin = this.client.admin
             setTimeout(() => this.loading = false, 300);
         })
         .catch((error) => {
