@@ -130,6 +130,6 @@ public class HomebankingApplication {
 
 	// Password Encoder
 
-/*	@Autowired
-	private PasswordEncoder passwordEncoder;*/
+//	@Autowired
+//	private PasswordEncoder passwordEncoder;
 }
