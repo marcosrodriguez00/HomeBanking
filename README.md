@@ -6,11 +6,11 @@ Welcome! this is BankHub, a simulated online banking application developed durin
 
 ## Technologies used
 
-- **Frontend**: HTML, CSS, JavaScript, Vue.JS, Bootstrap, Axios
-- **Backend**: Java, Spring Boot
-- **Database**: PostgreSQL
-- **Security**: Spring Security
-- **Software:**: Postman, PgAdmin4
+- **Frontend:** HTML, CSS, JavaScript, Vue.JS, Bootstrap, Axios
+- **Backend:** Java, Spring Boot
+- **Database:** PostgreSQL
+- **Security:** Spring Security
+- **Software:** Postman, PgAdmin4
 
 ## Feautures
 
