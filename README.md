@@ -27,7 +27,7 @@ Welcome! this is BankHub, a simulated online banking application developed durin
 
 ## Screenshots
 
-[Ver video](bankhub_video_display.mp4)
+![Index](readme_ss/bankHub/index1.png)
 
 ## Credits
 
